@@ -29,19 +29,14 @@ public class FragmentFactory {
         {
             case Constants.CAMERA_PAGE:
                 // get camera fragment
-                return getLibraryFragment();
+                return new CameraFragment();
             case Constants.SEARCH_PAGE:
                 // get search fragment
-                return getLibraryFragment();
+                return new SearchFragment();
             case Constants.LIBRARY_PAGE:
             default:
-                return getLibraryFragment();
+                return new LibraryFragment();
         }
-    }
-
-    private LibraryFragment getLibraryFragment()
-    {
-        return new LibraryFragment();
     }
 
     /*@Override
