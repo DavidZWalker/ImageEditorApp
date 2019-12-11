@@ -1,13 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.SearchFragment">
+    tools:context=".ui.main.SearchFragment"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="SearchFrag" />
+        android:layout_gravity="top"
+        android:paddingBottom="10dp"
+        android:text="@string/searchLabel" />
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/editTextSearchPictures"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:hint="@string/searchPictures" />
+
+    <Button
+        android:id="@+id/buttonSearchPictures"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/searchButtons" />
+
+</LinearLayout>

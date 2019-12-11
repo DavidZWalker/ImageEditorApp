@@ -3,4 +3,7 @@
     <string name="tab_text_1">Camera</string>
     <string name="tab_text_2">Library</string>
     <string name="tab_text_3">Online</string>
+    <string name="searchPictures">Search for photos</string>
+    <string name="searchButtons">Search</string>
+    <string name="searchLabel">Search free high resolution photos</string>
 </resources>
