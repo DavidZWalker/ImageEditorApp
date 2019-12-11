@@ -20,54 +20,16 @@ import utilities.Constants;
  */
 public class FragmentFactory {
 
-    private static final String ARG_SECTION_NUMBER = "section_number";
-
-    private PageViewModel pageViewModel;
-
     public Fragment getFragment(int index) {
         switch (index)
         {
             case Constants.CAMERA_PAGE:
-                // get camera fragment
                 return new CameraFragment();
             case Constants.SEARCH_PAGE:
-                // get search fragment
                 return new SearchFragment();
             case Constants.LIBRARY_PAGE:
             default:
                 return new LibraryFragment();
         }
     }
-
-    /*@Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        pageViewModel = ViewModelProviders.of(this).get(PageViewModel.class);
-        int index = 1;
-        if (getArguments() != null) {
-            index = getArguments().getInt(ARG_SECTION_NUMBER);
-        }
-        pageViewModel.setIndex(index);
-    }
-
-    @Override
-    public View onCreateView(
-            @NonNull LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        int index = 1;
-        if (getArguments() != null)
-            index = getArguments().getInt(ARG_SECTION_NUMBER);
-
-        View root = null;
-        if (index == 1) root = inflater.inflate(R.layout.fragment_main, container, false);
-        else root = inflater.inflate(R.layout.activity_main, container, false);
-        final TextView textView = root.findViewById(R.id.section_label);
-        pageViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-        return root;
-    }*/
 }
