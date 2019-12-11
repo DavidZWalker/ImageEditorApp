@@ -17,6 +17,5 @@ public class LibraryViewModel extends ViewModel {
 
     public void loadLib()
     {
-
     }
 }
