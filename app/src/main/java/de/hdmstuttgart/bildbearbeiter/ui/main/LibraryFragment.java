@@ -2,6 +2,7 @@ package de.hdmstuttgart.bildbearbeiter.ui.main;
 
 import androidx.lifecycle.ViewModelProviders;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,8 +12,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.google.android.material.snackbar.Snackbar;
+
+import java.io.FileNotFoundException;
+import java.util.BitSet;
+import java.util.List;
 
 import de.hdmstuttgart.bildbearbeiter.R;
+import utilities.ImageFileHandler;
 
 public class LibraryFragment extends Fragment {
 
@@ -31,8 +40,12 @@ public class LibraryFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(LibraryViewModel.class);
-
+        ImageFileHandler imageFileHandler = new ImageFileHandler(getContext(), "BBImages");
+        mViewModel = ViewModelProviders.of(this, new LibraryViewModelFactory(imageFileHandler)).get(LibraryViewModel.class);
+        try {
+            List<Bitmap> bitmaps =  mViewModel.getSavedImages();
+        } catch (FileNotFoundException e) {
+            Snackbar.make(getView(), "Failed to load images.", Snackbar.LENGTH_LONG);
+        }
     }
-
 }
