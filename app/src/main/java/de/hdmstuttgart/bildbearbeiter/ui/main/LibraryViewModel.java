@@ -1,21 +1,31 @@
 package de.hdmstuttgart.bildbearbeiter.ui.main;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import androidx.lifecycle.ViewModel;
 
-import de.hdmstuttgart.bildbearbeiter.model.Library;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import utilities.ImageFileHandler;
 
 public class LibraryViewModel extends ViewModel {
 
-    private final String imagesDirName = "myimages";
-    private Library model;
+    ImageFileHandler imageFileHandler;
 
-    public LibraryViewModel()
+    public LibraryViewModel(ImageFileHandler imageFileHandler)
     {
         super();
-        model = new Library();
+        this.imageFileHandler = imageFileHandler;
     }
 
-    public void loadLib()
-    {
+    public List<Bitmap> getSavedImages() throws FileNotFoundException {
+        List<Bitmap> bitmaps = new ArrayList<>();
+        File[] files = imageFileHandler.getImageFolder().listFiles();
+        for (File f : files)
+            bitmaps.add(imageFileHandler.getImage(f.getName()));
+        return bitmaps;
     }
 }
