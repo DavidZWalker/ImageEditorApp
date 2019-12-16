@@ -35,8 +35,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     @Override
     public void onBindViewHolder(@NonNull SearchViewHolder holder, int position) {
         ImageView searchResult = holder.itemView.findViewById(R.id.image_search_result);
-
-        //TODO: SET IMAGES INTO recycler
         searchResult.setImageBitmap(searchList.get(position));
     }
 
