@@ -16,10 +16,14 @@ import de.hdmstuttgart.bildbearbeiter.Photo;
 import de.hdmstuttgart.bildbearbeiter.R;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchViewHolder> {
-    private List<Photo> searchList;
+    private List<Bitmap> searchList;
 
-    public SearchAdapter(List<Photo> searchList) {
+    public SearchAdapter(List<Bitmap> searchList) {
         this.searchList = searchList;
+    }
+
+    public void addToSearchList (Bitmap bitmap){
+        this.searchList.add(bitmap);
     }
 
     @NonNull
@@ -34,9 +38,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     @Override
     public void onBindViewHolder(@NonNull SearchViewHolder holder, int position) {
         ImageView searchResult = holder.itemView.findViewById(R.id.image_search_result);
-        TextView textView = holder.itemView.findViewById(R.id.testString);
-        textView.setText(searchList.get(position).id);
-        //TODO: load image from Current position
+
+        //TODO: SET IMAGES INTO recycler
 
     }
 
@@ -59,7 +62,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         }
     }
 
-    public void setSearchList(List<Photo> searchList) {
+    public void setSearchList(List<Bitmap> searchList) {
         this.searchList = searchList;
     }
 

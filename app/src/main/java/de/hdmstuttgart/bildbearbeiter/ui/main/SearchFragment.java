@@ -2,6 +2,7 @@ package de.hdmstuttgart.bildbearbeiter.ui.main;
 
 import androidx.lifecycle.ViewModelProviders;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -40,6 +41,7 @@ public class SearchFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private SearchAdapter searchAdapter;
     private List<Photo> photoList;
+    private List<Bitmap> bitmapList;
 
     public static SearchFragment newInstance() {
         return new SearchFragment();
@@ -66,7 +68,7 @@ public class SearchFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         //adapter
-        searchAdapter = new SearchAdapter(photoList);
+        searchAdapter = new SearchAdapter(bitmapList);
         recyclerView.setAdapter(searchAdapter);
 
         return view;
@@ -99,7 +101,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onResponse(Call<Photo> call, Response<Photo> response) {
                 photoList.add(response.body());
-                searchAdapter.setSearchList(photoList);
+
                 searchAdapter.notifyDataSetChanged();
 
                 getActivity().findViewById(R.id.progress_search).setVisibility(View.GONE);
