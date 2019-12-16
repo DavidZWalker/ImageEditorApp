@@ -115,7 +115,7 @@ public class SearchFragment extends Fragment {
             public void onResponse(Call<Photo> call, Response<Photo> response) {
                 //get url
                 urls.put("THUMB", response.body().urls.thumb);
-                urls.put("FULL", response.body().urls.full);
+                urls.put("REGULAR", response.body().urls.regular);
 
                 //download bitmap
                 getBitmapfromUrl();
