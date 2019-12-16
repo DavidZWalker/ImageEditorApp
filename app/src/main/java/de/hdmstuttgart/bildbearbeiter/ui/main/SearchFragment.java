@@ -3,6 +3,8 @@ package de.hdmstuttgart.bildbearbeiter.ui.main;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,8 +21,15 @@ import android.widget.Button;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.hdmstuttgart.bildbearbeiter.APIInterface;
 import de.hdmstuttgart.bildbearbeiter.Photo;
@@ -30,6 +39,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Url;
 import utilities.Constants;
 
 public class SearchFragment extends Fragment {
@@ -41,6 +51,8 @@ public class SearchFragment extends Fragment {
     private ImageAdapter searchAdapter;
     private List<Photo> photoList;
     private List<Bitmap> bitmapList;
+    private Map<String, String> urls;
+
 
     public static SearchFragment newInstance() {
         return new SearchFragment();
@@ -49,6 +61,8 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        urls = new HashMap<>();
+        bitmapList = new ArrayList<>();
         //inflate view to work with it
         final View view = inflater.inflate(R.layout.search_fragment, container, false);
         //setting onClick on SearchButton
@@ -63,7 +77,7 @@ public class SearchFragment extends Fragment {
 
         //assign recycle
         recyclerView = view.findViewById(R.id.recyclerSearch);
-        linearLayoutManager = new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false);
+        linearLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         //adapter
@@ -74,7 +88,6 @@ public class SearchFragment extends Fragment {
     }
 
 
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -82,6 +95,7 @@ public class SearchFragment extends Fragment {
 
         // TODO: Use the ViewModel
     }
+
     private void searchPicturesOnline() {
         photoList = new ArrayList<>();
 
@@ -99,13 +113,15 @@ public class SearchFragment extends Fragment {
         call.enqueue(new Callback<Photo>() {
             @Override
             public void onResponse(Call<Photo> call, Response<Photo> response) {
-                photoList.add(response.body());
+                //get url
+                urls.put("THUMB", response.body().urls.thumb);
+                urls.put("FULL", response.body().urls.full);
 
+                //download bitmap
+                getBitmapfromUrl();
+                //insert into map
                 searchAdapter.notifyDataSetChanged();
-
                 getActivity().findViewById(R.id.progress_search).setVisibility(View.GONE);
-
-
             }
 
             @Override
@@ -115,6 +131,54 @@ public class SearchFragment extends Fragment {
         });
 
 
+    }
+
+    private void getBitmapfromUrl() {
+        BitmapTask bitmapTask = new BitmapTask();
+        bitmapTask.execute();
+    }
+
+
+    private class BitmapTask extends AsyncTask<String, Integer, Long> {
+
+        @Override
+        protected void onPostExecute(Long aLong) {
+            super.onPostExecute(aLong);
+            searchAdapter.notifyDataSetChanged();
+        }
+
+        protected Long doInBackground(String... string) {
+            if (android.os.Debug.isDebuggerConnected())
+                android.os.Debug.waitForDebugger();
+
+            long totalSize = 0;
+            for (int i = 0; i < urls.size(); i++) {
+
+                try {
+                    URL url = new URL(urls.get("THUMB"));
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setDoInput(true);
+                    connection.connect();
+                    InputStream input = connection.getInputStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(input);
+                    bitmapList.add(bitmap);
+                    totalSize++;
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+                // Escape early if cancel() is called
+                if (isCancelled()) break;
+            }
+            searchAdapter.setBitmapList(bitmapList);
+
+            return totalSize;
+        }
+
 
     }
+
 }
+
