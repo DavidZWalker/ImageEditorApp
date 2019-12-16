@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -39,7 +38,7 @@ public class SearchFragment extends Fragment {
     private Button searchButton;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
-    private SearchAdapter searchAdapter;
+    private ImageAdapter searchAdapter;
     private List<Photo> photoList;
     private List<Bitmap> bitmapList;
 
@@ -68,7 +67,7 @@ public class SearchFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         //adapter
-        searchAdapter = new SearchAdapter(bitmapList);
+        searchAdapter = new ImageAdapter(bitmapList);
         recyclerView.setAdapter(searchAdapter);
 
         return view;

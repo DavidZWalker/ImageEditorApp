@@ -8,18 +8,17 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.List;
 
 import de.hdmstuttgart.bildbearbeiter.R;
@@ -29,7 +28,6 @@ public class LibraryFragment extends Fragment {
 
     private LibraryViewModel mViewModel;
     private RecyclerView imageRecyclerView;
-    private List<Bitmap> bitmaps;
 
     public static LibraryFragment newInstance() {
         return new LibraryFragment();
@@ -46,13 +44,22 @@ public class LibraryFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         ImageFileHandler imageFileHandler = new ImageFileHandler(getContext(), "BBImages");
         mViewModel = ViewModelProviders.of(this, new LibraryViewModelFactory(imageFileHandler)).get(LibraryViewModel.class);
+
+        // get saved images into a list
+        List<Bitmap> bitmaps = new ArrayList<>();
         try {
             bitmaps =  mViewModel.getSavedImages();
         } catch (FileNotFoundException e) {
             Snackbar.make(getView(), "Failed to load images.", Snackbar.LENGTH_LONG).show();
-            bitmaps = new ArrayList<>();
         }
+
+        // init adapter for RecyclerView
+        ImageAdapter adapter = new ImageAdapter(bitmaps);
+
+        // init RecyclerView
         imageRecyclerView = getActivity().findViewById(R.id.imageRecyclerView);
-        imageRecyclerView.setAdapter(new SearchAdapter(bitmaps));
+        imageRecyclerView.setHasFixedSize(true);
+        imageRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        imageRecyclerView.setAdapter(adapter);
     }
 }
