@@ -6,4 +6,8 @@
     <string name="searchPictures">Search for photos</string>
     <string name="searchButtons">Search</string>
     <string name="searchLabel">Search free high resolution photos</string>
+
+    <string name="title_activity_fullscreen_image">FullscreenImageActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
