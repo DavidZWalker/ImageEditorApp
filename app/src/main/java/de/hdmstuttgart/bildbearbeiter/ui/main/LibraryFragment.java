@@ -45,7 +45,7 @@ public class LibraryFragment extends Fragment {
         try {
             List<Bitmap> bitmaps =  mViewModel.getSavedImages();
         } catch (FileNotFoundException e) {
-            Snackbar.make(getView(), "Failed to load images.", Snackbar.LENGTH_LONG);
+            Snackbar.make(getView(), "Failed to load images.", Snackbar.LENGTH_LONG).show();
         }
     }
 }

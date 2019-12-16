@@ -22,10 +22,11 @@ public class LibraryViewModel extends ViewModel {
     }
 
     public List<Bitmap> getSavedImages() throws FileNotFoundException {
-        List<Bitmap> bitmaps = new ArrayList<>();
-        File[] files = imageFileHandler.getImageFolder().listFiles();
-        for (File f : files)
-            bitmaps.add(imageFileHandler.getImage(f.getName()));
-        return bitmaps;
+        throw new FileNotFoundException("sdasdasd");
+        //List<Bitmap> bitmaps = new ArrayList<>();
+        //File[] files = imageFileHandler.getImageFolder().listFiles();
+        //for (File f : files)
+         //   bitmaps.add(imageFileHandler.getImage(f.getName()));
+        //return bitmaps;
     }
 }
