@@ -4,15 +4,12 @@ import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import de.hdmstuttgart.bildbearbeiter.Photo;
 import de.hdmstuttgart.bildbearbeiter.R;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchViewHolder> {
@@ -30,9 +27,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     @Override
     public SearchViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //create new view
-        LinearLayout linearLayout = (LinearLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item,parent,false);
+        ImageView imageView = (ImageView) LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item,parent,false);
 
-        return new SearchViewHolder(linearLayout);
+        return new SearchViewHolder(imageView);
     }
 
     @Override
@@ -53,11 +50,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
     public static class SearchViewHolder extends RecyclerView.ViewHolder {
 
-        LinearLayout linearLayout;
+        ImageView imageView;
 
-        public SearchViewHolder(LinearLayout linearLayout) {
-            super(linearLayout);
-            this.linearLayout = linearLayout;
+        public SearchViewHolder(ImageView imageView) {
+            super(imageView);
+            this.imageView = imageView;
 
         }
     }
