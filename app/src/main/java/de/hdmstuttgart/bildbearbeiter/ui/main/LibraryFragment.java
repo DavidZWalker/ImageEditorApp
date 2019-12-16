@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
@@ -26,6 +28,8 @@ import utilities.ImageFileHandler;
 public class LibraryFragment extends Fragment {
 
     private LibraryViewModel mViewModel;
+    private RecyclerView imageRecyclerView;
+    private List<Bitmap> bitmaps;
 
     public static LibraryFragment newInstance() {
         return new LibraryFragment();
@@ -43,9 +47,12 @@ public class LibraryFragment extends Fragment {
         ImageFileHandler imageFileHandler = new ImageFileHandler(getContext(), "BBImages");
         mViewModel = ViewModelProviders.of(this, new LibraryViewModelFactory(imageFileHandler)).get(LibraryViewModel.class);
         try {
-            List<Bitmap> bitmaps =  mViewModel.getSavedImages();
+            bitmaps =  mViewModel.getSavedImages();
         } catch (FileNotFoundException e) {
             Snackbar.make(getView(), "Failed to load images.", Snackbar.LENGTH_LONG).show();
+            bitmaps = new ArrayList<>();
         }
+        imageRecyclerView = getActivity().findViewById(R.id.imageRecyclerView);
+        imageRecyclerView.setAdapter(new SearchAdapter(bitmaps));
     }
 }
