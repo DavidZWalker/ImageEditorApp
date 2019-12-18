@@ -3,8 +3,6 @@ package de.hdmstuttgart.bildbearbeiter.ui.main;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,26 +20,21 @@ import android.widget.EditText;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import de.hdmstuttgart.bildbearbeiter.APIInterface;
-import de.hdmstuttgart.bildbearbeiter.Photo;
+import de.hdmstuttgart.bildbearbeiter.Result;
 import de.hdmstuttgart.bildbearbeiter.R;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Url;
 import utilities.Constants;
+import utilities.SearchResponse;
 
 public class SearchFragment extends Fragment {
 
@@ -50,10 +43,11 @@ public class SearchFragment extends Fragment {
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private ImageAdapter searchAdapter;
-    private List<Photo> photoList;
+    private List<Result> resultList;
     private List<Bitmap> bitmapList;
     private Map<String, String> urls;
     private EditText editText;
+    private List<String> urlStrings;
 
 
     public static SearchFragment newInstance() {
@@ -65,6 +59,7 @@ public class SearchFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         urls = new HashMap<>();
         bitmapList = new ArrayList<>();
+        urlStrings = new ArrayList<>();
         //inflate view to work with it
         final View view = inflater.inflate(R.layout.search_fragment, container, false);
         //setting onClick on SearchButton
@@ -99,7 +94,7 @@ public class SearchFragment extends Fragment {
     }
 
     private void searchPicturesOnline() {
-        photoList = new ArrayList<>();
+        resultList = new ArrayList<>();
 
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -116,12 +111,14 @@ public class SearchFragment extends Fragment {
         editText.setText("");
 
 
-        Call<Photo> call = unsplashAPI.getSearchResults(query, Constants.UNSPLASH_PAGE, Constants.UNSPLASH_PER_PAGE, Constants.UNSPLASH_ACCESS_TOKEN);
-        call.enqueue(new Callback<Photo>() {
+        Call<SearchResponse> call = unsplashAPI.getSearchResults(query, Constants.UNSPLASH_PAGE, Constants.UNSPLASH_PER_PAGE, Constants.UNSPLASH_ACCESS_TOKEN);
+        call.enqueue(new Callback<SearchResponse>() {
             @Override
-            public void onResponse(Call<Photo> call, Response<Photo> response) {
-                //get urls
-                call = null;
+            public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+                //get urls TODO FIX ME bruv
+                resultList = response.body().result;
+
+                //puts urls with constants in map
 
 
                 //download bitmap
@@ -132,7 +129,7 @@ public class SearchFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Photo> call, Throwable t) {
+            public void onFailure(Call<SearchResponse> call, Throwable t) {
                 getActivity().findViewById(R.id.progress_search).setVisibility(View.GONE);
             }
         });

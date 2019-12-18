@@ -7,19 +7,37 @@ import android.os.AsyncTask;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
 public class BitmapDownloader {
-    private List<java.net.URL> URL;
+    private List<String> urlStrings;
+    private List<URL> urls;
     public List<Bitmap> results;
-    //public
+    private String resolution;
 
-    public void setURL(List<java.net.URL> URL) {
-        this.URL = URL;
+    public BitmapDownloader(List<String> urlString, String resolution) {
+        this.urlStrings = urlString;
+        for (String s : urlStrings) {
+            createURL(s);
+        }
+        this.resolution = resolution;
     }
 
-    public List<Bitmap> downloadBitmaps(){
+    public void createURL(String urlString) {
+        try {
+            this.urls.add(new URL(urlString));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String getResolution() {
+        return resolution;
+    }
+
+    public List<Bitmap> downloadBitmaps() {
         BitmapTask bitmapTask = new BitmapTask();
         bitmapTask.execute();
         return results;
@@ -38,16 +56,16 @@ public class BitmapDownloader {
                 android.os.Debug.waitForDebugger();
 
             long totalSize = 0;
-            /*for (int i = 0; i < 5; i++) {
+            for (URL u : urls) {
 
                 try {
-                    URL url = new URL(urls.get("THUMB"));
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    //resolution via parameter
+                    HttpURLConnection connection = (HttpURLConnection) u.openConnection();
                     connection.setDoInput(true);
                     connection.connect();
                     InputStream input = connection.getInputStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(input);
-                    bitmapList.add(bitmap);
+                    results.add(bitmap);
                     totalSize++;
 
                 } catch (IOException e) {
@@ -58,13 +76,10 @@ public class BitmapDownloader {
                 // Escape early if cancel() is called
                 if (isCancelled()) break;
             }
-            searchAdapter.setBitmapList(bitmapList);*/
-
             return totalSize;
         }
 
 
     }
-    //get urls
-    //publish progress
+
 }
