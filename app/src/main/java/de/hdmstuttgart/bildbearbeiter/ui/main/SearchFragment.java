@@ -145,7 +145,6 @@ public class SearchFragment extends Fragment {
         protected void onPostExecute(Long aLong) {
             super.onPostExecute(aLong);
             searchAdapter.notifyDataSetChanged();
-            getActivity().findViewById(R.id.recyclerSearch).setVisibility(View.VISIBLE);
         }
 
         protected Long doInBackground(String... string) {
