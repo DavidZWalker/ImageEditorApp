@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -30,6 +31,7 @@ public class CameraFragment extends Fragment {
 
     private CameraViewModel mViewModel;
     private Button takePhotoButton;
+    private ImageView capturedImageView;
 
     public static CameraFragment newInstance() {
         return new CameraFragment();
@@ -45,6 +47,7 @@ public class CameraFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(CameraViewModel.class);
+        capturedImageView = getActivity().findViewById(R.id.capturedImage);
         takePhotoButton = getActivity().findViewById(R.id.takePhotoButton);
         takePhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
