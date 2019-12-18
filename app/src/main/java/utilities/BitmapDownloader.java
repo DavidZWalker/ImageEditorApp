@@ -13,6 +13,7 @@ import java.util.List;
 public class BitmapDownloader {
     private List<java.net.URL> URL;
     public List<Bitmap> results;
+    //public
 
     public void setURL(List<java.net.URL> URL) {
         this.URL = URL;
