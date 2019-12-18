@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -52,6 +53,7 @@ public class SearchFragment extends Fragment {
     private List<Photo> photoList;
     private List<Bitmap> bitmapList;
     private Map<String, String> urls;
+    private EditText editText;
 
 
     public static SearchFragment newInstance() {
@@ -99,7 +101,6 @@ public class SearchFragment extends Fragment {
     private void searchPicturesOnline() {
         photoList = new ArrayList<>();
 
-
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
@@ -109,16 +110,22 @@ public class SearchFragment extends Fragment {
                 .build();
         APIInterface unsplashAPI = retrofit.create(APIInterface.class);
 
-        Call<Photo> call = unsplashAPI.getRandomPicture(Constants.UNSPLASH_ACCESS_KEY);
+        //get Search String from User
+        editText = getActivity().findViewById(R.id.editTextSearchPictures);
+        String query = editText.getText().toString();
+        editText.setText("");
+
+
+        Call<Photo> call = unsplashAPI.getSearchResults(query, Constants.UNSPLASH_PAGE, Constants.UNSPLASH_PER_PAGE, Constants.UNSPLASH_ACCESS_TOKEN);
         call.enqueue(new Callback<Photo>() {
             @Override
             public void onResponse(Call<Photo> call, Response<Photo> response) {
-                //get url
-                urls.put("THUMB", response.body().urls.thumb);
-                urls.put("REGULAR", response.body().urls.regular);
+                //get urls
+                call = null;
+
 
                 //download bitmap
-                getBitmapfromUrl();
+
                 //insert into map
                 searchAdapter.notifyDataSetChanged();
                 getActivity().findViewById(R.id.progress_search).setVisibility(View.GONE);
@@ -133,52 +140,6 @@ public class SearchFragment extends Fragment {
 
     }
 
-    private void getBitmapfromUrl() {
-        BitmapTask bitmapTask = new BitmapTask();
-        bitmapTask.execute();
-    }
-
-
-    private class BitmapTask extends AsyncTask<String, Integer, Long> {
-
-        @Override
-        protected void onPostExecute(Long aLong) {
-            super.onPostExecute(aLong);
-            searchAdapter.notifyDataSetChanged();
-        }
-
-        protected Long doInBackground(String... string) {
-            if (android.os.Debug.isDebuggerConnected())
-                android.os.Debug.waitForDebugger();
-
-            long totalSize = 0;
-            for (int i = 0; i < urls.size(); i++) {
-
-                try {
-                    URL url = new URL(urls.get("THUMB"));
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setDoInput(true);
-                    connection.connect();
-                    InputStream input = connection.getInputStream();
-                    Bitmap bitmap = BitmapFactory.decodeStream(input);
-                    bitmapList.add(bitmap);
-                    totalSize++;
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return null;
-                }
-
-                // Escape early if cancel() is called
-                if (isCancelled()) break;
-            }
-            searchAdapter.setBitmapList(bitmapList);
-
-            return totalSize;
-        }
-
-
-    }
 
 }
 
