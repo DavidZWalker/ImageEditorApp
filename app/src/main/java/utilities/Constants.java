@@ -13,4 +13,12 @@ public final class Constants {
     public static final String UNSPLASH_REFRESH_TOKEN="f126eb8b0708fc83f9f392aef1ed070715791141dddf567530ab191940e1e789";
     public static final String UNSPLASH_PAGE = "1";
     public static final String UNSPLASH_PER_PAGE = "20";
+
+    //unsplash resolutions
+    public static final String UNSPLASH_RAW = "RAW";
+    public static final String UNSPLASH_FULL = "FULL";
+    public static final String UNSPLASH_REGULAR = "REGULAR";
+    public static final String UNSPLASH_SMALL = "SMALL";
+    public static final String UNSPLASH_THUMB = "THUMB";
+
 }
