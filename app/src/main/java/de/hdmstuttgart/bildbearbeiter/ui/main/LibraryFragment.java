@@ -28,6 +28,7 @@ public class LibraryFragment extends Fragment {
 
     private LibraryViewModel mViewModel;
     private RecyclerView imageRecyclerView;
+    private ImageAdapter mAdapter;
 
     public static LibraryFragment newInstance() {
         return new LibraryFragment();
@@ -54,12 +55,23 @@ public class LibraryFragment extends Fragment {
         }
 
         // init adapter for RecyclerView
-        ImageAdapter adapter = new ImageAdapter(bitmaps);
+        mAdapter = new ImageAdapter(bitmaps);
 
         // init RecyclerView
         imageRecyclerView = getActivity().findViewById(R.id.imageRecyclerView);
         imageRecyclerView.setHasFixedSize(true);
         imageRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        imageRecyclerView.setAdapter(adapter);
+        imageRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        try {
+            List<Bitmap> bmps = mViewModel.getSavedImages();
+            mAdapter.setBitmapList(bmps);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

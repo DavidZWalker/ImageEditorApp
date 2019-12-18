@@ -24,19 +24,24 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.io.File;
+import java.io.IOException;
+import java.util.Random;
 
 import de.hdmstuttgart.bildbearbeiter.R;
+import utilities.Constants;
 import utilities.ImageFileHandler;
 
 public class CameraFragment extends Fragment {
 
-    private CameraViewModel mViewModel;
     private Button takePhotoButton;
+    private Button saveImageButton;
     private ImageView capturedImageView;
     private Uri imageUri;
     private ImageFileHandler imageFileHandler;
-    private String fileName = "test";
+    private Bitmap capturedBitmap;
 
     public static CameraFragment newInstance() {
         return new CameraFragment();
@@ -51,8 +56,15 @@ public class CameraFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(CameraViewModel.class);
         capturedImageView = getActivity().findViewById(R.id.capturedImage);
+        saveImageButton = getActivity().findViewById(R.id.saveImageButton);
+        saveImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveImageToLibrary();
+            }
+        });
+        saveImageButton.setVisibility(View.INVISIBLE);
         takePhotoButton = getActivity().findViewById(R.id.takePhotoButton);
         takePhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,11 +74,22 @@ public class CameraFragment extends Fragment {
         });
     }
 
-    public void takePhoto() {
+    private void saveImageToLibrary() {
+        ImageFileHandler ifh = new ImageFileHandler(getContext(), Constants.IMAGES_LIBRARY);
+        Random r = new Random();
+        try {
+            ifh.saveImage(capturedBitmap, "captured_" + r.nextInt());
+            Snackbar.make(getView(), "Successfully saved!", Snackbar.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void takePhoto() {
         imageFileHandler = new ImageFileHandler(getContext(), "capturedImages");
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         String auth = getActivity().getApplicationContext().getPackageName() + ".provider";
-        imageUri = FileProvider.getUriForFile(getContext(), auth, imageFileHandler.createFileWithName(fileName));
+        imageUri = FileProvider.getUriForFile(getContext(), auth, imageFileHandler.createFileWithName(Constants.IMAGES_TMP_CAM));
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivityForResult(intent, 100);
@@ -75,20 +98,18 @@ public class CameraFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case 100:
-                    Uri selectedImage = imageUri;
-                    getActivity().getContentResolver().notifyChange(selectedImage, null);
-                    ContentResolver cr = getActivity().getContentResolver();
-                    Bitmap bitmap;
-                    try {
-                        Bitmap bmp = imageFileHandler.getImage(fileName);
-                        capturedImageView.setImageBitmap(bmp);
-                    } catch (Exception e) {
-                        Toast.makeText(getActivity(), "Failed to load", Toast.LENGTH_SHORT)
-                                .show();
-                        Log.e("Camera", e.toString());
-                    }
-                }
+        if (requestCode == 100) {
+            Uri selectedImage = imageUri;
+            getActivity().getContentResolver().notifyChange(selectedImage, null);
+            try {
+                capturedBitmap = imageFileHandler.getImage(Constants.IMAGES_TMP_CAM);
+                capturedImageView.setImageBitmap(capturedBitmap);
+                saveImageButton.setVisibility(View.VISIBLE);
+            } catch (Exception e) {
+                Toast.makeText(getActivity(), "Failed to load", Toast.LENGTH_SHORT)
+                        .show();
+                Log.e("Camera", e.toString());
+            }
+        }
         }
     }

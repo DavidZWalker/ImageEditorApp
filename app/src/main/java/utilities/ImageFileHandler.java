@@ -27,7 +27,7 @@ public class ImageFileHandler {
     public void saveImage(@NonNull Bitmap bmp, String title) throws IOException {
         File file = new File(internalImageStorage, title);
         FileOutputStream fos = new FileOutputStream(file);
-        bmp.compress(Bitmap.CompressFormat.JPEG, Bitmap.DENSITY_NONE, fos);
+        bmp.compress(Bitmap.CompressFormat.PNG, 0, fos);
         fos.close();
     }
 
