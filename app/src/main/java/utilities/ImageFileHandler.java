@@ -44,4 +44,8 @@ public class ImageFileHandler {
     public File getImageFolder() {
         return internalImageStorage;
     }
+
+    public File createFileWithName(String fileName) {
+        return new File(internalImageStorage, fileName);
+    }
 }

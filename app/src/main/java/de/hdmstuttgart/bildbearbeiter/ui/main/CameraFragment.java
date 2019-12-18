@@ -1,5 +1,6 @@
 package de.hdmstuttgart.bildbearbeiter.ui.main;
 
+import androidx.core.content.FileProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.app.Activity;
@@ -26,12 +27,16 @@ import android.widget.Toast;
 import java.io.File;
 
 import de.hdmstuttgart.bildbearbeiter.R;
+import utilities.ImageFileHandler;
 
 public class CameraFragment extends Fragment {
 
     private CameraViewModel mViewModel;
     private Button takePhotoButton;
     private ImageView capturedImageView;
+    private Uri imageUri;
+    private ImageFileHandler imageFileHandler;
+    private String fileName = "test";
 
     public static CameraFragment newInstance() {
         return new CameraFragment();
@@ -57,11 +62,14 @@ public class CameraFragment extends Fragment {
         });
     }
 
-    private Uri imageUri;
-
     public void takePhoto() {
+        imageFileHandler = new ImageFileHandler(getContext(), "capturedImages");
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        getActivity().startActivityForResult(intent, 100);
+        String auth = getActivity().getApplicationContext().getPackageName() + ".provider";
+        imageUri = FileProvider.getUriForFile(getContext(), auth, imageFileHandler.createFileWithName(fileName));
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivityForResult(intent, 100);
     }
 
     @Override
@@ -69,14 +77,13 @@ public class CameraFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case 100:
-                if (resultCode == Activity.RESULT_OK) {
                     Uri selectedImage = imageUri;
                     getActivity().getContentResolver().notifyChange(selectedImage, null);
                     ContentResolver cr = getActivity().getContentResolver();
                     Bitmap bitmap;
                     try {
-                        Toast.makeText(getActivity(), selectedImage.toString(),
-                                Toast.LENGTH_LONG).show();
+                        Bitmap bmp = imageFileHandler.getImage(fileName);
+                        capturedImageView.setImageBitmap(bmp);
                     } catch (Exception e) {
                         Toast.makeText(getActivity(), "Failed to load", Toast.LENGTH_SHORT)
                                 .show();
@@ -85,4 +92,3 @@ public class CameraFragment extends Fragment {
                 }
         }
     }
-}
