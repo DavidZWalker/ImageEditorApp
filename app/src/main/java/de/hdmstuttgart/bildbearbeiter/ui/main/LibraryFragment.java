@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdmstuttgart.bildbearbeiter.R;
+import utilities.Constants;
 import utilities.ImageFileHandler;
 
 public class LibraryFragment extends Fragment {
@@ -43,7 +44,7 @@ public class LibraryFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ImageFileHandler imageFileHandler = new ImageFileHandler(getContext(), "BBImages");
+        ImageFileHandler imageFileHandler = new ImageFileHandler(getContext(), Constants.IMAGES_LIBRARY);
         mViewModel = ViewModelProviders.of(this, new LibraryViewModelFactory(imageFileHandler)).get(LibraryViewModel.class);
 
         // get saved images into a list
@@ -65,13 +66,15 @@ public class LibraryFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        try {
-            List<Bitmap> bmps = mViewModel.getSavedImages();
-            mAdapter.setBitmapList(bmps);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            try {
+                List<Bitmap> bmps = mViewModel.getSavedImages();
+                mAdapter.setBitmapList(bmps);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

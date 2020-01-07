@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 import de.hdmstuttgart.bildbearbeiter.R;
+import utilities.Constants;
 import utilities.ImageFileHandler;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
@@ -43,7 +44,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
                 Intent intent = new Intent(parent.getContext(), FullscreenImageActivity.class);
                 ImageView imageView = (ImageView) v;
                 Bitmap bmp = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
-                ImageFileHandler ifh = new ImageFileHandler(parent.getContext(), "tmp");
+                ImageFileHandler ifh = new ImageFileHandler(parent.getContext(), Constants.IMAGES_TMP_FULLSCREEN);
                 try {
                     ifh.saveImage(bmp, "tmpImage");
                 } catch (IOException e) {
@@ -79,5 +80,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     public void setBitmapList(List<Bitmap> bitmapList) {
         this.bitmapList = bitmapList;
+        notifyDataSetChanged();
     }
 }
