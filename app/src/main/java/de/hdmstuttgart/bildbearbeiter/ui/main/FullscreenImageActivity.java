@@ -7,12 +7,9 @@ import android.widget.ImageView;
 import java.io.FileNotFoundException;
 
 import de.hdmstuttgart.bildbearbeiter.R;
+import utilities.Constants;
 import utilities.ImageFileHandler;
 
-/**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- */
 public class FullscreenImageActivity extends AppCompatActivity {
 
     @Override
@@ -21,7 +18,7 @@ public class FullscreenImageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fullscreen_image);
         ImageView mContentView = findViewById(R.id.fullscreenImage);
 
-        ImageFileHandler ifh = new ImageFileHandler(this, "tmp");
+        ImageFileHandler ifh = new ImageFileHandler(this, Constants.IMAGES_TMP_FULLSCREEN);
         Bitmap bmp = null;
         try {
             bmp = ifh.getImage("tmpImage");
