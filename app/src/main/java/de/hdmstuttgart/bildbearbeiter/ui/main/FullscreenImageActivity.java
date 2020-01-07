@@ -13,6 +13,7 @@ import java.io.FileNotFoundException;
 
 import de.hdmstuttgart.bildbearbeiter.filters.BlueBitmapFilter;
 import de.hdmstuttgart.bildbearbeiter.filters.BrightBitmapFilter;
+import de.hdmstuttgart.bildbearbeiter.filters.GreenBitmapFilter;
 import de.hdmstuttgart.bildbearbeiter.filters.IBitmapFilter;
 import de.hdmstuttgart.bildbearbeiter.R;
 import de.hdmstuttgart.bildbearbeiter.filters.NoBitmapFilter;
@@ -44,6 +45,7 @@ public class FullscreenImageActivity extends AppCompatActivity {
         // ADD NEW FILTERS HERE!!!
         filters.add(new NoBitmapFilter(sourceBitmap));
         filters.add(new BrightBitmapFilter(sourceBitmap));
+        filters.add(new GreenBitmapFilter(sourceBitmap));
         filters.add(new BlueBitmapFilter(sourceBitmap));
     }
 
