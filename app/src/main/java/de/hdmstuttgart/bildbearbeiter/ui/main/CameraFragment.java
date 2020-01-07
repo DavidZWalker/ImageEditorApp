@@ -79,6 +79,7 @@ public class CameraFragment extends Fragment {
         Random r = new Random();
         try {
             ifh.saveImage(capturedBitmap, "captured_" + r.nextInt());
+            saveImageButton.setVisibility(View.GONE);
             Snackbar.make(getView(), "Successfully saved!", Snackbar.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,0 +1,37 @@
+package de.hdmstuttgart.bildbearbeiter.filters;
+
+import android.graphics.Bitmap;
+import android.graphics.Color;
+
+public class BlueBitmapFilter extends BitmapFilterBase {
+
+    public BlueBitmapFilter(Bitmap sourceBitmap) {
+        super(sourceBitmap);
+    }
+
+    @Override
+    public Bitmap applyFilter() {
+        for(int i=0; i<sourceBitmap.getWidth(); i++){
+            for(int j=0; j<sourceBitmap.getHeight(); j++){
+                int p = sourceBitmap.getPixel(i, j);
+                int r = Color.red(p);
+                int g = Color.green(p);
+                int b = Color.blue(p);
+                int alpha = Color.alpha(p);
+
+                r =  0;
+                g =  0;
+                b =  b+150;
+                alpha = 0;
+                resultBitmap.setPixel(i, j, Color.argb(Color.alpha(p), r, g, b));
+            }
+        }
+
+        return resultBitmap;
+    }
+
+    @Override
+    public String getName() {
+        return "Blue";
+    }
+}
