@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.io.FileNotFoundException;
 
@@ -81,17 +83,20 @@ public class FullscreenImageActivity extends AppCompatActivity {
 
     private View createButtonForFilter(final IBitmapFilter filter)
     {
-        ImageView filterButton = (ImageView) LayoutInflater.from(getApplicationContext()).inflate(R.layout.filter_button, null ,false);
+        RelativeLayout filterButtonLayoutRoot = (RelativeLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.filter_button, null ,false);
+        TextView textView = (TextView) filterButtonLayoutRoot.getChildAt(1);
+        final ImageView thumb = (ImageView) filterButtonLayoutRoot.getChildAt(0);
 
-        filterButton.setImageBitmap(filter.applyFilter());
-        filterButton.setOnClickListener(new View.OnClickListener() {
+        textView.setText(filter.getName());
+        thumb.setImageBitmap(filter.applyFilter());
+        filterButtonLayoutRoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bitmap bmp = ((BitmapDrawable)((ImageView)v).getDrawable()).getBitmap();
+                Bitmap bmp = ((BitmapDrawable)thumb.getDrawable()).getBitmap();
                 imageView.setImageBitmap(bmp);
             }
         });
 
-        return filterButton;
+        return filterButtonLayoutRoot;
     }
 }
