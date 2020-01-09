@@ -99,10 +99,40 @@ public class FullscreenImageActivity extends AppCompatActivity {
         filterButtons.addView(filterButtonLayoutRoot);
     }
 
+    public View startAddFilterButton(String name) {
+        RelativeLayout filterButtonLayoutRoot = (RelativeLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.filter_button, null ,false);
+        TextView textView = (TextView) filterButtonLayoutRoot.getChildAt(1);
+        textView.setText(name);
+        filterButtons.addView(filterButtonLayoutRoot);
+        return filterButtonLayoutRoot;
+    }
+
+    public void finishAddFilterButton(View view, Bitmap filteredBitmap, String name) {
+        RelativeLayout filterButtonLayoutRoot = (RelativeLayout) view;
+        TextView textView = (TextView) filterButtonLayoutRoot.getChildAt(1);
+        final ImageView thumb = (ImageView) filterButtonLayoutRoot.getChildAt(0);
+        ProgressBar progressBar = (ProgressBar) filterButtonLayoutRoot.getChildAt(2);
+        progressBar.setVisibility(View.GONE);
+        textView.setText(name);
+        thumb.setImageBitmap(filteredBitmap);
+        filterButtonLayoutRoot.setOnClickListener(v -> {
+            Bitmap bmp = ((BitmapDrawable)thumb.getDrawable()).getBitmap();
+            imageView.setImageBitmap(bmp);
+        });
+    }
+
     private class AddFilterButtonTask extends AsyncTask<IBitmapFilter, Void, Void> {
 
         Bitmap filteredBitmap;
         String filterName;
+
+        View layout;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            layout = startAddFilterButton("tmp");
+        }
 
         @Override
         protected Void doInBackground(IBitmapFilter... filters) {
@@ -114,7 +144,7 @@ public class FullscreenImageActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            addFilteredBitmapToView(filteredBitmap, filterName);
+            finishAddFilterButton(layout, filteredBitmap, filterName);
         }
     }
 }
