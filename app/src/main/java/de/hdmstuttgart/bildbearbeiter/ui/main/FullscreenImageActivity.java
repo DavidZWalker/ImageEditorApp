@@ -2,22 +2,23 @@ package de.hdmstuttgart.bildbearbeiter.ui.main;
 import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.io.FileNotFoundException;
 
+import de.hdmstuttgart.bildbearbeiter.filters.BlackWhiteBitmapFilter;
 import de.hdmstuttgart.bildbearbeiter.filters.BlueBitmapFilter;
-import de.hdmstuttgart.bildbearbeiter.filters.BrightBitmapFilter;
+import de.hdmstuttgart.bildbearbeiter.filters.RedBitmapFilter;
+import de.hdmstuttgart.bildbearbeiter.filters.SepiaBitmapFilter;
 import de.hdmstuttgart.bildbearbeiter.filters.GreenBitmapFilter;
 import de.hdmstuttgart.bildbearbeiter.filters.IBitmapFilter;
 import de.hdmstuttgart.bildbearbeiter.R;
 import de.hdmstuttgart.bildbearbeiter.filters.NoBitmapFilter;
+import de.hdmstuttgart.bildbearbeiter.filters.VignetteBitmapFilter;
 import utilities.Constants;
 import utilities.ImageFileHandler;
 
@@ -45,7 +46,10 @@ public class FullscreenImageActivity extends AppCompatActivity {
     private void initFilterList() {
         // ADD NEW FILTERS HERE!!!
          filters.add(new NoBitmapFilter(sourceBitmap));
-         filters.add(new BrightBitmapFilter(sourceBitmap));
+         filters.add(new BlackWhiteBitmapFilter(sourceBitmap));
+         filters.add(new SepiaBitmapFilter(sourceBitmap));
+         filters.add(new VignetteBitmapFilter(sourceBitmap));
+        filters.add(new RedBitmapFilter(sourceBitmap));
          filters.add(new GreenBitmapFilter(sourceBitmap));
          filters.add(new BlueBitmapFilter(sourceBitmap));
     }
