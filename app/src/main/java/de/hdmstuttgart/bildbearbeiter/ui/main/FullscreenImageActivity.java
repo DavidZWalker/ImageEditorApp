@@ -61,8 +61,7 @@ public class FullscreenImageActivity extends AppCompatActivity {
     private void loadFilterButtons() {
         initFilterList();
         for (final IBitmapFilter f : filters) {
-
-            filterButtons.addView(createButtonForFilter(f));
+            new AddFilterButtonTask().execute(f);
         }
     }
 
@@ -83,33 +82,39 @@ public class FullscreenImageActivity extends AppCompatActivity {
         }
     }
 
-    private View createButtonForFilter(final IBitmapFilter filter)
+    public void addFilteredBitmapToView(Bitmap filteredBitmap, String name)
     {
         RelativeLayout filterButtonLayoutRoot = (RelativeLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.filter_button, null ,false);
         TextView textView = (TextView) filterButtonLayoutRoot.getChildAt(1);
         final ImageView thumb = (ImageView) filterButtonLayoutRoot.getChildAt(0);
         ProgressBar progressBar = (ProgressBar) filterButtonLayoutRoot.getChildAt(2);
 
-        textView.setText(filter.getName());
-        thumb.setImageBitmap(filter.applyFilter());
+        textView.setText(name);
+        thumb.setImageBitmap(filteredBitmap);
         filterButtonLayoutRoot.setOnClickListener(v -> {
             Bitmap bmp = ((BitmapDrawable)thumb.getDrawable()).getBitmap();
             imageView.setImageBitmap(bmp);
         });
 
-        return filterButtonLayoutRoot;
+        filterButtons.addView(filterButtonLayoutRoot);
     }
 
-    private class AddFilterButtonTask extends AsyncTask<Void, Void, Void> {
+    private class AddFilterButtonTask extends AsyncTask<IBitmapFilter, Void, Void> {
+
+        Bitmap filteredBitmap;
+        String filterName;
 
         @Override
-        protected Void doInBackground(Void... voids) {
+        protected Void doInBackground(IBitmapFilter... filters) {
+            filteredBitmap = filters[0].applyFilter();
+            filterName = filters[0].getName();
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            addFilteredBitmapToView(filteredBitmap, filterName);
         }
     }
 }
