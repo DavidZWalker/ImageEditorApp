@@ -2,6 +2,7 @@ package de.hdmstuttgart.bildbearbeiter.ui.main;
 import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,10 +44,10 @@ public class FullscreenImageActivity extends AppCompatActivity {
 
     private void initFilterList() {
         // ADD NEW FILTERS HERE!!!
-        filters.add(new NoBitmapFilter(sourceBitmap));
-        filters.add(new BrightBitmapFilter(sourceBitmap));
-        filters.add(new GreenBitmapFilter(sourceBitmap));
-        filters.add(new BlueBitmapFilter(sourceBitmap));
+         filters.add(new NoBitmapFilter(sourceBitmap));
+         filters.add(new BrightBitmapFilter(sourceBitmap));
+         filters.add(new GreenBitmapFilter(sourceBitmap));
+         filters.add(new BlueBitmapFilter(sourceBitmap));
     }
 
     private void loadFilterButtons() {
@@ -74,14 +75,15 @@ public class FullscreenImageActivity extends AppCompatActivity {
         }
     }
 
-    private Button createButtonForFilter(final IBitmapFilter filter)
+    private View createButtonForFilter(final IBitmapFilter filter)
     {
-        Button filterButton = (Button) LayoutInflater.from(getApplicationContext()).inflate(R.layout.filter_button, null ,false);
-        filterButton.setText(filter.getName());
+        ImageView filterButton = (ImageView) LayoutInflater.from(getApplicationContext()).inflate(R.layout.filter_button, null ,false);
+
+        filterButton.setImageBitmap(filter.applyFilter());
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bitmap bmp = filter.applyFilter();
+                Bitmap bmp = ((BitmapDrawable)((ImageView)v).getDrawable()).getBitmap();
                 imageView.setImageBitmap(bmp);
             }
         });
