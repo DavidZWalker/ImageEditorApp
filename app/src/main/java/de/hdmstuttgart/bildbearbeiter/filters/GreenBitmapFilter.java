@@ -25,6 +25,6 @@ public class GreenBitmapFilter extends BitmapFilterBase {
 
     @Override
     public String getName() {
-        return "Green";
+        return "Green Channel";
     }
 }

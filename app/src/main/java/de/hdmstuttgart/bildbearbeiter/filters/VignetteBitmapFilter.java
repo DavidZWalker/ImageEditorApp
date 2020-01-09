@@ -44,6 +44,6 @@ public class VignetteBitmapFilter extends BitmapFilterBase {
 
     @Override
     public String getName() {
-        return null;
+        return "Vignette";
     }
 }

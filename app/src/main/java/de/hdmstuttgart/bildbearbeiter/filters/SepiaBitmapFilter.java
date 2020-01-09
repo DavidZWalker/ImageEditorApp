@@ -42,6 +42,6 @@ public class SepiaBitmapFilter extends BitmapFilterBase {
 
     @Override
     public String getName() {
-        return "Bright";
+        return "Sepia";
     }
 }

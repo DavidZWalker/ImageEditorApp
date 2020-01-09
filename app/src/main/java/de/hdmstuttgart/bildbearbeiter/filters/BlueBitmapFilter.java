@@ -26,6 +26,6 @@ public class BlueBitmapFilter extends BitmapFilterBase {
 
     @Override
     public String getName() {
-        return "Blue";
+        return "Blue Channel";
     }
 }
