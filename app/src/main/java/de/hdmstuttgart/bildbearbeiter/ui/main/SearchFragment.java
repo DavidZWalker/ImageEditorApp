@@ -3,6 +3,8 @@ package de.hdmstuttgart.bildbearbeiter.ui.main;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,10 @@ import android.widget.EditText;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +40,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import utilities.Constants;
+import utilities.FileIndexer;
+import utilities.ImageFileHandler;
 
 public class SearchFragment extends Fragment {
 
@@ -68,6 +76,7 @@ public class SearchFragment extends Fragment {
             public void onClick(View v) {
                 view.findViewById(R.id.progress_search).setVisibility(View.VISIBLE);
                 searchPicturesOnline();
+
             }
         });
 
@@ -114,23 +123,14 @@ public class SearchFragment extends Fragment {
         call.enqueue(new Callback<SearchResponseResult>() {
             @Override
             public void onResponse(Call<SearchResponseResult> call, Response<SearchResponseResult> response) {
-                //get urls TODO FIX ME bruv
+                //get urls
                 if (response.isSuccessful()) {
                     searchResponseResultList = response.body().getResults();
                 } else {
                     //escape if response is invalid
                     return;
                 }
-
-
-                //puts urls with constants in map
-
-
-                //download bitmap
-
-                //insert into map
-                searchAdapter.notifyDataSetChanged();
-                getActivity().findViewById(R.id.progress_search).setVisibility(View.GONE);
+                handleResponse();
             }
 
             @Override
@@ -138,11 +138,59 @@ public class SearchFragment extends Fragment {
                 getActivity().findViewById(R.id.progress_search).setVisibility(View.GONE);
             }
         });
-        handleResponse();
     }
 
     private void handleResponse() {
-        //TODO: handle response
+        ImageFileHandler imageFileHandler = new ImageFileHandler(getContext(), Constants.IMAGES_LIBRARY);
+        //download all images in regular size
+        searchResponseResultList.forEach(image -> {
+            new DownloadFilesTask().execute();
+        });
+    }
+
+
+    private class DownloadFilesTask extends AsyncTask<URL, Integer, Boolean> {
+        ImageFileHandler imageFileHandler;
+        Bitmap downloadedImage;
+        FileIndexer fileIndexer;
+
+        protected Boolean doInBackground(URL... urls) {
+            //used for saving images locally
+            imageFileHandler = new ImageFileHandler(getContext(), Constants.IMAGES_LIBRARY);
+            fileIndexer = new FileIndexer();
+            //getting urls
+            searchResponseResultList.forEach(image -> {
+                try {
+                    URL url = new URL(image.getUrls().getRegular());
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setDoInput(true);
+                    connection.connect();
+                    InputStream input = connection.getInputStream();
+                    downloadedImage = BitmapFactory.decodeStream(input);
+                } catch (IOException e) {
+                    // Log exception
+                    return;
+                    //todo handle exception
+                }
+                publishProgress();
+
+            });
+            return true;
+
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+            try {
+                imageFileHandler.saveImage(downloadedImage, Integer.valueOf(fileIndexer.getIndex(getContext())).toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            searchAdapter.notifyDataSetChanged();
+            bitmapList.add(downloadedImage);
+        }
+        protected void onPostExecute(Long result) {
+            getActivity().findViewById(R.id.progress_search).setVisibility(View.GONE);
+        }
     }
 
 
