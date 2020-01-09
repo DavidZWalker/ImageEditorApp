@@ -60,9 +60,8 @@ public class FullscreenImageActivity extends AppCompatActivity {
 
     private void loadFilterButtons() {
         initFilterList();
-        for (final IBitmapFilter f : filters) {
-            new AddFilterButtonTask().execute(f);
-        }
+        for (IBitmapFilter f : filters)
+            new ApplyBitmapFilterTask(f).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
@@ -82,21 +81,19 @@ public class FullscreenImageActivity extends AppCompatActivity {
         }
     }
 
-    public View startAddFilterButton(String name) {
+    public View startAddFilterButton(IBitmapFilter filter) {
         RelativeLayout filterButtonLayoutRoot = (RelativeLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.filter_button, null ,false);
         TextView textView = (TextView) filterButtonLayoutRoot.getChildAt(1);
-        textView.setText(name);
         filterButtons.addView(filterButtonLayoutRoot);
+        textView.setText(filter.getName());
         return filterButtonLayoutRoot;
     }
 
-    public void finishAddFilterButton(View view, Bitmap filteredBitmap, String name) {
+    public void finishAddFilterButton(View view, Bitmap filteredBitmap) {
         RelativeLayout filterButtonLayoutRoot = (RelativeLayout) view;
-        TextView textView = (TextView) filterButtonLayoutRoot.getChildAt(1);
         final ImageView thumb = (ImageView) filterButtonLayoutRoot.getChildAt(0);
         ProgressBar progressBar = (ProgressBar) filterButtonLayoutRoot.getChildAt(2);
         progressBar.setVisibility(View.GONE);
-        textView.setText(name);
         thumb.setImageBitmap(filteredBitmap);
         filterButtonLayoutRoot.setOnClickListener(v -> {
             Bitmap bmp = ((BitmapDrawable)thumb.getDrawable()).getBitmap();
@@ -104,30 +101,34 @@ public class FullscreenImageActivity extends AppCompatActivity {
         });
     }
 
-    private class AddFilterButtonTask extends AsyncTask<IBitmapFilter, Void, Void> {
+    private class ApplyBitmapFilterTask extends AsyncTask<Void, Void, Void> {
 
         Bitmap filteredBitmap;
-        String filterName;
-
+        IBitmapFilter filter;
         View layout;
+
+        public ApplyBitmapFilterTask(IBitmapFilter filter)
+        {
+            super();
+            this.filter = filter;
+        }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            layout = startAddFilterButton("tmp");
+            layout = startAddFilterButton(filter);
         }
 
         @Override
-        protected Void doInBackground(IBitmapFilter... filters) {
-            filteredBitmap = filters[0].applyFilter();
-            filterName = filters[0].getName();
+        protected Void doInBackground(Void... voids) {
+            filteredBitmap = filter.applyFilter();
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            finishAddFilterButton(layout, filteredBitmap, filterName);
+            finishAddFilterButton(layout, filteredBitmap);
         }
     }
 }
