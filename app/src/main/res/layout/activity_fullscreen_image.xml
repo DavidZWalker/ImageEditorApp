@@ -5,16 +5,26 @@
     android:layout_height="match_parent"
     android:background="#000"
     tools:context=".ui.main.FullscreenImageActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/rootView">
 
     <ImageView
         android:id="@+id/fullscreenImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:maxHeight="400dp"
+        android:adjustViewBounds="true"/>
+
+    <Button
+        android:id="@+id/btn_saveImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save"
+        android:onClick="saveImageToLibrary"/>
 
     <HorizontalScrollView
         android:layout_width="wrap_content"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
         <LinearLayout
             android:id="@+id/filterButtons"
             android:layout_width="wrap_content"

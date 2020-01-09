@@ -6,11 +6,14 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.FileNotFoundException;
 
@@ -26,15 +29,18 @@ import de.hdmstuttgart.bildbearbeiter.filters.VignetteBitmapFilter;
 import utilities.Constants;
 import utilities.ImageFileHandler;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class FullscreenImageActivity extends AppCompatActivity {
 
     ImageView imageView;
     LinearLayout filterButtons;
-    List<IBitmapFilter> filters = new ArrayList<>();
+    Button saveButton;
     Bitmap sourceBitmap;
+    List<IBitmapFilter> filters = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +48,7 @@ public class FullscreenImageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fullscreen_image);
         imageView = findViewById(R.id.fullscreenImage);
         filterButtons = findViewById(R.id.filterButtons);
+        saveButton = findViewById(R.id.btn_saveImage);
 
         loadImage();
         loadFilterButtons();
@@ -67,6 +74,18 @@ public class FullscreenImageActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+    }
+
+    public void saveImageToLibrary(View v) {
+        ImageFileHandler ifh = new ImageFileHandler(this.getApplicationContext(), Constants.IMAGES_LIBRARY);
+        Random r = new Random();
+        try {
+            Bitmap imageToSave = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+            ifh.saveImage(imageToSave, "filtered_" + r.nextInt());
+            Snackbar.make(findViewById(R.id.rootView), "Successfully saved!", Snackbar.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadImage()
