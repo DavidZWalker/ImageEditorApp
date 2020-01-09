@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.hdmstuttgart.bildbearbeiter.APIInterface;
-import de.hdmstuttgart.bildbearbeiter.Result;
+import de.hdmstuttgart.bildbearbeiter.SearchResponseResult;
 import de.hdmstuttgart.bildbearbeiter.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,7 +44,7 @@ public class SearchFragment extends Fragment {
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private ImageAdapter searchAdapter;
-    private List<Result> resultList;
+    private List<SearchResponseResult.Photo> searchResponseResultList;
     private List<Bitmap> bitmapList;
     private Map<String, String> urls;
     private EditText editText;
@@ -94,7 +95,7 @@ public class SearchFragment extends Fragment {
     }
 
     private void searchPicturesOnline() {
-        resultList = new ArrayList<>();
+        searchResponseResultList = new ArrayList<>();
 
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -111,12 +112,18 @@ public class SearchFragment extends Fragment {
         editText.setText("");
 
 
-        Call<SearchResponse> call = unsplashAPI.getSearchResults(query, Constants.UNSPLASH_PAGE, Constants.UNSPLASH_PER_PAGE, Constants.UNSPLASH_ACCESS_TOKEN);
-        call.enqueue(new Callback<SearchResponse>() {
+        Call<SearchResponseResult> call = unsplashAPI.getSearchResults(query, Constants.UNSPLASH_PAGE, Constants.UNSPLASH_PER_PAGE, Constants.UNSPLASH_ACCESS_TOKEN);
+        call.enqueue(new Callback<SearchResponseResult>() {
             @Override
-            public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+            public void onResponse(Call<SearchResponseResult> call, Response<SearchResponseResult> response) {
                 //get urls TODO FIX ME bruv
-                resultList = response.body().result;
+                if (response.isSuccessful()) {
+                    searchResponseResultList = response.body().getResults();
+                } else {
+                    //escape if response is invalid
+                    return;
+                }
+
 
                 //puts urls with constants in map
 
@@ -129,12 +136,15 @@ public class SearchFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<SearchResponse> call, Throwable t) {
+            public void onFailure(Call<SearchResponseResult> call, Throwable t) {
                 getActivity().findViewById(R.id.progress_search).setVisibility(View.GONE);
             }
         });
+        handleResponse();
+    }
 
-
+    private void handleResponse() {
+        //TODO: handle response
     }
 
 

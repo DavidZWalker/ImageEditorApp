@@ -8,8 +8,8 @@ import utilities.SearchResponse;
 
 public interface APIInterface {
     @GET("photos/random")
-    Call<Result> getRandomPicture(@Query("client_id") String apiKey);
+    Call<SearchResponseResult> getRandomPicture(@Query("client_id") String apiKey);
 
     @GET("search/photos")
-    Call<SearchResponse> getSearchResults(@Query("query") String query, @Query("page") String page, @Query("per_page") String per_page, @Header("Authorization") String auth);
+    Call<SearchResponseResult> getSearchResults(@Query("query") String query, @Query("page") String page, @Query("per_page") String per_page, @Header("Authorization") String auth);
 }
