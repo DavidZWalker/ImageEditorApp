@@ -82,23 +82,6 @@ public class FullscreenImageActivity extends AppCompatActivity {
         }
     }
 
-    public void addFilteredBitmapToView(Bitmap filteredBitmap, String name)
-    {
-        RelativeLayout filterButtonLayoutRoot = (RelativeLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.filter_button, null ,false);
-        TextView textView = (TextView) filterButtonLayoutRoot.getChildAt(1);
-        final ImageView thumb = (ImageView) filterButtonLayoutRoot.getChildAt(0);
-        ProgressBar progressBar = (ProgressBar) filterButtonLayoutRoot.getChildAt(2);
-
-        textView.setText(name);
-        thumb.setImageBitmap(filteredBitmap);
-        filterButtonLayoutRoot.setOnClickListener(v -> {
-            Bitmap bmp = ((BitmapDrawable)thumb.getDrawable()).getBitmap();
-            imageView.setImageBitmap(bmp);
-        });
-
-        filterButtons.addView(filterButtonLayoutRoot);
-    }
-
     public View startAddFilterButton(String name) {
         RelativeLayout filterButtonLayoutRoot = (RelativeLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.filter_button, null ,false);
         TextView textView = (TextView) filterButtonLayoutRoot.getChildAt(1);
