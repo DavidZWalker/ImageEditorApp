@@ -2,11 +2,13 @@ package de.hdmstuttgart.bildbearbeiter.ui.main;
 import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -51,15 +53,15 @@ public class FullscreenImageActivity extends AppCompatActivity {
          filters.add(new BlackWhiteBitmapFilter(sourceBitmap));
          filters.add(new SepiaBitmapFilter(sourceBitmap));
          filters.add(new VignetteBitmapFilter(sourceBitmap));
-        filters.add(new RedBitmapFilter(sourceBitmap));
+         filters.add(new RedBitmapFilter(sourceBitmap));
          filters.add(new GreenBitmapFilter(sourceBitmap));
          filters.add(new BlueBitmapFilter(sourceBitmap));
     }
 
     private void loadFilterButtons() {
         initFilterList();
-
         for (final IBitmapFilter f : filters) {
+
             filterButtons.addView(createButtonForFilter(f));
         }
     }
@@ -86,17 +88,28 @@ public class FullscreenImageActivity extends AppCompatActivity {
         RelativeLayout filterButtonLayoutRoot = (RelativeLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.filter_button, null ,false);
         TextView textView = (TextView) filterButtonLayoutRoot.getChildAt(1);
         final ImageView thumb = (ImageView) filterButtonLayoutRoot.getChildAt(0);
+        ProgressBar progressBar = (ProgressBar) filterButtonLayoutRoot.getChildAt(2);
 
         textView.setText(filter.getName());
         thumb.setImageBitmap(filter.applyFilter());
-        filterButtonLayoutRoot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bitmap bmp = ((BitmapDrawable)thumb.getDrawable()).getBitmap();
-                imageView.setImageBitmap(bmp);
-            }
+        filterButtonLayoutRoot.setOnClickListener(v -> {
+            Bitmap bmp = ((BitmapDrawable)thumb.getDrawable()).getBitmap();
+            imageView.setImageBitmap(bmp);
         });
 
         return filterButtonLayoutRoot;
+    }
+
+    private class AddFilterButtonTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
     }
 }
