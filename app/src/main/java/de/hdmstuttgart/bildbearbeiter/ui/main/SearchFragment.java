@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import de.hdmstuttgart.bildbearbeiter.APIInterface;
 import de.hdmstuttgart.bildbearbeiter.SearchResponseResult;
@@ -52,9 +53,8 @@ public class SearchFragment extends Fragment {
     private ImageAdapter searchAdapter;
     private List<SearchResponseResult.Photo> searchResponseResultList;
     private List<Bitmap> bitmapList;
-    private Map<String, String> urls;
+
     private EditText editText;
-    private List<String> urlStrings;
 
 
     public static SearchFragment newInstance() {
@@ -64,9 +64,9 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        urls = new HashMap<>();
+
         bitmapList = new ArrayList<>();
-        urlStrings = new ArrayList<>();
+
         //inflate view to work with it
         final View view = inflater.inflate(R.layout.search_fragment, container, false);
         //setting onClick on SearchButton
@@ -74,8 +74,10 @@ public class SearchFragment extends Fragment {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                bitmapList.clear();
                 view.findViewById(R.id.progress_search).setVisibility(View.VISIBLE);
                 searchPicturesOnline();
+
 
             }
         });
@@ -114,7 +116,7 @@ public class SearchFragment extends Fragment {
         APIInterface unsplashAPI = retrofit.create(APIInterface.class);
 
         //get Search String from User
-        editText = getActivity().findViewById(R.id.editTextSearchPictures);
+        editText = Objects.requireNonNull(getActivity()).findViewById(R.id.editTextSearchPictures);
         String query = editText.getText().toString();
         editText.setText("");
 
@@ -135,7 +137,7 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void onFailure(Call<SearchResponseResult> call, Throwable t) {
-                getActivity().findViewById(R.id.progress_search).setVisibility(View.GONE);
+                Objects.requireNonNull(getActivity()).findViewById(R.id.progress_search).setVisibility(View.GONE);
             }
         });
     }
@@ -143,9 +145,7 @@ public class SearchFragment extends Fragment {
     private void handleResponse() {
         ImageFileHandler imageFileHandler = new ImageFileHandler(getContext(), Constants.IMAGES_LIBRARY);
         //download all images in regular size
-        searchResponseResultList.forEach(image -> {
-            new DownloadFilesTask().execute();
-        });
+        new DownloadFilesTask().execute();
     }
 
 
@@ -180,17 +180,16 @@ public class SearchFragment extends Fragment {
         }
 
         protected void onProgressUpdate(Integer... progress) {
-            try {
-                imageFileHandler.saveImage(downloadedImage, Integer.valueOf(fileIndexer.getIndex(getContext())).toString());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            searchAdapter.notifyDataSetChanged();
             bitmapList.add(downloadedImage);
+            searchAdapter.notifyDataSetChanged();
         }
-        protected void onPostExecute(Long result) {
-            getActivity().findViewById(R.id.progress_search).setVisibility(View.GONE);
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            getView().findViewById(R.id.progress_search).setVisibility(View.GONE);
+
         }
+
     }
 
 
