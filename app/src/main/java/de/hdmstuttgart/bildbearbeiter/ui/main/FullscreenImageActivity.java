@@ -1,5 +1,6 @@
 package de.hdmstuttgart.bildbearbeiter.ui.main;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
@@ -15,60 +16,28 @@ import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import java.io.FileNotFoundException;
-
-import de.hdmstuttgart.bildbearbeiter.filters.BlackWhiteBitmapFilter;
-import de.hdmstuttgart.bildbearbeiter.filters.BlueBitmapFilter;
-import de.hdmstuttgart.bildbearbeiter.filters.RedBitmapFilter;
-import de.hdmstuttgart.bildbearbeiter.filters.SepiaBitmapFilter;
-import de.hdmstuttgart.bildbearbeiter.filters.GreenBitmapFilter;
 import de.hdmstuttgart.bildbearbeiter.filters.IBitmapFilter;
 import de.hdmstuttgart.bildbearbeiter.R;
-import de.hdmstuttgart.bildbearbeiter.filters.NoBitmapFilter;
-import de.hdmstuttgart.bildbearbeiter.filters.VignetteBitmapFilter;
-import utilities.Constants;
-import utilities.ImageFileHandler;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class FullscreenImageActivity extends AppCompatActivity {
 
     ImageView imageView;
     LinearLayout filterButtons;
     Button saveButton;
-    Bitmap sourceBitmap;
-    List<IBitmapFilter> filters = new ArrayList<>();
+    FullscreenImageViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen_image);
+        viewModel = new FullscreenImageViewModel(getFilesDir());
+
         imageView = findViewById(R.id.fullscreenImage);
         filterButtons = findViewById(R.id.filterButtons);
         saveButton = findViewById(R.id.btn_saveImage);
 
-        loadImage();
-        loadFilterButtons();
-    }
-
-    private void initFilterList() {
-        // ADD NEW FILTERS HERE!!!
-         filters.add(new NoBitmapFilter(sourceBitmap));
-         filters.add(new BlackWhiteBitmapFilter(sourceBitmap));
-         filters.add(new SepiaBitmapFilter(sourceBitmap));
-         filters.add(new VignetteBitmapFilter(sourceBitmap));
-         filters.add(new RedBitmapFilter(sourceBitmap));
-         filters.add(new GreenBitmapFilter(sourceBitmap));
-         filters.add(new BlueBitmapFilter(sourceBitmap));
-    }
-
-    private void loadFilterButtons() {
-        initFilterList();
-        for (IBitmapFilter f : filters)
-            new ApplyBitmapFilterTask(f).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        imageView.setImageBitmap(viewModel.getSourceImage());
+        addFilterButtonsToView();
     }
 
     @Override
@@ -77,38 +46,29 @@ public class FullscreenImageActivity extends AppCompatActivity {
     }
 
     public void saveImageToLibrary(View v) {
-        ImageFileHandler ifh = new ImageFileHandler(this.getApplicationContext(), Constants.IMAGES_LIBRARY);
-        Random r = new Random();
-        try {
-            Bitmap imageToSave = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
-            ifh.saveImage(imageToSave, "filtered_" + r.nextInt());
-            Snackbar.make(findViewById(R.id.rootView), "Successfully saved!", Snackbar.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Bitmap imageToSave = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+        boolean saveResult = viewModel.saveImageToLibrary(imageToSave);
+        Snackbar.make(findViewById(R.id.rootView),
+                saveResult ? "Image saved to library!" : "Failed to save image.",
+                Snackbar.LENGTH_SHORT).show();
     }
 
-    private void loadImage()
-    {
-        try {
-            ImageFileHandler ifh = new ImageFileHandler(this, Constants.IMAGES_TMP_FULLSCREEN);
-            Bitmap bmp = ifh.getImage("tmpImage");
-            imageView.setImageBitmap(bmp);
-            sourceBitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    private void addFilterButtonsToView() {
+        for (IBitmapFilter f : viewModel.getAvailableFilters())
+            new AddFilterButtonToView(f).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    public View startAddFilterButton(IBitmapFilter filter) {
+    private View startAddFilterButton(IBitmapFilter filter) {
         RelativeLayout filterButtonLayoutRoot = (RelativeLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.filter_button, null ,false);
+        ImageView thumb = (ImageView) filterButtonLayoutRoot.getChildAt(0);
         TextView textView = (TextView) filterButtonLayoutRoot.getChildAt(1);
         filterButtons.addView(filterButtonLayoutRoot);
+        thumb.setImageBitmap(viewModel.getTempBlackBitmap());
         textView.setText(filter.getName());
         return filterButtonLayoutRoot;
     }
 
-    public void finishAddFilterButton(View view, Bitmap filteredBitmap) {
+    private void finishAddFilterButton(View view, Bitmap filteredBitmap) {
         RelativeLayout filterButtonLayoutRoot = (RelativeLayout) view;
         final ImageView thumb = (ImageView) filterButtonLayoutRoot.getChildAt(0);
         ProgressBar progressBar = (ProgressBar) filterButtonLayoutRoot.getChildAt(2);
@@ -120,13 +80,13 @@ public class FullscreenImageActivity extends AppCompatActivity {
         });
     }
 
-    private class ApplyBitmapFilterTask extends AsyncTask<Void, Void, Void> {
+    private class AddFilterButtonToView extends AsyncTask<Void, Void, Void> {
 
         Bitmap filteredBitmap;
         IBitmapFilter filter;
         View layout;
 
-        public ApplyBitmapFilterTask(IBitmapFilter filter)
+        public AddFilterButtonToView(IBitmapFilter filter)
         {
             super();
             this.filter = filter;

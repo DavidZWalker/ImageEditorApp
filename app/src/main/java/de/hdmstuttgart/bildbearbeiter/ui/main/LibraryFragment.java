@@ -44,7 +44,7 @@ public class LibraryFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ImageFileHandler imageFileHandler = new ImageFileHandler(getContext(), Constants.IMAGES_LIBRARY);
+        ImageFileHandler imageFileHandler = new ImageFileHandler(getContext().getFilesDir(), Constants.IMAGES_LIBRARY);
         mViewModel = ViewModelProviders.of(this, new LibraryViewModelFactory(imageFileHandler)).get(LibraryViewModel.class);
 
         // get saved images into a list

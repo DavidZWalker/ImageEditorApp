@@ -43,10 +43,6 @@ public class CameraFragment extends Fragment {
     private ImageFileHandler imageFileHandler;
     private Bitmap capturedBitmap;
 
-    public static CameraFragment newInstance() {
-        return new CameraFragment();
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -58,24 +54,14 @@ public class CameraFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         capturedImageView = getActivity().findViewById(R.id.capturedImage);
         saveImageButton = getActivity().findViewById(R.id.saveImageButton);
-        saveImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveImageToLibrary();
-            }
-        });
+        saveImageButton.setOnClickListener(v -> saveImageToLibrary());
         saveImageButton.setVisibility(View.INVISIBLE);
         takePhotoButton = getActivity().findViewById(R.id.takePhotoButton);
-        takePhotoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                takePhoto();
-            }
-        });
+        takePhotoButton.setOnClickListener(v -> takePhoto());
     }
 
     private void saveImageToLibrary() {
-        ImageFileHandler ifh = new ImageFileHandler(getContext(), Constants.IMAGES_LIBRARY);
+        ImageFileHandler ifh = new ImageFileHandler(getContext().getFilesDir(), Constants.IMAGES_LIBRARY);
         Random r = new Random();
         try {
             ifh.saveImage(capturedBitmap, "captured_" + r.nextInt());
@@ -87,7 +73,7 @@ public class CameraFragment extends Fragment {
     }
 
     private void takePhoto() {
-        imageFileHandler = new ImageFileHandler(getContext(), "capturedImages");
+        imageFileHandler = new ImageFileHandler(getContext().getFilesDir(), "capturedImages");
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         String auth = getActivity().getApplicationContext().getPackageName() + ".provider";
         imageUri = FileProvider.getUriForFile(getContext(), auth, imageFileHandler.createFileWithName(Constants.IMAGES_TMP_CAM));

@@ -143,7 +143,7 @@ public class SearchFragment extends Fragment {
     }
 
     private void handleResponse() {
-        ImageFileHandler imageFileHandler = new ImageFileHandler(getContext(), Constants.IMAGES_LIBRARY);
+        ImageFileHandler imageFileHandler = new ImageFileHandler(getContext().getFilesDir(), Constants.IMAGES_LIBRARY);
         //download all images in regular size
         new DownloadFilesTask().execute();
     }
@@ -156,7 +156,7 @@ public class SearchFragment extends Fragment {
 
         protected Boolean doInBackground(URL... urls) {
             //used for saving images locally
-            imageFileHandler = new ImageFileHandler(getContext(), Constants.IMAGES_LIBRARY);
+            imageFileHandler = new ImageFileHandler(getContext().getFilesDir(), Constants.IMAGES_LIBRARY);
             fileIndexer = new FileIndexer();
             //getting urls
             searchResponseResultList.forEach(image -> {

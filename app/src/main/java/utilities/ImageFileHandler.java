@@ -14,13 +14,11 @@ import java.io.IOException;
 
 public class ImageFileHandler {
 
-    private Context applicationContext;
     private File internalImageStorage;
 
-    public ImageFileHandler(Context context, String imageFolder)
+    public ImageFileHandler(File rootDir, String imageFolder)
     {
-        applicationContext = context;
-        internalImageStorage = new File(applicationContext.getFilesDir(), imageFolder);
+        internalImageStorage = new File(rootDir, imageFolder);
         if (!internalImageStorage.exists()) internalImageStorage.mkdirs();
     }
 
@@ -35,10 +33,6 @@ public class ImageFileHandler {
             File imageFile = new File(internalImageStorage, imgName);
             FileInputStream fis = new FileInputStream(imageFile);
             return BitmapFactory.decodeStream(fis);
-    }
-
-    public Bitmap getBitmapFromResource(int resId) {
-        return BitmapFactory.decodeResource(applicationContext.getResources(), resId);
     }
 
     public File getImageFolder() {
