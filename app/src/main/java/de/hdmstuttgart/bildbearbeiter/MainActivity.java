@@ -19,6 +19,6 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
-        viewPager.post(() -> viewPager.setCurrentItem(1));
+        viewPager.post(() -> viewPager.setCurrentItem(Constants.LIBRARY_PAGE));
     }
 }
