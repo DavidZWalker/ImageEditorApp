@@ -22,8 +22,9 @@ import de.hdmstuttgart.bildbearbeiter.filters.NoBitmapFilter;
 import de.hdmstuttgart.bildbearbeiter.filters.RedBitmapFilter;
 import de.hdmstuttgart.bildbearbeiter.filters.SepiaBitmapFilter;
 import de.hdmstuttgart.bildbearbeiter.filters.VignetteBitmapFilter;
-import utilities.Constants;
 import utilities.ImageFileHandler;
+import utilities.ImageLibraryFileHandler;
+import utilities.TempImageFileHandler;
 
 public class FullscreenImageViewModel extends ViewModel {
     private Bitmap sourceImage;
@@ -67,28 +68,15 @@ public class FullscreenImageViewModel extends ViewModel {
 
     public boolean saveImageToLibrary(Bitmap imageToSave)
     {
-        try {
-            ImageFileHandler ifh = new ImageFileHandler(rootDir, Constants.IMAGES_LIBRARY);
-            Random r = new Random();
-            ifh.saveImage(imageToSave, "filtered_" + r.nextInt());
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
+        ImageFileHandler ifh = new ImageLibraryFileHandler(rootDir);
+        Random r = new Random();
+        return ifh.saveImage(imageToSave, "filtered_" + r.nextInt());
     }
 
     private Bitmap loadSourceImageFromFile()
     {
-        Bitmap returnImage = null;
-        try {
-            ImageFileHandler ifh = new ImageFileHandler(rootDir, Constants.IMAGES_TMP_FULLSCREEN);
-            returnImage = ifh.getImage("tmpImage");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return returnImage;
+        ImageFileHandler ifh = new TempImageFileHandler(rootDir);
+        return ifh.getImage("tmpImage");
     }
 
     private void initAvailableFilters()

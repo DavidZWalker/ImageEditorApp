@@ -1,45 +1,56 @@
 package utilities;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import androidx.annotation.NonNull;
-
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
-public class ImageFileHandler {
+public abstract class ImageFileHandler {
 
-    private File internalImageStorage;
+    private File applicationFilesDir;
+    private File imageDir;
 
-    public ImageFileHandler(File rootDir, String imageFolder)
+    protected ImageFileHandler(File applicationFilesDir, File imageDir) {
+        this.applicationFilesDir = applicationFilesDir;
+        this.imageDir = imageDir;
+        if (!imageDir.exists()) imageDir.mkdirs();
+    }
+
+    public final boolean saveImage(Bitmap imageToSave, String fileName)
     {
-        internalImageStorage = new File(rootDir, imageFolder);
-        if (!internalImageStorage.exists()) internalImageStorage.mkdirs();
+        try {
+            File file = new File(imageDir, fileName);
+            FileOutputStream fos = new FileOutputStream(file);
+            imageToSave.compress(Bitmap.CompressFormat.PNG, 0, fos);
+            fos.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    public void saveImage(@NonNull Bitmap bmp, String title) throws IOException {
-        File file = new File(internalImageStorage, title);
-        FileOutputStream fos = new FileOutputStream(file);
-        bmp.compress(Bitmap.CompressFormat.PNG, 0, fos);
-        fos.close();
-    }
-
-    public Bitmap getImage(String imgName) throws FileNotFoundException {
-            File imageFile = new File(internalImageStorage, imgName);
+    public final Bitmap getImage(String imgName) {
+        try {
+            File imageFile = new File(imageDir, imgName);
             FileInputStream fis = new FileInputStream(imageFile);
-            return BitmapFactory.decodeStream(fis);
+            Bitmap decodedBitmap = BitmapFactory.decodeStream(fis);
+            fis.close();
+            return decodedBitmap;
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
     public File getImageFolder() {
-        return internalImageStorage;
+        return imageDir;
     }
 
     public File createFileWithName(String fileName) {
-        return new File(internalImageStorage, fileName);
+        return new File(imageDir, fileName);
     }
 }

@@ -24,6 +24,7 @@ import java.util.List;
 import de.hdmstuttgart.bildbearbeiter.R;
 import utilities.Constants;
 import utilities.ImageFileHandler;
+import utilities.ImageLibraryFileHandler;
 
 public class LibraryFragment extends Fragment {
 
@@ -44,7 +45,7 @@ public class LibraryFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ImageFileHandler imageFileHandler = new ImageFileHandler(getContext().getFilesDir(), Constants.IMAGES_LIBRARY);
+        ImageFileHandler imageFileHandler = new ImageLibraryFileHandler(getContext().getFilesDir());
         mViewModel = ViewModelProviders.of(this, new LibraryViewModelFactory(imageFileHandler)).get(LibraryViewModel.class);
 
         // get saved images into a list
