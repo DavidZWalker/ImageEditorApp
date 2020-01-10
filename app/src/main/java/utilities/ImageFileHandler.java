@@ -9,11 +9,9 @@ import java.io.FileOutputStream;
 
 public abstract class ImageFileHandler {
 
-    private File applicationFilesDir;
     private File imageDir;
 
-    protected ImageFileHandler(File applicationFilesDir, File imageDir) {
-        this.applicationFilesDir = applicationFilesDir;
+    protected ImageFileHandler(File imageDir) {
         this.imageDir = imageDir;
         if (!imageDir.exists()) imageDir.mkdirs();
     }

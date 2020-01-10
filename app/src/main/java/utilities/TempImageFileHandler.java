@@ -6,7 +6,6 @@ public class TempImageFileHandler extends ImageFileHandler {
 
     public TempImageFileHandler(File applicationFilesDir) {
         super(
-                applicationFilesDir,
                 new File(applicationFilesDir, "tmp")
         );
     }
