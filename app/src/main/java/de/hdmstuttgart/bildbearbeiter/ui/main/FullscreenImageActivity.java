@@ -78,7 +78,6 @@ public class FullscreenImageActivity extends AppCompatActivity {
         filterButtons.addView(filterButtonLayoutRoot);
         thumb.setImageBitmap(viewModel.getTempBlackBitmap());
         textView.setText(filter.getName());
-        if (filterButtons.getChildCount() == 1) selectFilter(filterButtonLayoutRoot);
         return filterButtonLayoutRoot;
     }
 
@@ -89,6 +88,8 @@ public class FullscreenImageActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
         thumb.setImageBitmap(filteredBitmap);
         filterButtonLayoutRoot.setOnClickListener(this::selectFilter);
+        if (selectedFilterView == null)
+            selectFilter(filterButtons.getChildAt(0));
     }
 
     private void selectFilter(View newSelection) {
