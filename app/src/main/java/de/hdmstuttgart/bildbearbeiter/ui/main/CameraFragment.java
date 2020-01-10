@@ -23,7 +23,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import de.hdmstuttgart.bildbearbeiter.R;
 import utilities.ImageFileHandler;
-import utilities.ImageLibraryFileHandler;
+import utilities.LibraryImageFileHandler;
 import utilities.TempImageFileHandler;
 
 public class CameraFragment extends Fragment {
@@ -45,7 +45,7 @@ public class CameraFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         viewModel = new CameraViewModel(
                 new TempImageFileHandler(getContext().getFilesDir()),
-                new ImageLibraryFileHandler(getContext().getFilesDir())
+                new LibraryImageFileHandler(getContext().getFilesDir())
         );
         capturedImageView = getActivity().findViewById(R.id.capturedImage);
         saveImageButton = getActivity().findViewById(R.id.saveImageButton);

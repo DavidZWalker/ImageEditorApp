@@ -27,9 +27,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import de.hdmstuttgart.bildbearbeiter.APIInterface;
@@ -43,7 +41,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import utilities.Constants;
 import utilities.FileIndexer;
 import utilities.ImageFileHandler;
-import utilities.ImageLibraryFileHandler;
+import utilities.LibraryImageFileHandler;
 
 public class SearchFragment extends Fragment {
 
@@ -156,7 +154,7 @@ public class SearchFragment extends Fragment {
 
         protected Boolean doInBackground(URL... urls) {
             //used for saving images locally
-            imageFileHandler = new ImageLibraryFileHandler(getContext().getFilesDir());
+            imageFileHandler = new LibraryImageFileHandler(getContext().getFilesDir());
             fileIndexer = new FileIndexer();
             //getting urls
             searchResponseResultList.forEach(image -> {

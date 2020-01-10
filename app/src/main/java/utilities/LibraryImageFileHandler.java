@@ -4,9 +4,9 @@ import android.graphics.Bitmap;
 
 import java.io.File;
 
-public class ImageLibraryFileHandler extends ImageFileHandler {
+public class LibraryImageFileHandler extends ImageFileHandler {
 
-    public ImageLibraryFileHandler(File applicationFilesDir) {
+    public LibraryImageFileHandler(File applicationFilesDir) {
         super(
                 applicationFilesDir,
                 new File(applicationFilesDir, "BBImages")

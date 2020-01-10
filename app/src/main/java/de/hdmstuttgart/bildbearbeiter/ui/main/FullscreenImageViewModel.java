@@ -8,8 +8,6 @@ import android.graphics.Paint;
 import androidx.lifecycle.ViewModel;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -23,7 +21,7 @@ import de.hdmstuttgart.bildbearbeiter.filters.RedBitmapFilter;
 import de.hdmstuttgart.bildbearbeiter.filters.SepiaBitmapFilter;
 import de.hdmstuttgart.bildbearbeiter.filters.VignetteBitmapFilter;
 import utilities.ImageFileHandler;
-import utilities.ImageLibraryFileHandler;
+import utilities.LibraryImageFileHandler;
 import utilities.TempImageFileHandler;
 
 public class FullscreenImageViewModel extends ViewModel {
@@ -68,7 +66,7 @@ public class FullscreenImageViewModel extends ViewModel {
 
     public boolean saveImageToLibrary(Bitmap imageToSave)
     {
-        ImageFileHandler ifh = new ImageLibraryFileHandler(rootDir);
+        ImageFileHandler ifh = new LibraryImageFileHandler(rootDir);
         Random r = new Random();
         return ifh.saveImage(imageToSave, "filtered_" + r.nextInt());
     }
