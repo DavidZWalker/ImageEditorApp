@@ -21,7 +21,7 @@
 
     <ProgressBar
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:padding="30dp"/>
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
 
 </RelativeLayout>

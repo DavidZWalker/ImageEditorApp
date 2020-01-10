@@ -3,6 +3,8 @@ package de.hdmstuttgart.bildbearbeiter.filters;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 
+import androidx.core.math.MathUtils;
+
 import java.util.stream.IntStream;
 
 public class BlackWhiteBitmapFilter extends BitmapFilterBase {
@@ -13,7 +15,7 @@ public class BlackWhiteBitmapFilter extends BitmapFilterBase {
 
     @Override
     public Bitmap applyFilter() {
-        double contrast = Math.pow(1.5, 2);
+        double contrast = 2;
 
         IntStream.range(0, sourceBitmap.getWidth())
                 .parallel()
@@ -22,35 +24,21 @@ public class BlackWhiteBitmapFilter extends BitmapFilterBase {
                         .forEach(y -> {
                             // get pixel color
                             int pixel = sourceBitmap.getPixel(x, y);
-                            int A = Color.alpha(pixel);
+
                             // apply filter contrast for every channel R, G, B
-                            int R = Color.red(pixel);
-                            R = (int) (((((R / 255.0) - 0.5) * contrast) + 0.5) * 255.0);
-                            if (R < 0) {
-                                R = 0;
-                            } else if (R > 255) {
-                                R = 255;
-                            }
+                            int r = Color.red(pixel);
+                            r = (int) MathUtils.clamp(((((r / 255.0) - 0.5) * contrast) + 0.5) * 255.0, 0, 255);
 
-                            int G = Color.red(pixel);
-                            G = (int) (((((G / 255.0) - 0.5) * contrast) + 0.5) * 255.0);
-                            if (G < 0) {
-                                G = 0;
-                            } else if (G > 255) {
-                                G = 255;
-                            }
+                            int g = Color.red(pixel);
+                            g = (int) MathUtils.clamp(((((g / 255.0) - 0.5) * contrast) + 0.5) * 255.0, 0, 255);
 
-                            int B = Color.red(pixel);
-                            B = (int) (((((B / 255.0) - 0.5) * contrast) + 0.5) * 255.0);
-                            if (B < 0) {
-                                B = 0;
-                            } else if (B > 255) {
-                                B = 255;
-                            }
+                            int b = Color.red(pixel);
+                            b = (int) MathUtils.clamp(((((b / 255.0) - 0.5) * contrast) + 0.5) * 255.0, 0, 255);
 
                             // set new pixel color to output bitmap
-                            resultBitmap.setPixel(x, y, Color.argb(A, R, G, B));
+                            resultBitmap.setPixel(x, y, Color.argb(Color.alpha(pixel), r, g, b));
                         }));
+
         return resultBitmap;
     }
 
