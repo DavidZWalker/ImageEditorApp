@@ -16,6 +16,9 @@ import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.hdmstuttgart.bildbearbeiter.filters.IBitmapFilter;
 import de.hdmstuttgart.bildbearbeiter.R;
 
@@ -25,6 +28,7 @@ public class FullscreenImageActivity extends AppCompatActivity {
     LinearLayout filterButtons;
     Button saveButton;
     FullscreenImageViewModel viewModel;
+    List<AsyncTask> runningTasks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,7 @@ public class FullscreenImageActivity extends AppCompatActivity {
         imageView = findViewById(R.id.fullscreenImage);
         filterButtons = findViewById(R.id.filterButtons);
         saveButton = findViewById(R.id.btn_saveImage);
+        runningTasks = new ArrayList<>();
 
         imageView.setImageBitmap(viewModel.getSourceImage());
         addFilterButtonsToView();
@@ -43,6 +48,12 @@ public class FullscreenImageActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        runningTasks.forEach(x -> x.cancel(true));
     }
 
     public void saveImageToLibrary(View v) {
@@ -95,6 +106,7 @@ public class FullscreenImageActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            runningTasks.add(this);
             layout = startAddFilterButton(filter);
         }
 
@@ -108,6 +120,7 @@ public class FullscreenImageActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             finishAddFilterButton(layout, filteredBitmap);
+            runningTasks.remove(this);
         }
     }
 }
