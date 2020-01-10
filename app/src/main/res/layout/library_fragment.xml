@@ -5,12 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.LibraryFragment">
 
-    <ProgressBar
-        android:id="@+id/libProgressBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white_overlay" />
-
     <TextView
         android:id="@+id/emptyListTextView"
         android:layout_width="match_parent"
@@ -24,7 +18,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/imageRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/libProgressBar"/>
+        android:layout_height="match_parent"/>
+
+    <ProgressBar
+        android:id="@+id/libProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white_overlay" />
 
 </RelativeLayout>
