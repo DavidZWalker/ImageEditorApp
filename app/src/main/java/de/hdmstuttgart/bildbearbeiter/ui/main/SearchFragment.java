@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import de.hdmstuttgart.bildbearbeiter.APIInterface;
+import de.hdmstuttgart.bildbearbeiter.UnsplashAPI;
 import de.hdmstuttgart.bildbearbeiter.SearchResponseResult;
 import de.hdmstuttgart.bildbearbeiter.R;
 import retrofit2.Call;
@@ -101,7 +101,7 @@ public class SearchFragment extends Fragment {
                 .baseUrl(Constants.UNSPLASH_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
-        APIInterface unsplashAPI = retrofit.create(APIInterface.class);
+        UnsplashAPI unsplashAPI = retrofit.create(UnsplashAPI.class);
 
         //get Search String from User
         editText = Objects.requireNonNull(getActivity()).findViewById(R.id.editTextSearchPictures);
