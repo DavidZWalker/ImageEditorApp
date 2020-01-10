@@ -78,6 +78,7 @@ public class CameraFragment extends Fragment {
         String auth = getActivity().getApplicationContext().getPackageName() + ".provider";
         viewModel.setImageUri(FileProvider.getUriForFile(getContext(), auth, viewModel.createCapturedImageFile()));
         intent.putExtra(MediaStore.EXTRA_OUTPUT, viewModel.getImageUri());
+        intent.putExtra("android.intent.extras.LENS_FACING_FRONT", 1);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivityForResult(intent,100);
     }
