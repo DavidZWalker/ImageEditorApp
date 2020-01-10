@@ -29,7 +29,6 @@ public class LibraryFragment extends Fragment {
     private LibraryViewModel mViewModel;
     private RecyclerView imageRecyclerView;
     private ImageAdapter mAdapter;
-    private TextView emptyListTextView;
     private ProgressBar progressBar;
 
     @Override
@@ -46,7 +45,6 @@ public class LibraryFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         imageRecyclerView = getActivity().findViewById(R.id.imageRecyclerView);
-        emptyListTextView = getActivity().findViewById(R.id.emptyListTextView);
         progressBar = getActivity().findViewById(R.id.libProgressBar);
         mAdapter = new ImageAdapter(new ArrayList<>());
 
@@ -70,7 +68,6 @@ public class LibraryFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
             progressBar.setVisibility(View.VISIBLE);
-            emptyListTextView.setVisibility(View.GONE);
         }
 
         @Override
@@ -94,8 +91,7 @@ public class LibraryFragment extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             progressBar.setVisibility(View.GONE);
-            if (mAdapter.getItemCount() == 0)
-                emptyListTextView.setVisibility(View.VISIBLE);
+            mAdapter.notifyDataSetChanged();
         }
     }
 }
