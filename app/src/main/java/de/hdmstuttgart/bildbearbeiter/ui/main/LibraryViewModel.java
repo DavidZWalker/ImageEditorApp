@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import utilities.ImageFileHandler;
+import de.hdmstuttgart.bildbearbeiter.utilities.ImageFileHandler;
 
 public class LibraryViewModel extends ViewModel {
 

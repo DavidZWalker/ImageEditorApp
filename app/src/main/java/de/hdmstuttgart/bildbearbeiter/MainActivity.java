@@ -5,7 +5,7 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 import de.hdmstuttgart.bildbearbeiter.ui.main.SectionsPagerAdapter;
-import utilities.Constants;
+import de.hdmstuttgart.bildbearbeiter.utilities.Constants;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +19,6 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
-        viewPager.post(() -> viewPager.setCurrentItem(Constants.LIBRARY_PAGE));
+        viewPager.post(() -> viewPager.setCurrentItem(Constants.LIBRARY_PAGE - 1));
     }
 }

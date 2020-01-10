@@ -1,4 +1,4 @@
-package utilities;
+package de.hdmstuttgart.bildbearbeiter.utilities;
 
 public final class Constants {
     public static final int CAMERA_PAGE = 1;

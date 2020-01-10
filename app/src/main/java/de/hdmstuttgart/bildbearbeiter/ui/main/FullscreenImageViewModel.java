@@ -20,7 +20,7 @@ import de.hdmstuttgart.bildbearbeiter.filters.NoBitmapFilter;
 import de.hdmstuttgart.bildbearbeiter.filters.RedBitmapFilter;
 import de.hdmstuttgart.bildbearbeiter.filters.SepiaBitmapFilter;
 import de.hdmstuttgart.bildbearbeiter.filters.VignetteBitmapFilter;
-import utilities.ImageFileHandler;
+import de.hdmstuttgart.bildbearbeiter.utilities.ImageFileHandler;
 
 public class FullscreenImageViewModel extends ViewModel {
     private Bitmap sourceImage;

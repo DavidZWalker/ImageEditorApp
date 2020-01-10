@@ -5,7 +5,6 @@ import androidx.core.content.FileProvider;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -23,7 +22,7 @@ import android.widget.ImageView;
 import com.google.android.material.snackbar.Snackbar;
 
 import de.hdmstuttgart.bildbearbeiter.R;
-import utilities.ImageFileHandler;
+import de.hdmstuttgart.bildbearbeiter.utilities.ImageFileHandler;
 
 public class CameraFragment extends Fragment {
 

@@ -1,4 +1,4 @@
-package utilities;
+package de.hdmstuttgart.bildbearbeiter.utilities;
 
 import android.content.Context;
 

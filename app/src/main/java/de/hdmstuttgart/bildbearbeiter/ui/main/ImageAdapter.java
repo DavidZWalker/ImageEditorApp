@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import de.hdmstuttgart.bildbearbeiter.R;
-import utilities.ImageFileHandler;
+import de.hdmstuttgart.bildbearbeiter.utilities.ImageFileHandler;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
     private List<Bitmap> bitmapList;

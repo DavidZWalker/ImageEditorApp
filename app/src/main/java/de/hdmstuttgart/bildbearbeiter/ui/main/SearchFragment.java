@@ -38,9 +38,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import utilities.Constants;
-import utilities.FileIndexer;
-import utilities.ImageFileHandler;
+import de.hdmstuttgart.bildbearbeiter.utilities.Constants;
+import de.hdmstuttgart.bildbearbeiter.utilities.FileIndexer;
+import de.hdmstuttgart.bildbearbeiter.utilities.ImageFileHandler;
 
 public class SearchFragment extends Fragment {
 

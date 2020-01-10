@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel;
 import java.io.File;
 import java.util.Random;
 
-import utilities.ImageFileHandler;
+import de.hdmstuttgart.bildbearbeiter.utilities.ImageFileHandler;
 
 public class CameraViewModel extends ViewModel {
 
