@@ -21,12 +21,13 @@ public class VignetteBitmapFilter extends BitmapFilterBase {
         int rad;
         Canvas canvas = new Canvas(resultBitmap);
         canvas.drawBitmap(sourceBitmap, 0, 0, new Paint());
-        if(sourceBitmap.getWidth()<sourceBitmap.getHeight()){
-            int o = (sourceBitmap.getHeight()*2)/100;
-            rad = sourceBitmap.getHeight() - o*50/3;
-        }else{
-            int o = (sourceBitmap.getWidth()*2)/100;
-            rad = sourceBitmap.getWidth() - o*50/3;
+        if (sourceBitmap.getWidth() < sourceBitmap.getHeight()){
+            int o = (sourceBitmap.getHeight() * 2) / 100;
+            rad = sourceBitmap.getHeight() - o * 50 / 3;
+        }
+        else {
+            int o = (sourceBitmap.getWidth() * 2) / 100;
+            rad = sourceBitmap.getWidth() - o * 50 / 3;
         }
         Rect rect = new Rect(0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight());
         RectF rectf = new RectF(rect);
