@@ -6,21 +6,17 @@
     tools:context=".ui.main.CameraFragment"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/takePhotoButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="take photo" />
-
     <ImageView
         android:id="@+id/capturedImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitStart"/>
 
     <Button
         android:id="@+id/saveImageButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save" />
+        android:text="@string/save" />
 
 </LinearLayout>

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -21,15 +22,18 @@ import android.widget.ImageView;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.function.Predicate;
+
 import de.hdmstuttgart.bildbearbeiter.R;
+import de.hdmstuttgart.bildbearbeiter.utilities.Constants;
 import de.hdmstuttgart.bildbearbeiter.utilities.ImageFileHandler;
 
 public class CameraFragment extends Fragment {
 
-    private Button takePhotoButton;
     private Button saveImageButton;
     private ImageView capturedImageView;
     private CameraViewModel viewModel;
+    private ViewPager viewPagerParent;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -48,8 +52,6 @@ public class CameraFragment extends Fragment {
         saveImageButton = getActivity().findViewById(R.id.saveImageButton);
         saveImageButton.setOnClickListener(v -> saveImageToLibrary());
         saveImageButton.setVisibility(View.INVISIBLE);
-        takePhotoButton = getActivity().findViewById(R.id.takePhotoButton);
-        takePhotoButton.setOnClickListener(v -> takePhoto());
     }
 
     private void saveImageToLibrary() {
@@ -63,9 +65,15 @@ public class CameraFragment extends Fragment {
         else snackBarString = "Failed to save image.";
 
         Snackbar.make(getView(),snackBarString, Snackbar.LENGTH_SHORT).show();
+        capturedImageView.setImageBitmap(null);
+        switchToLibrary();
     }
 
-    private void takePhoto() {
+    public void setViewPagerContext(ViewPager viewPager) {
+        viewPagerParent = viewPager;
+    }
+
+    public void takePhoto() {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         String auth = getActivity().getApplicationContext().getPackageName() + ".provider";
         viewModel.setImageUri(FileProvider.getUriForFile(getContext(), auth, viewModel.createCapturedImageFile()));
@@ -77,16 +85,26 @@ public class CameraFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100) {
-            Uri selectedImage = viewModel.getImageUri();
-            getActivity().getContentResolver().notifyChange(selectedImage, null);
-            Bitmap bmp = viewModel.getCapturedBitmap();
-            if (bmp != null) {
-                capturedImageView.setImageBitmap(bmp);
-                saveImageButton.setVisibility(View.VISIBLE);
-            }
-            else
-                Snackbar.make(getView(), "Failed to get image.", Snackbar.LENGTH_SHORT).show();
+        if (resultCode == -1) {
+            loadImageIntoView();
         }
+        else if (resultCode == 0) {
+            switchToLibrary();
+        }
+    }
+
+    private void loadImageIntoView() {
+        Uri selectedImage = viewModel.getImageUri();
+        getActivity().getContentResolver().notifyChange(selectedImage, null);
+        Bitmap bmp = viewModel.getCapturedBitmap();
+        if (bmp != null) {
+            capturedImageView.setImageBitmap(bmp);
+            saveImageButton.setVisibility(View.VISIBLE);
+        } else
+            Snackbar.make(getView(), "Failed to get image.", Snackbar.LENGTH_SHORT).show();
+    }
+
+    private void switchToLibrary() {
+        viewPagerParent.setCurrentItem(Constants.LIBRARY_PAGE - 1);
     }
 }

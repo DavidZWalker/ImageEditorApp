@@ -10,8 +10,8 @@
     <string name="title_activity_fullscreen_image">Edit your image</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="save">Save</string>
     <string name="empty_list_text">Nothing here…</string>
-    <string name="library_loading_text">Loading...</string>
-    <string name="savingText">Saving...</string>
+    <string name="library_loading_text">Loading…</string>
+    <string name="savingText">Saving…</string>
+    <string name="save">Save</string>
 </resources>
