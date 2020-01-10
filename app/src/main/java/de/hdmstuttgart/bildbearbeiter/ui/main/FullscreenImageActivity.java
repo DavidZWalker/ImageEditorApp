@@ -60,15 +60,12 @@ public class FullscreenImageActivity extends AppCompatActivity {
 
     public void saveImageToLibrary(View v) {
         Bitmap imageToSave = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
-        boolean saveResult = viewModel.saveImageToLibrary(imageToSave);
-        Snackbar.make(findViewById(R.id.rootView),
-                saveResult ? "Image saved to library!" : "Failed to save image.",
-                Snackbar.LENGTH_SHORT).show();
+        new SaveImageTask(imageToSave).execute();
     }
 
     private void addFilterButtonsToView() {
         for (IBitmapFilter f : viewModel.getAvailableFilters())
-            new AddFilterButtonToView(f).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new AddFilterButtonToViewTask(f).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     private View startAddFilterButton(IBitmapFilter filter) {
@@ -107,13 +104,13 @@ public class FullscreenImageActivity extends AppCompatActivity {
         selectedFilterView = newFilterView;
     }
 
-    private class AddFilterButtonToView extends AsyncTask<Void, Void, Void> {
+    private class AddFilterButtonToViewTask extends AsyncTask<Void, Void, Void> {
 
         Bitmap filteredBitmap;
         IBitmapFilter filter;
         View layout;
 
-        public AddFilterButtonToView(IBitmapFilter filter)
+        public AddFilterButtonToViewTask(IBitmapFilter filter)
         {
             super();
             this.filter = filter;
@@ -137,6 +134,36 @@ public class FullscreenImageActivity extends AppCompatActivity {
             super.onPostExecute(aVoid);
             finishAddFilterButton(layout, filteredBitmap);
             runningTasks.remove(this);
+        }
+    }
+
+    private class SaveImageTask extends  AsyncTask<Void, Void, Boolean> {
+
+        private Bitmap imageToSave;
+
+        public SaveImageTask(Bitmap imageToSave) {
+            this.imageToSave = imageToSave;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            saveButton.setText(getResources().getText(R.string.savingText));
+            saveButton.setEnabled(false);
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            return viewModel.saveImageToLibrary(imageToSave);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean saveResult) {
+            super.onPostExecute(saveResult);
+            saveButton.setEnabled(true);
+            saveButton.setText(getResources().getText(R.string.save));
+            Snackbar.make(findViewById(R.id.rootView),
+                    saveResult ? "Image saved to library!" : "Failed to save image.",
+                    Snackbar.LENGTH_SHORT).show();
         }
     }
 }

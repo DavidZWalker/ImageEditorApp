@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class LibraryFragment extends Fragment {
     private RecyclerView imageRecyclerView;
     private ImageAdapter mAdapter;
     private ProgressBar progressBar;
+    private TextView libraryTextView;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -45,6 +47,7 @@ public class LibraryFragment extends Fragment {
 
         imageRecyclerView = getActivity().findViewById(R.id.imageRecyclerView);
         progressBar = getActivity().findViewById(R.id.libProgressBar);
+        libraryTextView = getActivity().findViewById(R.id.libraryTextView);
         mAdapter = new ImageAdapter(new ArrayList<>());
 
         // init RecyclerView
@@ -73,6 +76,7 @@ public class LibraryFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
             progressBar.setVisibility(View.VISIBLE);
+            libraryTextView.setText(getResources().getString(R.string.library_loading_text));
         }
 
         @Override
@@ -97,6 +101,7 @@ public class LibraryFragment extends Fragment {
             super.onPostExecute(aVoid);
             progressBar.setVisibility(View.GONE);
             mAdapter.notifyDataSetChanged();
+            libraryTextView.setText(getResources().getString(R.string.empty_list_text));
         }
     }
 }

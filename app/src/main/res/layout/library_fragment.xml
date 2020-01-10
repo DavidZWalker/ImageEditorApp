@@ -6,7 +6,7 @@
     tools:context=".ui.main.LibraryFragment">
 
     <TextView
-        android:id="@+id/emptyListTextView"
+        android:id="@+id/libraryTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"

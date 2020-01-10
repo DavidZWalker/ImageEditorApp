@@ -6,7 +6,8 @@
     android:background="#000"
     tools:context=".ui.main.FullscreenImageActivity"
     android:orientation="vertical"
-    android:id="@+id/rootView">
+    android:id="@+id/rootView"
+    android:theme="@style/Theme.AppCompat.NoActionBar">
 
     <ImageView
         android:id="@+id/fullscreenImage"

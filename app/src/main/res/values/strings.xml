@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BildBearbeiter</string>
+    <string name="app_name">Image Editor</string>
     <string name="tab_text_1">Camera</string>
     <string name="tab_text_2">Library</string>
     <string name="tab_text_3">Online</string>
@@ -7,9 +7,11 @@
     <string name="searchButtons">Search</string>
     <string name="searchLabel">Search free high resolution photos</string>
 
-    <string name="title_activity_fullscreen_image">FullscreenImageActivity</string>
+    <string name="title_activity_fullscreen_image">Edit your image</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="save">Save</string>
     <string name="empty_list_text">Nothing here…</string>
+    <string name="library_loading_text">Loading...</string>
+    <string name="savingText">Saving...</string>
 </resources>
