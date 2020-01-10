@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -30,6 +31,7 @@ public class LibraryFragment extends Fragment {
     private LibraryViewModel mViewModel;
     private RecyclerView imageRecyclerView;
     private ImageAdapter mAdapter;
+    private TextView emptyListTextView;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -42,6 +44,7 @@ public class LibraryFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         ImageFileHandler imageFileHandler = new LibraryImageFileHandler(getContext().getFilesDir());
         mViewModel = ViewModelProviders.of(this, new LibraryViewModelFactory(imageFileHandler)).get(LibraryViewModel.class);
+        emptyListTextView = getActivity().findViewById(R.id.emptyListTextView);
 
         // init adapter for RecyclerView
         mAdapter = new ImageAdapter(mViewModel.getSavedImages());
@@ -56,6 +59,16 @@ public class LibraryFragment extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        mAdapter.setBitmapList(mViewModel.getSavedImages());
+        if (isVisibleToUser) {
+            mAdapter.setBitmapList(mViewModel.getSavedImages());
+            if (mAdapter.getItemCount() == 0) {
+                emptyListTextView.setVisibility(View.VISIBLE);
+                imageRecyclerView.setVisibility(View.GONE);
+            }
+            else {
+                emptyListTextView.setVisibility(View.GONE);
+                imageRecyclerView.setVisibility(View.VISIBLE);
+            }
+        }
     }
 }
