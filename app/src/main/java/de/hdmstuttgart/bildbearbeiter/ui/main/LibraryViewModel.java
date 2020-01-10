@@ -21,11 +21,15 @@ public class LibraryViewModel extends ViewModel {
         this.imageFileHandler = imageFileHandler;
     }
 
-    public List<Bitmap> getSavedImages() throws FileNotFoundException {
+    public List<Bitmap> getSavedImages() {
         List<Bitmap> bitmaps = new ArrayList<>();
         File[] files = imageFileHandler.getImageFolder().listFiles();
-        for (File f : files)
-            bitmaps.add(imageFileHandler.getImage(f.getName()));
+        for (File f : files) {
+            Bitmap imageToAdd = imageFileHandler.getImage(f.getName());
+            if (imageToAdd != null)
+                bitmaps.add(imageToAdd);
+        }
+
         return bitmaps;
     }
 }

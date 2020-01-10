@@ -32,7 +32,6 @@ public class CameraFragment extends Fragment {
     private Button saveImageButton;
     private ImageView capturedImageView;
     private CameraViewModel viewModel;
-    private ImageFileHandler imageFileHandler;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -71,7 +70,6 @@ public class CameraFragment extends Fragment {
     private void takePhoto() {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         String auth = getActivity().getApplicationContext().getPackageName() + ".provider";
-        imageFileHandler = viewModel.getCapturedImageFileHandler();
         viewModel.setImageUri(FileProvider.getUriForFile(getContext(), auth, viewModel.createCapturedImageFile()));
         intent.putExtra(MediaStore.EXTRA_OUTPUT, viewModel.getImageUri());
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);

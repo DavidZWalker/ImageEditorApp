@@ -31,10 +31,6 @@ public class LibraryFragment extends Fragment {
     private RecyclerView imageRecyclerView;
     private ImageAdapter mAdapter;
 
-    public static LibraryFragment newInstance() {
-        return new LibraryFragment();
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -47,16 +43,8 @@ public class LibraryFragment extends Fragment {
         ImageFileHandler imageFileHandler = new LibraryImageFileHandler(getContext().getFilesDir());
         mViewModel = ViewModelProviders.of(this, new LibraryViewModelFactory(imageFileHandler)).get(LibraryViewModel.class);
 
-        // get saved images into a list
-        List<Bitmap> bitmaps = new ArrayList<>();
-        try {
-            bitmaps =  mViewModel.getSavedImages();
-        } catch (FileNotFoundException e) {
-            Snackbar.make(getView(), "Failed to load images.", Snackbar.LENGTH_LONG).show();
-        }
-
         // init adapter for RecyclerView
-        mAdapter = new ImageAdapter(bitmaps);
+        mAdapter = new ImageAdapter(mViewModel.getSavedImages());
 
         // init RecyclerView
         imageRecyclerView = getActivity().findViewById(R.id.imageRecyclerView);
@@ -68,13 +56,6 @@ public class LibraryFragment extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            try {
-                List<Bitmap> bmps = mViewModel.getSavedImages();
-                mAdapter.setBitmapList(bmps);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
+        mAdapter.setBitmapList(mViewModel.getSavedImages());
     }
 }

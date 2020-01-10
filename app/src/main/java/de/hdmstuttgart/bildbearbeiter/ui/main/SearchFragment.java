@@ -55,11 +55,6 @@ public class SearchFragment extends Fragment {
 
     private EditText editText;
 
-
-    public static SearchFragment newInstance() {
-        return new SearchFragment();
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -70,15 +65,10 @@ public class SearchFragment extends Fragment {
         final View view = inflater.inflate(R.layout.search_fragment, container, false);
         //setting onClick on SearchButton
         searchButton = view.findViewById(R.id.buttonSearchPictures);
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bitmapList.clear();
-                view.findViewById(R.id.progress_search).setVisibility(View.VISIBLE);
-                searchPicturesOnline();
-
-
-            }
+        searchButton.setOnClickListener(v -> {
+            bitmapList.clear();
+            view.findViewById(R.id.progress_search).setVisibility(View.VISIBLE);
+            searchPicturesOnline();
         });
 
         //assign recycle
@@ -146,7 +136,6 @@ public class SearchFragment extends Fragment {
         new DownloadFilesTask().execute();
     }
 
-
     private class DownloadFilesTask extends AsyncTask<URL, Integer, Boolean> {
         ImageFileHandler imageFileHandler;
         Bitmap downloadedImage;
@@ -174,7 +163,6 @@ public class SearchFragment extends Fragment {
 
             });
             return true;
-
         }
 
         protected void onProgressUpdate(Integer... progress) {
@@ -187,9 +175,6 @@ public class SearchFragment extends Fragment {
             getView().findViewById(R.id.progress_search).setVisibility(View.GONE);
 
         }
-
     }
-
-
 }
 
