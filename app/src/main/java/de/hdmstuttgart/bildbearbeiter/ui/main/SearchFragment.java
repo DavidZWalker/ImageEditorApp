@@ -41,7 +41,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import utilities.Constants;
 import utilities.FileIndexer;
 import utilities.ImageFileHandler;
-import utilities.LibraryImageFileHandler;
 
 public class SearchFragment extends Fragment {
 
@@ -143,7 +142,7 @@ public class SearchFragment extends Fragment {
 
         protected Boolean doInBackground(URL... urls) {
             //used for saving images locally
-            imageFileHandler = new LibraryImageFileHandler(getContext().getFilesDir());
+            imageFileHandler = new ImageFileHandler(getContext().getFilesDir(), ImageFileHandler.IMAGE_DIR_LIB);
             fileIndexer = new FileIndexer();
             //getting urls
             searchResponseResultList.forEach(image -> {

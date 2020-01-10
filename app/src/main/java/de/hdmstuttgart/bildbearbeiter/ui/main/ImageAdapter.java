@@ -4,20 +4,16 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.IOException;
 import java.util.List;
 
 import de.hdmstuttgart.bildbearbeiter.R;
-import utilities.Constants;
 import utilities.ImageFileHandler;
-import utilities.TempImageFileHandler;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
     private List<Bitmap> bitmapList;
@@ -41,7 +37,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             Intent intent = new Intent(parent.getContext(), FullscreenImageActivity.class);
             ImageView imageView1 = (ImageView) v;
             Bitmap bmp = ((BitmapDrawable) imageView1.getDrawable()).getBitmap();
-            ImageFileHandler ifh = new TempImageFileHandler(parent.getContext().getFilesDir());
+            ImageFileHandler ifh = new ImageFileHandler(parent.getContext().getFilesDir(), ImageFileHandler.IMAGE_DIR_TMP);
             ifh.saveImage(bmp, "tmpImage");
             intent.putExtra("imageURI", "tmpImage");
             parent.getContext().startActivity(intent);

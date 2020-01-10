@@ -7,12 +7,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
-public abstract class ImageFileHandler {
+public class ImageFileHandler {
+
+    public static final String IMAGE_DIR_LIB = "BBImages";
+    public static final String IMAGE_DIR_TMP = "tmp";
 
     private File imageDir;
 
-    protected ImageFileHandler(File imageDir) {
-        this.imageDir = imageDir;
+    public ImageFileHandler(File applicationDir, String imageSubDir) {
+        this.imageDir = new File(applicationDir, imageSubDir);
         if (!imageDir.exists()) imageDir.mkdirs();
     }
 

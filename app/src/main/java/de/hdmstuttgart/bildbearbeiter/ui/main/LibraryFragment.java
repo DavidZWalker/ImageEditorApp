@@ -2,7 +2,6 @@ package de.hdmstuttgart.bildbearbeiter.ui.main;
 
 import androidx.lifecycle.ViewModelProviders;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,15 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.android.material.snackbar.Snackbar;
-
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-
 import de.hdmstuttgart.bildbearbeiter.R;
 import utilities.ImageFileHandler;
-import utilities.LibraryImageFileHandler;
 
 public class LibraryFragment extends Fragment {
 
@@ -42,7 +34,7 @@ public class LibraryFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ImageFileHandler imageFileHandler = new LibraryImageFileHandler(getContext().getFilesDir());
+        ImageFileHandler imageFileHandler = new ImageFileHandler(getContext().getFilesDir(), ImageFileHandler.IMAGE_DIR_LIB);
         mViewModel = ViewModelProviders.of(this, new LibraryViewModelFactory(imageFileHandler)).get(LibraryViewModel.class);
         emptyListTextView = getActivity().findViewById(R.id.emptyListTextView);
 

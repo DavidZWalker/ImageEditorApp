@@ -5,6 +5,7 @@ import androidx.core.content.FileProvider;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -23,8 +24,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 import de.hdmstuttgart.bildbearbeiter.R;
 import utilities.ImageFileHandler;
-import utilities.LibraryImageFileHandler;
-import utilities.TempImageFileHandler;
 
 public class CameraFragment extends Fragment {
 
@@ -43,8 +42,8 @@ public class CameraFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         viewModel = new CameraViewModel(
-                new TempImageFileHandler(getContext().getFilesDir()),
-                new LibraryImageFileHandler(getContext().getFilesDir())
+                new ImageFileHandler(getContext().getFilesDir(), ImageFileHandler.IMAGE_DIR_TMP),
+                new ImageFileHandler(getContext().getFilesDir(), ImageFileHandler.IMAGE_DIR_LIB)
         );
         capturedImageView = getActivity().findViewById(R.id.capturedImage);
         saveImageButton = getActivity().findViewById(R.id.saveImageButton);
