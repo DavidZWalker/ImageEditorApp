@@ -2,6 +2,7 @@ package de.hdmstuttgart.bildbearbeiter.ui.main;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ public class FullscreenImageActivity extends AppCompatActivity {
     ImageView imageView;
     LinearLayout filterButtons;
     Button saveButton;
+    View selectedFilterView;
     FullscreenImageViewModel viewModel;
     List<AsyncTask> runningTasks;
 
@@ -76,19 +78,32 @@ public class FullscreenImageActivity extends AppCompatActivity {
         filterButtons.addView(filterButtonLayoutRoot);
         thumb.setImageBitmap(viewModel.getTempBlackBitmap());
         textView.setText(filter.getName());
+        if (filterButtons.getChildCount() == 1) selectFilter(filterButtonLayoutRoot);
         return filterButtonLayoutRoot;
     }
 
     private void finishAddFilterButton(View view, Bitmap filteredBitmap) {
         RelativeLayout filterButtonLayoutRoot = (RelativeLayout) view;
-        final ImageView thumb = (ImageView) filterButtonLayoutRoot.getChildAt(0);
+        ImageView thumb = (ImageView) filterButtonLayoutRoot.getChildAt(0);
         ProgressBar progressBar = (ProgressBar) filterButtonLayoutRoot.getChildAt(2);
         progressBar.setVisibility(View.GONE);
         thumb.setImageBitmap(filteredBitmap);
-        filterButtonLayoutRoot.setOnClickListener(v -> {
-            Bitmap bmp = ((BitmapDrawable)thumb.getDrawable()).getBitmap();
-            imageView.setImageBitmap(bmp);
-        });
+        filterButtonLayoutRoot.setOnClickListener(this::selectFilter);
+    }
+
+    private void selectFilter(View newSelection) {
+        // deselect old filter view
+        if (selectedFilterView != null) {
+            selectedFilterView.setBackgroundColor(Color.TRANSPARENT);
+        }
+
+        // select new filter view
+        RelativeLayout newFilterView = (RelativeLayout) newSelection;
+        ImageView thumb = (ImageView) newFilterView.getChildAt(0);
+        Bitmap bmp = ((BitmapDrawable)thumb.getDrawable()).getBitmap();
+        imageView.setImageBitmap(bmp);
+        newFilterView.setBackgroundColor(Color.GREEN);
+        selectedFilterView = newFilterView;
     }
 
     private class AddFilterButtonToView extends AsyncTask<Void, Void, Void> {
