@@ -12,7 +12,7 @@ public final class Constants {
     public static final String UNSPLASH_ACCESS_TOKEN="Bearer 4d69c93af58f8f56799f704d95f66f67c3172af4ab0ee0479ae6e58ac95171fe";
     public static final String UNSPLASH_REFRESH_TOKEN="f126eb8b0708fc83f9f392aef1ed070715791141dddf567530ab191940e1e789";
     public static final String UNSPLASH_PAGE = "1";
-    public static final String UNSPLASH_PER_PAGE = "10";
+    public static final String UNSPLASH_PER_PAGE = "30";
 
     public static final String INDEX_FILE_NAME = "Index";
     public static final String TEXT_LIBRARY ="BBText";

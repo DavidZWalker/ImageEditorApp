@@ -1,4 +1,6 @@
-<ImageView android:id="@+id/image_search_result"
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/image_search_result"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android" />
+    android:scaleType="fitXY"
+    android:adjustViewBounds="true"/>

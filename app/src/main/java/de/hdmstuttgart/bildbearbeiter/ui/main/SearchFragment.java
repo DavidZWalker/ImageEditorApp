@@ -147,7 +147,7 @@ public class SearchFragment extends Fragment {
             //getting urls
             searchResponseResultList.forEach(image -> {
                 try {
-                    URL url = new URL(image.getUrls().getRegular());
+                    URL url = new URL(image.getUrls().getSmall());
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setDoInput(true);
                     connection.connect();
