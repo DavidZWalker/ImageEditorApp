@@ -21,6 +21,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -67,9 +68,15 @@ public class SearchFragment extends Fragment {
         //setting onClick on SearchButton
         searchButton = view.findViewById(R.id.buttonSearchPictures);
         searchButton.setOnClickListener(v -> {
-            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
-                    InputMethodManager.RESULT_UNCHANGED_SHOWN);
+            //prevent crashes
+            if (Objects.requireNonNull(getActivity()).getCurrentFocus() != null) {
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(Objects.requireNonNull(getActivity().getCurrentFocus()).getWindowToken(),
+                            InputMethodManager.RESULT_UNCHANGED_SHOWN);
+                }
+            }
+
             bitmapList.clear();
             view.findViewById(R.id.progress_search).setVisibility(View.VISIBLE);
             searchPicturesOnline();
@@ -87,7 +94,6 @@ public class SearchFragment extends Fragment {
         return view;
     }
 
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -97,6 +103,19 @@ public class SearchFragment extends Fragment {
     }
 
     private void searchPicturesOnline() {
+
+        editText = Objects.requireNonNull(getActivity()).findViewById(R.id.editTextSearchPictures);
+
+        if (editText.getText().toString().equals("")) {
+            String snackBarString;
+            snackBarString = "Please enter something in the search field";
+            Snackbar.make(getView(), snackBarString, Snackbar.LENGTH_SHORT).show();
+
+            Objects.requireNonNull(getActivity()).findViewById(R.id.progress_search).setVisibility(View.GONE);
+
+            return;
+        }
+
         searchResponseResultList = new ArrayList<>();
 
         Gson gson = new GsonBuilder()
@@ -109,7 +128,6 @@ public class SearchFragment extends Fragment {
         UnsplashAPI unsplashAPI = retrofit.create(UnsplashAPI.class);
 
         //get Search String from User
-        editText = Objects.requireNonNull(getActivity()).findViewById(R.id.editTextSearchPictures);
         String query = editText.getText().toString();
         editText.setText("");
 
