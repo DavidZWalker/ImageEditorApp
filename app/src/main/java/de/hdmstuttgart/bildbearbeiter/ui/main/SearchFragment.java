@@ -2,6 +2,7 @@ package de.hdmstuttgart.bildbearbeiter.ui.main;
 
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -65,6 +67,9 @@ public class SearchFragment extends Fragment {
         //setting onClick on SearchButton
         searchButton = view.findViewById(R.id.buttonSearchPictures);
         searchButton.setOnClickListener(v -> {
+            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
+                    InputMethodManager.RESULT_UNCHANGED_SHOWN);
             bitmapList.clear();
             view.findViewById(R.id.progress_search).setVisibility(View.VISIBLE);
             searchPicturesOnline();
