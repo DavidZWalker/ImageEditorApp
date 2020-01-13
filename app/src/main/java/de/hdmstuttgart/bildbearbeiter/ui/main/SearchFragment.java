@@ -104,7 +104,7 @@ public class SearchFragment extends Fragment {
         if (editText.getText().toString().equals("")) {
             String snackBarString;
             snackBarString = "Please enter something in the search field";
-            Snackbar.make(getView(), snackBarString, Snackbar.LENGTH_SHORT).show();
+            showSnackbar(snackBarString);
 
             Objects.requireNonNull(getActivity()).findViewById(R.id.progress_search).setVisibility(View.GONE);
 
@@ -134,6 +134,10 @@ public class SearchFragment extends Fragment {
                 //get urls
                 if (response.isSuccessful()) {
                     searchResponseResultList = response.body().getResults();
+                    if (checkIfResponseIsEmpty(searchResponseResultList, query)) {
+                        hideProgressCircle();
+                        return;
+                    }
                 } else {
                     //escape if response is invalid
                     return;
@@ -146,6 +150,21 @@ public class SearchFragment extends Fragment {
                 Objects.requireNonNull(getActivity()).findViewById(R.id.progress_search).setVisibility(View.GONE);
             }
         });
+    }
+
+    private void showSnackbar(String snackBarString) {
+        Snackbar.make(getView(), snackBarString, Snackbar.LENGTH_SHORT).show();
+    }
+
+    private boolean checkIfResponseIsEmpty(List<SearchResponseResult.Photo> searchResponseResultList, String query) {
+        if (searchResponseResultList.size() < 1) {
+            String snackBarString;
+            snackBarString = "No results were found for \""  + query + "\". Try again!";
+            showSnackbar(snackBarString);
+            return true;
+        }
+
+        return false;
     }
 
     private void handleResponse() {
@@ -173,8 +192,10 @@ public class SearchFragment extends Fragment {
                     downloadedImage = BitmapFactory.decodeStream(input);
                 } catch (IOException e) {
                     // Log exception
+                    String snackBarString;
+                    showSnackbar("Failed to establish a connection to the Internet, Please try again!");
                     return;
-                    //todo handle exception
+
                 }
                 publishProgress();
 
@@ -189,9 +210,13 @@ public class SearchFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
-            getView().findViewById(R.id.progress_search).setVisibility(View.GONE);
-
+            hideProgressCircle();
         }
+    }
+
+    private void hideProgressCircle() {
+        getView().findViewById(R.id.progress_search).setVisibility(View.GONE);
+
     }
 }
 
