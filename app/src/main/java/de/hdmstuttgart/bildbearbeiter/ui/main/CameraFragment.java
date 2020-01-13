@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -48,6 +49,7 @@ public class CameraFragment extends Fragment {
                 new ImageFileHandler(getContext().getFilesDir(), ImageFileHandler.IMAGE_DIR_TMP),
                 new ImageFileHandler(getContext().getFilesDir(), ImageFileHandler.IMAGE_DIR_LIB)
         );
+
         capturedImageView = getActivity().findViewById(R.id.capturedImage);
         saveImageButton = getActivity().findViewById(R.id.saveImageButton);
         saveImageButton.setOnClickListener(v -> saveImageToLibrary());
@@ -56,17 +58,7 @@ public class CameraFragment extends Fragment {
 
     private void saveImageToLibrary() {
         Bitmap bmp = ((BitmapDrawable)capturedImageView.getDrawable()).getBitmap();
-        boolean saveResult = viewModel.saveImageToLibrary(bmp);
-        String snackBarString;
-        if (saveResult){
-            saveImageButton.setVisibility(View.GONE);
-            snackBarString = "Image saved to library!";
-        }
-        else snackBarString = "Failed to save image.";
-
-        Snackbar.make(getView(),snackBarString, Snackbar.LENGTH_SHORT).show();
-        capturedImageView.setImageBitmap(null);
-        switchToLibrary();
+        new SaveImageTask(bmp).execute();
     }
 
     public void setViewPagerContext(ViewPager viewPager) {
@@ -107,5 +99,46 @@ public class CameraFragment extends Fragment {
 
     private void switchToLibrary() {
         viewPagerParent.setCurrentItem(Constants.LIBRARY_PAGE - 1);
+    }
+
+    private class SaveImageTask extends AsyncTask<Void, Void, Boolean> {
+
+        private Bitmap imageToSave;
+
+        public SaveImageTask(Bitmap imageToSave) {
+            this.imageToSave = imageToSave;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            saveImageButton.setText(getResources().getText(R.string.savingText));
+            saveImageButton.setEnabled(false);
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            return viewModel.saveImageToLibrary(imageToSave);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean saveResult) {
+            super.onPostExecute(saveResult);
+            String saveText;
+            if (saveResult) {
+                capturedImageView.setImageBitmap(null);
+                saveText = "Image saved to library!";
+            }
+            else saveText = "Failed to save image.";
+
+            saveImageButton.setEnabled(true);
+            saveImageButton.setText(getResources().getText(R.string.save));
+            saveImageButton.setVisibility(View.INVISIBLE);
+            Snackbar.make(getActivity().findViewById(android.R.id.content),
+                    saveText,
+                    Snackbar.LENGTH_SHORT).show();
+
+            if (saveResult)
+                switchToLibrary();
+        }
     }
 }
