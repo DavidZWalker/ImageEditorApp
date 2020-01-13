@@ -22,6 +22,7 @@ import android.widget.ProgressBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdmstuttgart.bildbearbeiter.SearchResponseResult;
 import de.hdmstuttgart.bildbearbeiter.R;
@@ -36,7 +37,7 @@ public class SearchFragment extends Fragment {
     private Button searchButton;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
-    ProgressBar searchProgressBar;
+    private ProgressBar searchProgressBar;
     private ImageAdapter searchAdapter;
 
     private EditText editText;
@@ -87,8 +88,10 @@ public class SearchFragment extends Fragment {
                 @Override
                 public void onResponse(Call<SearchResponseResult> call, Response<SearchResponseResult> response) {
                     //get urls
-                    if (response.isSuccessful())
-                        new DownloadFilesTask().execute((SearchResponseResult.Photo[]) response.body().getPhotos().toArray());
+                    if (response.isSuccessful()) {
+                        List<SearchResponseResult.Photo> photoList = response.body().getPhotos();
+                        new DownloadFilesTask().execute(photoList.toArray(new SearchResponseResult.Photo[photoList.size()]));
+                    }
                 }
 
                 @Override
