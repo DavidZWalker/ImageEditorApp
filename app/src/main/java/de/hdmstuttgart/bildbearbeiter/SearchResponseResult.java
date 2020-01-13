@@ -16,7 +16,7 @@ public class SearchResponseResult {
     @Expose
     private List<Photo> results = null;
 
-    public List<Photo> getResults() {
+    public List<Photo> getPhotos() {
         return results;
     }
 

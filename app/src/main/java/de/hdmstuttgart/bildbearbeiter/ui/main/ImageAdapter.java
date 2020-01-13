@@ -70,4 +70,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         this.bitmapList = bitmapList;
         notifyDataSetChanged();
     }
+
+    public void clearBitmapList() {
+        this.bitmapList.clear();
+        notifyDataSetChanged();
+    }
 }
