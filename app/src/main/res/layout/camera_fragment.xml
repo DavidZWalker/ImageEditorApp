@@ -17,6 +17,8 @@
         android:id="@+id/saveImageButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/save" />
+        android:background="@color/colorAccent"
+        android:text="@string/save"
+        android:textColor="#FFFFFF" />
 
 </LinearLayout>
