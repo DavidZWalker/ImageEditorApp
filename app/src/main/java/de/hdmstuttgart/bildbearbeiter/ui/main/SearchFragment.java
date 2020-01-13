@@ -36,6 +36,7 @@ import java.util.Objects;
 import de.hdmstuttgart.bildbearbeiter.UnsplashAPI;
 import de.hdmstuttgart.bildbearbeiter.SearchResponseResult;
 import de.hdmstuttgart.bildbearbeiter.R;
+import de.hdmstuttgart.bildbearbeiter.utilities.UIUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -68,14 +69,8 @@ public class SearchFragment extends Fragment {
         //setting onClick on SearchButton
         searchButton = view.findViewById(R.id.buttonSearchPictures);
         searchButton.setOnClickListener(v -> {
-            //prevent crashes
-            if (Objects.requireNonNull(getActivity()).getCurrentFocus() != null) {
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null) {
-                    imm.hideSoftInputFromWindow(Objects.requireNonNull(getActivity().getCurrentFocus()).getWindowToken(),
-                            InputMethodManager.RESULT_UNCHANGED_SHOWN);
-                }
-            }
+
+            UIUtil.hideKeyboard(getActivity());
 
             bitmapList.clear();
             view.findViewById(R.id.progress_search).setVisibility(View.VISIBLE);
