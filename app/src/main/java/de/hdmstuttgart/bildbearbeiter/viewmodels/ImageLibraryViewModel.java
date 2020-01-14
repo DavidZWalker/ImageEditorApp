@@ -23,9 +23,13 @@ public class ImageLibraryViewModel extends ViewModel {
 
     public Bitmap getBitmapFromFile(File file) {
         try {
-            return model.getBitmapFromFile(file);
+            return model.loadImageFile(file);
         } catch (IOException e) {
             return null;
         }
+    }
+
+    public void removeImage(Bitmap bmpToRemove) {
+        model.removeImage(bmpToRemove);
     }
 }

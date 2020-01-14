@@ -42,4 +42,8 @@ public class ImageFileHandler {
     public File createFileWithName(String fileName) {
         return new File(imageDir, fileName);
     }
+
+    public void deleteFile(File fileToRemove) {
+        fileToRemove.delete();
+    }
 }
