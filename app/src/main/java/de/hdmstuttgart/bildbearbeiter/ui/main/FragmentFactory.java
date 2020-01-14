@@ -3,7 +3,6 @@ package de.hdmstuttgart.bildbearbeiter.ui.main;
 import androidx.fragment.app.Fragment;
 
 import de.hdmstuttgart.bildbearbeiter.MainActivity;
-import de.hdmstuttgart.bildbearbeiter.utilities.Constants;
 
 /**
  * A placeholder fragment containing a simple view.

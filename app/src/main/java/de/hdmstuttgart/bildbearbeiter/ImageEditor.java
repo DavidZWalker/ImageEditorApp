@@ -3,6 +3,7 @@ package de.hdmstuttgart.bildbearbeiter;
 import android.graphics.Bitmap;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -26,18 +27,24 @@ public class ImageEditor {
     public ImageEditor(File appFilesDir) {
         rootDir = appFilesDir;
         availableFilters = new ArrayList<>();
-        sourceImage = loadSourceImageFromFile();
+
+        try {
+            sourceImage = loadSourceImageFromFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+            sourceImage = null;
+        }
+
         initAvailableFilters();
     }
 
-    public boolean saveImageToLibrary(Bitmap imageToSave)
-    {
+    public void saveImageToLibrary(Bitmap imageToSave) throws IOException {
         ImageFileHandler ifh = new ImageFileHandler(rootDir, ImageFileHandler.IMAGE_DIR_LIB);
         Random r = new Random();
-        return ifh.saveImage(imageToSave, "filtered_" + r.nextInt());
+        ifh.saveImage(imageToSave, "filtered_" + r.nextInt());
     }
 
-    public Bitmap getSourceImage() {
+    public Bitmap getSourceImage() throws IOException {
         return sourceImage != null ? sourceImage : loadSourceImageFromFile();
     }
 
@@ -45,8 +52,7 @@ public class ImageEditor {
         return availableFilters;
     }
 
-    private Bitmap loadSourceImageFromFile()
-    {
+    private Bitmap loadSourceImageFromFile() throws IOException {
         ImageFileHandler ifh = new ImageFileHandler(rootDir, ImageFileHandler.IMAGE_DIR_TMP);
         return ifh.getImage("tmpImage");
     }

@@ -23,11 +23,8 @@ import android.widget.ImageView;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.function.Predicate;
-
+import de.hdmstuttgart.bildbearbeiter.MainActivity;
 import de.hdmstuttgart.bildbearbeiter.R;
-import de.hdmstuttgart.bildbearbeiter.utilities.Constants;
-import de.hdmstuttgart.bildbearbeiter.utilities.ImageFileHandler;
 
 public class CameraFragment extends Fragment {
 
@@ -95,7 +92,7 @@ public class CameraFragment extends Fragment {
     }
 
     private void switchToLibrary() {
-        viewPagerParent.setCurrentItem(Constants.LIBRARY_PAGE - 1);
+        viewPagerParent.setCurrentItem(MainActivity.LIBRARY_PAGE - 1);
     }
 
     private class SaveImageTask extends AsyncTask<Void, Void, Boolean> {

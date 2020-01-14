@@ -1,7 +1,6 @@
 package de.hdmstuttgart.bildbearbeiter.ui.main;
 
 import android.content.Context;
-import android.graphics.Camera;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdmstuttgart.bildbearbeiter.R;
-import de.hdmstuttgart.bildbearbeiter.utilities.Constants;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to

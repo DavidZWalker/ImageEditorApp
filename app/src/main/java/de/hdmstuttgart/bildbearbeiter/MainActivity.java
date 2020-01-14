@@ -5,7 +5,6 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 import de.hdmstuttgart.bildbearbeiter.ui.main.SectionsPagerAdapter;
-import de.hdmstuttgart.bildbearbeiter.utilities.Constants;
 
 public class MainActivity extends AppCompatActivity {
 

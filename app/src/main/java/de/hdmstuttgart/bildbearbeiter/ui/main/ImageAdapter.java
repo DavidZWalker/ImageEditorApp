@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.IOException;
 import java.util.List;
 
 import de.hdmstuttgart.bildbearbeiter.R;
@@ -38,7 +39,11 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             ImageView imageView1 = (ImageView) v;
             Bitmap bmp = ((BitmapDrawable) imageView1.getDrawable()).getBitmap();
             ImageFileHandler ifh = new ImageFileHandler(parent.getContext().getFilesDir(), ImageFileHandler.IMAGE_DIR_TMP);
-            ifh.saveImage(bmp, "tmpImage");
+            try {
+                ifh.saveImage(bmp, "tmpImage");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             intent.putExtra("imageURI", "tmpImage");
             parent.getContext().startActivity(intent);
         });
