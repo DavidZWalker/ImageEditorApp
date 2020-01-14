@@ -15,4 +15,9 @@
     <string name="library_loading_text">Loading…</string>
     <string name="savingText">Saving…</string>
     <string name="save">Save</string>
+
+    <string name="saveImage">Save Image</string>
+    <string name="deleteImage">Delete Image</string>
+    <string name="editImage">Edit Image</string>
+    <string name="Cancel">Cancel</string>
 </resources>

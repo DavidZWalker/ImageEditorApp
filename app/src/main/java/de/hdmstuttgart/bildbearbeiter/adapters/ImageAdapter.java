@@ -4,16 +4,22 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.io.IOException;
 import java.util.List;
 
 import de.hdmstuttgart.bildbearbeiter.R;
+import de.hdmstuttgart.bildbearbeiter.views.BottomSheetFragment;
 import de.hdmstuttgart.bildbearbeiter.views.ImageEditorActivity;
 import de.hdmstuttgart.bildbearbeiter.utilities.ImageFileHandler;
 
@@ -25,7 +31,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         notifyDataSetChanged();
     }
 
-    public void addToBitmapList(Bitmap bitmap){
+    public void addToBitmapList(Bitmap bitmap) {
         this.bitmapList.add(bitmap);
         notifyItemInserted(bitmapList.size() - 1);
     }
@@ -34,7 +40,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, int viewType) {
         //create new view
-        ImageView imageView = (ImageView) LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item, parent,false);
+        ImageView imageView = (ImageView) LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item, parent, false);
         imageView.setOnClickListener(v -> {
             Intent intent = new Intent(parent.getContext(), ImageEditorActivity.class);
             ImageView imageView1 = (ImageView) v;
@@ -47,6 +53,12 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             }
             intent.putExtra("imageURI", "tmpImage");
             parent.getContext().startActivity(intent);
+        });
+        imageView.setOnLongClickListener(v -> {
+            BottomSheetFragment dialog = new BottomSheetFragment(imageView);
+            FragmentManager fm = ((AppCompatActivity)parent.getContext()).getSupportFragmentManager();
+            dialog.show(fm, "bla");
+            return true;
         });
         return new ImageViewHolder(imageView);
     }
