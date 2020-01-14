@@ -9,6 +9,10 @@ import de.hdmstuttgart.bildbearbeiter.utilities.Constants;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final int CAMERA_PAGE = 1;
+    public static final int LIBRARY_PAGE = 2;
+    public static final int SEARCH_PAGE = 3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
-        viewPager.post(() -> viewPager.setCurrentItem(Constants.LIBRARY_PAGE - 1));
+        viewPager.post(() -> viewPager.setCurrentItem(LIBRARY_PAGE - 1));
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
