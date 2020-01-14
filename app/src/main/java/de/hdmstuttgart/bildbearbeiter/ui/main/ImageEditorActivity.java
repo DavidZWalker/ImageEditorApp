@@ -23,20 +23,20 @@ import java.util.List;
 import de.hdmstuttgart.bildbearbeiter.filters.IBitmapFilter;
 import de.hdmstuttgart.bildbearbeiter.R;
 
-public class FullscreenImageActivity extends AppCompatActivity {
+public class ImageEditorActivity extends AppCompatActivity {
 
     ImageView imageView;
     LinearLayout filterButtons;
     Button saveButton;
     View selectedFilterView;
-    FullscreenImageViewModel viewModel;
+    ImageEditorViewModel viewModel;
     List<AsyncTask> runningTasks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen_image);
-        viewModel = new FullscreenImageViewModel(getFilesDir());
+        viewModel = new ImageEditorViewModel(getFilesDir());
 
         imageView = findViewById(R.id.fullscreenImage);
         filterButtons = findViewById(R.id.filterButtons);
@@ -73,7 +73,7 @@ public class FullscreenImageActivity extends AppCompatActivity {
         ImageView thumb = (ImageView) filterButtonLayoutRoot.getChildAt(0);
         TextView textView = (TextView) filterButtonLayoutRoot.getChildAt(1);
         filterButtons.addView(filterButtonLayoutRoot);
-        thumb.setImageBitmap(viewModel.getTempBlackBitmap());
+        thumb.setImageBitmap(viewModel.createTempBlackBitmap());
         textView.setText(filter.getName());
         return filterButtonLayoutRoot;
     }

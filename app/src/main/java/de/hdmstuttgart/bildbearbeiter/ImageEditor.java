@@ -1,11 +1,6 @@
-package de.hdmstuttgart.bildbearbeiter.ui.main;
+package de.hdmstuttgart.bildbearbeiter;
 
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-
-import androidx.lifecycle.ViewModel;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -22,44 +17,17 @@ import de.hdmstuttgart.bildbearbeiter.filters.SepiaBitmapFilter;
 import de.hdmstuttgart.bildbearbeiter.filters.VignetteBitmapFilter;
 import de.hdmstuttgart.bildbearbeiter.utilities.ImageFileHandler;
 
-public class FullscreenImageViewModel extends ViewModel {
+public class ImageEditor {
+
     private Bitmap sourceImage;
     private List<IBitmapFilter> availableFilters;
     private File rootDir;
 
-    public FullscreenImageViewModel(File appFilesDir) {
-        super();
+    public ImageEditor(File appFilesDir) {
         rootDir = appFilesDir;
         availableFilters = new ArrayList<>();
         sourceImage = loadSourceImageFromFile();
         initAvailableFilters();
-    }
-
-    public List<IBitmapFilter> getAvailableFilters()
-    {
-        return availableFilters;
-    }
-
-    public Bitmap getSourceImage()
-    {
-        if (sourceImage == null)
-        {
-            sourceImage = loadSourceImageFromFile();
-        }
-
-        return sourceImage;
-    }
-
-    public Bitmap getTempBlackBitmap()
-    {
-        int width = sourceImage.getWidth();
-        int height = sourceImage.getHeight();
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        Paint paint = new Paint();
-        paint.setColor(Color.BLACK);
-        canvas.drawRect(0F, 0F, (float) width, (float) height, paint);
-        return bitmap;
     }
 
     public boolean saveImageToLibrary(Bitmap imageToSave)
@@ -67,6 +35,14 @@ public class FullscreenImageViewModel extends ViewModel {
         ImageFileHandler ifh = new ImageFileHandler(rootDir, ImageFileHandler.IMAGE_DIR_LIB);
         Random r = new Random();
         return ifh.saveImage(imageToSave, "filtered_" + r.nextInt());
+    }
+
+    public Bitmap getSourceImage() {
+        return sourceImage != null ? sourceImage : loadSourceImageFromFile();
+    }
+
+    public List<IBitmapFilter> getAvailableFilters() {
+        return availableFilters;
     }
 
     private Bitmap loadSourceImageFromFile()

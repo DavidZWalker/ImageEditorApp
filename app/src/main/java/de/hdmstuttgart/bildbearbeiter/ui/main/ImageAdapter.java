@@ -34,7 +34,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         //create new view
         ImageView imageView = (ImageView) LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item, parent,false);
         imageView.setOnClickListener(v -> {
-            Intent intent = new Intent(parent.getContext(), FullscreenImageActivity.class);
+            Intent intent = new Intent(parent.getContext(), ImageEditorActivity.class);
             ImageView imageView1 = (ImageView) v;
             Bitmap bmp = ((BitmapDrawable) imageView1.getDrawable()).getBitmap();
             ImageFileHandler ifh = new ImageFileHandler(parent.getContext().getFilesDir(), ImageFileHandler.IMAGE_DIR_TMP);
