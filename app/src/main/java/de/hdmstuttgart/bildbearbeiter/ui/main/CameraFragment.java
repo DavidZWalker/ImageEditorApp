@@ -45,10 +45,7 @@ public class CameraFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel = new CameraViewModel(
-                new ImageFileHandler(getContext().getFilesDir(), ImageFileHandler.IMAGE_DIR_TMP),
-                new ImageFileHandler(getContext().getFilesDir(), ImageFileHandler.IMAGE_DIR_LIB)
-        );
+        viewModel = new CameraViewModel(getActivity().getFilesDir());
 
         capturedImageView = getActivity().findViewById(R.id.capturedImage);
         saveImageButton = getActivity().findViewById(R.id.saveImageButton);

@@ -8,42 +8,34 @@ import androidx.lifecycle.ViewModel;
 import java.io.File;
 import java.util.Random;
 
-import de.hdmstuttgart.bildbearbeiter.utilities.ImageFileHandler;
+import de.hdmstuttgart.bildbearbeiter.Camera;
 
 public class CameraViewModel extends ViewModel {
 
-    private Uri imageUri;
-    private ImageFileHandler capturedImageFileHandler;
-    private ImageFileHandler saveImageFileHandler;
-    private String capturedImageTmpFileName = "capturedImage";
+    private Camera model;
 
-    public CameraViewModel(ImageFileHandler capturedImageFileHandler, ImageFileHandler saveImageFileHandler) {
-        this.capturedImageFileHandler = capturedImageFileHandler;
-        this.saveImageFileHandler = saveImageFileHandler;
+    public CameraViewModel(File appFilesDir) {
+        model = new Camera(appFilesDir);
     }
 
     public boolean saveImageToLibrary(Bitmap imageToSave) {
         Random r = new Random();
-        return saveImageFileHandler.saveImage(imageToSave, "captured_" + r.nextInt());
-    }
-
-    public ImageFileHandler getCapturedImageFileHandler() {
-        return capturedImageFileHandler;
+        return model.saveImageToLibrary(imageToSave, "captured_" + r.nextInt());
     }
 
     public File createCapturedImageFile() {
-        return capturedImageFileHandler.createFileWithName(capturedImageTmpFileName);
+        return model.createCapturedImageFile();
     }
 
     public Bitmap getCapturedBitmap() {
-        return capturedImageFileHandler.getImage(capturedImageTmpFileName);
+        return model.getCapturedBitmap();
     }
 
     public void setImageUri(Uri imageUri) {
-        this.imageUri = imageUri;
+        model.setImageUri(imageUri);
     }
 
     public Uri getImageUri() {
-        return this.imageUri;
+        return model.getImageUri();
     }
 }
