@@ -39,7 +39,6 @@ public class SearchFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private ProgressBar searchProgressBar;
     private ImageAdapter searchAdapter;
-
     private EditText editText;
 
     @Override

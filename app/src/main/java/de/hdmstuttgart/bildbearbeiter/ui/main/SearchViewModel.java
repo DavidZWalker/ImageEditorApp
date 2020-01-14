@@ -1,64 +1,29 @@
 package de.hdmstuttgart.bildbearbeiter.ui.main;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
 import androidx.lifecycle.ViewModel;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import de.hdmstuttgart.bildbearbeiter.SearchResponseResult;
-import de.hdmstuttgart.bildbearbeiter.UnsplashAPI;
-import de.hdmstuttgart.bildbearbeiter.utilities.Constants;
+import de.hdmstuttgart.bildbearbeiter.UnsplashSearcher;
 import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SearchViewModel extends ViewModel {
-    private Retrofit retrofit;
-    private UnsplashAPI api;
+    private UnsplashSearcher model;
 
     public SearchViewModel() {
         super();
-
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
-
-        retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.UNSPLASH_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        api = retrofit.create(UnsplashAPI.class);
+        model = new UnsplashSearcher();
     }
 
     public Call<SearchResponseResult> doSearch(String query) {
-        return query.equals("") ? null :
-                api.getSearchResults(query,
-                        Constants.UNSPLASH_PAGE,
-                        Constants.UNSPLASH_PER_PAGE,
-                        Constants.UNSPLASH_ACCESS_TOKEN);
+        return query.equals("") ? null : model.search(query);
     }
 
     public Bitmap getBitmapFromSearchResponse(SearchResponseResult.Photo res) {
         try {
-            URL url = new URL(res.getUrls().getSmall());
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            return BitmapFactory.decodeStream(input);
+            return model.getBitmapFromSearchResponse(res);
         }
         catch (Exception ex) {
             return null;
         }
     }
-
 }
