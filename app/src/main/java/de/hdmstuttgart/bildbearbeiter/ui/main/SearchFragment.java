@@ -77,6 +77,8 @@ public class SearchFragment extends Fragment {
     }
 
     private void doSearch() {
+        searchButton.setEnabled(false);
+        searchButton.setText(R.string.searchingText);
         //get Search String from User
         String query = editText.getText().toString();
 
@@ -96,6 +98,8 @@ public class SearchFragment extends Fragment {
                 @Override
                 public void onFailure(Call<SearchResponseResult> call, Throwable t) {
                     searchProgressBar.setVisibility(View.GONE);
+                    searchButton.setText(R.string.searchButtons);
+                    searchButton.setEnabled(true);
                 }
             });
         }
@@ -124,6 +128,8 @@ public class SearchFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             searchProgressBar.setVisibility(View.GONE);
+            searchButton.setText(R.string.searchButtons);
+            searchButton.setEnabled(true);
         }
     }
 }

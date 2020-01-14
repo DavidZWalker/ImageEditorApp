@@ -147,7 +147,7 @@ public class ImageEditorActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            saveButton.setText(getResources().getText(R.string.savingText));
+            saveButton.setText(R.string.savingText);
             saveButton.setEnabled(false);
         }
 
@@ -160,7 +160,7 @@ public class ImageEditorActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean saveResult) {
             super.onPostExecute(saveResult);
             saveButton.setEnabled(true);
-            saveButton.setText(getResources().getText(R.string.save));
+            saveButton.setText(R.string.save);
             Snackbar.make(findViewById(R.id.rootView),
                     saveResult ? "Image saved to library!" : "Failed to save image.",
                     Snackbar.LENGTH_SHORT).show();

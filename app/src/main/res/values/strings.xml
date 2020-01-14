@@ -6,6 +6,7 @@
     <string name="searchPictures">Search for photos</string>
     <string name="searchButtons">Search</string>
     <string name="searchLabel">Search free high resolution photos online</string>
+    <string name="searchingText">Searching…</string>
 
     <string name="title_activity_fullscreen_image">Edit your image</string>
     <string name="dummy_button">Dummy Button</string>

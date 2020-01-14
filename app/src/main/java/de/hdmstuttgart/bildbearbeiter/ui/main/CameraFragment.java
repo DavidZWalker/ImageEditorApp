@@ -105,7 +105,7 @@ public class CameraFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            saveImageButton.setText(getResources().getText(R.string.savingText));
+            saveImageButton.setText(R.string.savingText);
             saveImageButton.setEnabled(false);
         }
 
@@ -125,7 +125,7 @@ public class CameraFragment extends Fragment {
             else saveText = "Failed to save image.";
 
             saveImageButton.setEnabled(true);
-            saveImageButton.setText(getResources().getText(R.string.save));
+            saveImageButton.setText(R.string.save);
             saveImageButton.setVisibility(View.INVISIBLE);
             Snackbar.make(getActivity().findViewById(android.R.id.content),
                     saveText,
