@@ -1,4 +1,4 @@
-package de.hdmstuttgart.bildbearbeiter.ui.main;
+package de.hdmstuttgart.bildbearbeiter.views;
 
 import androidx.core.content.FileProvider;
 
@@ -23,8 +23,8 @@ import android.widget.ImageView;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import de.hdmstuttgart.bildbearbeiter.MainActivity;
 import de.hdmstuttgart.bildbearbeiter.R;
+import de.hdmstuttgart.bildbearbeiter.viewmodels.CameraViewModel;
 
 public class CameraFragment extends Fragment {
 

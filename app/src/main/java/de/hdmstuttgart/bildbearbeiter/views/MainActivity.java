@@ -1,10 +1,12 @@
-package de.hdmstuttgart.bildbearbeiter;
+package de.hdmstuttgart.bildbearbeiter.views;
 
 import android.os.Bundle;
 import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
-import de.hdmstuttgart.bildbearbeiter.ui.main.adapters.SectionsPagerAdapter;
+
+import de.hdmstuttgart.bildbearbeiter.R;
+import de.hdmstuttgart.bildbearbeiter.adapters.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 

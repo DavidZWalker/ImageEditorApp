@@ -1,4 +1,4 @@
-package de.hdmstuttgart.bildbearbeiter;
+package de.hdmstuttgart.bildbearbeiter.models;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

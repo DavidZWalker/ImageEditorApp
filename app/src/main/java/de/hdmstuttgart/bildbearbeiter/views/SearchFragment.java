@@ -1,4 +1,4 @@
-package de.hdmstuttgart.bildbearbeiter.ui.main;
+package de.hdmstuttgart.bildbearbeiter.views;
 
 import androidx.lifecycle.ViewModelProviders;
 
@@ -24,9 +24,10 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hdmstuttgart.bildbearbeiter.SearchResponseResult;
+import de.hdmstuttgart.bildbearbeiter.models.SearchResponseResult;
 import de.hdmstuttgart.bildbearbeiter.R;
-import de.hdmstuttgart.bildbearbeiter.ui.main.adapters.ImageAdapter;
+import de.hdmstuttgart.bildbearbeiter.adapters.ImageAdapter;
+import de.hdmstuttgart.bildbearbeiter.viewmodels.SearchViewModel;
 import de.hdmstuttgart.bildbearbeiter.utilities.UIUtil;
 import retrofit2.Call;
 import retrofit2.Callback;

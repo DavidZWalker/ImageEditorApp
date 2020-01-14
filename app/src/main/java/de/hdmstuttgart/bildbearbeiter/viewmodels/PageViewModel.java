@@ -1,4 +1,4 @@
-package de.hdmstuttgart.bildbearbeiter.ui.main;
+package de.hdmstuttgart.bildbearbeiter.viewmodels;
 
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;

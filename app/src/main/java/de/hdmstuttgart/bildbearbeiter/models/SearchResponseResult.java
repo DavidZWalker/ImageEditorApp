@@ -1,4 +1,4 @@
-package de.hdmstuttgart.bildbearbeiter;
+package de.hdmstuttgart.bildbearbeiter.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

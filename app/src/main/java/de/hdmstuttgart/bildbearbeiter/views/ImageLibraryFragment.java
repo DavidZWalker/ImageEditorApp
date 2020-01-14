@@ -1,4 +1,4 @@
-package de.hdmstuttgart.bildbearbeiter.ui.main;
+package de.hdmstuttgart.bildbearbeiter.views;
 
 import androidx.lifecycle.ViewModelProviders;
 
@@ -22,7 +22,9 @@ import java.io.File;
 import java.util.ArrayList;
 
 import de.hdmstuttgart.bildbearbeiter.R;
-import de.hdmstuttgart.bildbearbeiter.ui.main.adapters.ImageAdapter;
+import de.hdmstuttgart.bildbearbeiter.adapters.ImageAdapter;
+import de.hdmstuttgart.bildbearbeiter.viewmodels.ImageLibraryViewModel;
+import de.hdmstuttgart.bildbearbeiter.viewmodels.ImageLibraryViewModelFactory;
 
 public class ImageLibraryFragment extends Fragment {
 

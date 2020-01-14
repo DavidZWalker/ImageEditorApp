@@ -1,4 +1,4 @@
-package de.hdmstuttgart.bildbearbeiter.ui.main;
+package de.hdmstuttgart.bildbearbeiter.viewmodels;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import de.hdmstuttgart.bildbearbeiter.ImageEditor;
+import de.hdmstuttgart.bildbearbeiter.models.ImageEditor;
 import de.hdmstuttgart.bildbearbeiter.filters.IBitmapFilter;
 
 public class ImageEditorViewModel extends ViewModel {

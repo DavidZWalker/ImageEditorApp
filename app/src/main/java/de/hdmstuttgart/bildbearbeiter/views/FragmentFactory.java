@@ -1,8 +1,6 @@
-package de.hdmstuttgart.bildbearbeiter.ui.main;
+package de.hdmstuttgart.bildbearbeiter.views;
 
 import androidx.fragment.app.Fragment;
-
-import de.hdmstuttgart.bildbearbeiter.MainActivity;
 
 /**
  * A placeholder fragment containing a simple view.

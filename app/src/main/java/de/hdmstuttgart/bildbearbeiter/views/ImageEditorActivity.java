@@ -1,4 +1,4 @@
-package de.hdmstuttgart.bildbearbeiter.ui.main;
+package de.hdmstuttgart.bildbearbeiter.views;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Bitmap;
@@ -22,6 +22,7 @@ import java.util.List;
 
 import de.hdmstuttgart.bildbearbeiter.filters.IBitmapFilter;
 import de.hdmstuttgart.bildbearbeiter.R;
+import de.hdmstuttgart.bildbearbeiter.viewmodels.ImageEditorViewModel;
 
 public class ImageEditorActivity extends AppCompatActivity {
 

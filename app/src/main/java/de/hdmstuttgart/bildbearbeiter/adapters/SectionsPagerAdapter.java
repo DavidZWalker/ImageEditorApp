@@ -1,4 +1,4 @@
-package de.hdmstuttgart.bildbearbeiter.ui.main.adapters;
+package de.hdmstuttgart.bildbearbeiter.adapters;
 
 import android.content.Context;
 
@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdmstuttgart.bildbearbeiter.R;
-import de.hdmstuttgart.bildbearbeiter.ui.main.CameraFragment;
-import de.hdmstuttgart.bildbearbeiter.ui.main.FragmentFactory;
+import de.hdmstuttgart.bildbearbeiter.views.CameraFragment;
+import de.hdmstuttgart.bildbearbeiter.views.FragmentFactory;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to

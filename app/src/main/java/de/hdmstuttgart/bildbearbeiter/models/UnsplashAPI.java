@@ -1,4 +1,4 @@
-package de.hdmstuttgart.bildbearbeiter;
+package de.hdmstuttgart.bildbearbeiter.models;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
