@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class ImageFileHandler {
 
@@ -19,32 +20,19 @@ public class ImageFileHandler {
         if (!imageDir.exists()) imageDir.mkdirs();
     }
 
-    public final boolean saveImage(Bitmap imageToSave, String fileName)
-    {
-        try {
+    public final void saveImage(Bitmap imageToSave, String fileName) throws IOException {
             File file = new File(imageDir, fileName);
             FileOutputStream fos = new FileOutputStream(file);
             imageToSave.compress(Bitmap.CompressFormat.PNG, 0, fos);
             fos.close();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 
-    public final Bitmap getImage(String imgName) {
-        try {
+    public final Bitmap getImage(String imgName) throws IOException {
             File imageFile = new File(imageDir, imgName);
             FileInputStream fis = new FileInputStream(imageFile);
             Bitmap decodedBitmap = BitmapFactory.decodeStream(fis);
             fis.close();
             return decodedBitmap;
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
-        }
     }
 
     public File getImageFolder() {

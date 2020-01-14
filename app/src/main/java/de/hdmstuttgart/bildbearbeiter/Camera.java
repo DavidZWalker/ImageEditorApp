@@ -2,9 +2,8 @@ package de.hdmstuttgart.bildbearbeiter;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
-
 import java.io.File;
-import java.util.Random;
+import java.io.IOException;
 
 import de.hdmstuttgart.bildbearbeiter.utilities.ImageFileHandler;
 
@@ -19,15 +18,15 @@ public class Camera {
         saveImageFileHandler = new ImageFileHandler(appFilesDir, ImageFileHandler.IMAGE_DIR_LIB);
     }
 
-    public boolean saveImageToLibrary(Bitmap imageToSave, String fileName) {
-        return saveImageFileHandler.saveImage(imageToSave, fileName);
+    public void saveImageToLibrary(Bitmap imageToSave, String fileName) throws IOException {
+        saveImageFileHandler.saveImage(imageToSave, fileName);
     }
 
     public File createCapturedImageFile() {
         return capturedImageFileHandler.createFileWithName(capturedImageTmpFileName);
     }
 
-    public Bitmap getCapturedBitmap() {
+    public Bitmap getCapturedBitmap() throws IOException {
         return capturedImageFileHandler.getImage(capturedImageTmpFileName);
     }
     public void setImageUri(Uri imageUri) {

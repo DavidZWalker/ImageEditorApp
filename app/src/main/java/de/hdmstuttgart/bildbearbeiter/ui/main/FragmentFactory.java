@@ -18,7 +18,7 @@ public class FragmentFactory {
                 return new SearchFragment();
             case Constants.LIBRARY_PAGE:
             default:
-                return new LibraryFragment();
+                return new ImageLibraryFragment();
         }
     }
 }

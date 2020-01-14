@@ -2,12 +2,10 @@ package de.hdmstuttgart.bildbearbeiter.ui.main;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
-
 import androidx.lifecycle.ViewModel;
-
 import java.io.File;
+import java.io.IOException;
 import java.util.Random;
-
 import de.hdmstuttgart.bildbearbeiter.Camera;
 
 public class CameraViewModel extends ViewModel {
@@ -19,8 +17,14 @@ public class CameraViewModel extends ViewModel {
     }
 
     public boolean saveImageToLibrary(Bitmap imageToSave) {
-        Random r = new Random();
-        return model.saveImageToLibrary(imageToSave, "captured_" + r.nextInt());
+        try {
+            Random r = new Random();
+            model.saveImageToLibrary(imageToSave, "captured_" + r.nextInt());
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public File createCapturedImageFile() {
@@ -28,7 +32,12 @@ public class CameraViewModel extends ViewModel {
     }
 
     public Bitmap getCapturedBitmap() {
-        return model.getCapturedBitmap();
+        try {
+            return model.getCapturedBitmap();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void setImageUri(Uri imageUri) {

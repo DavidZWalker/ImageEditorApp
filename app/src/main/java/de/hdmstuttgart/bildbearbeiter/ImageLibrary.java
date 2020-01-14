@@ -1,10 +1,9 @@
-package de.hdmstuttgart.bildbearbeiter.ui.main;
+package de.hdmstuttgart.bildbearbeiter;
 
 import android.graphics.Bitmap;
 
-import androidx.lifecycle.ViewModel;
-
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,15 +11,12 @@ import java.util.stream.Collectors;
 
 import de.hdmstuttgart.bildbearbeiter.utilities.ImageFileHandler;
 
-public class LibraryViewModel extends ViewModel {
-
+public class ImageLibrary {
     private ImageFileHandler imageFileHandler;
     private List<File> loadedFiles = new ArrayList<>();
 
-    public LibraryViewModel(ImageFileHandler imageFileHandler)
-    {
-        super();
-        this.imageFileHandler = imageFileHandler;
+    public ImageLibrary(File appFilesDir) {
+        imageFileHandler = new ImageFileHandler(appFilesDir, ImageFileHandler.IMAGE_DIR_LIB);
     }
 
     public List<File> getUnloadedImageFiles() {
@@ -30,7 +26,7 @@ public class LibraryViewModel extends ViewModel {
                 .collect(Collectors.toList());
     }
 
-    public Bitmap getBitmapFromFile(File file) {
+    public Bitmap getBitmapFromFile(File file) throws IOException {
         loadedFiles.add(file);
         return imageFileHandler.getImage(file.getName());
     }

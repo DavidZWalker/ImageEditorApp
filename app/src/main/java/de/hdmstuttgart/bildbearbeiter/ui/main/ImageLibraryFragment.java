@@ -22,11 +22,10 @@ import java.io.File;
 import java.util.ArrayList;
 
 import de.hdmstuttgart.bildbearbeiter.R;
-import de.hdmstuttgart.bildbearbeiter.utilities.ImageFileHandler;
 
-public class LibraryFragment extends Fragment {
+public class ImageLibraryFragment extends Fragment {
 
-    private LibraryViewModel mViewModel;
+    private ImageLibraryViewModel mViewModel;
     private RecyclerView imageRecyclerView;
     private ImageAdapter mAdapter;
     private ProgressBar progressBar;
@@ -35,8 +34,7 @@ public class LibraryFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        ImageFileHandler imageFileHandler = new ImageFileHandler(getContext().getFilesDir(), ImageFileHandler.IMAGE_DIR_LIB);
-        mViewModel = ViewModelProviders.of(this, new LibraryViewModelFactory(imageFileHandler)).get(LibraryViewModel.class);
+        mViewModel = ViewModelProviders.of(this, new ImageLibraryViewModelFactory(getContext().getFilesDir())).get(ImageLibraryViewModel.class);
 
         return inflater.inflate(R.layout.library_fragment, container, false);
     }
