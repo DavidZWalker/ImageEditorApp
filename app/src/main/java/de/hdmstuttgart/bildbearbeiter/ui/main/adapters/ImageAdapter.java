@@ -1,4 +1,4 @@
-package de.hdmstuttgart.bildbearbeiter.ui.main;
+package de.hdmstuttgart.bildbearbeiter.ui.main.adapters;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 import de.hdmstuttgart.bildbearbeiter.R;
+import de.hdmstuttgart.bildbearbeiter.ui.main.ImageEditorActivity;
 import de.hdmstuttgart.bildbearbeiter.utilities.ImageFileHandler;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {

@@ -22,6 +22,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import de.hdmstuttgart.bildbearbeiter.R;
+import de.hdmstuttgart.bildbearbeiter.ui.main.adapters.ImageAdapter;
 
 public class ImageLibraryFragment extends Fragment {
 
