@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import java.io.IOException;
+import java.util.Random;
 
 import de.hdmstuttgart.bildbearbeiter.R;
 import de.hdmstuttgart.bildbearbeiter.adapters.ImageAdapter;
@@ -64,6 +66,9 @@ public class BottomSheetFragment extends com.google.android.material.bottomsheet
     }
 
     public void onClickSaveImage(View view) {
+        Bitmap bmpToSave = UIUtil.extractBitmap(imageView);
+        MediaStore.Images.Media.insertImage(getContext().getContentResolver(), bmpToSave, "PhotoMagicPhoto" , "savedPhoto");
+        MainActivity.showSnackbar("Image saved!");
         dismiss();
     }
 
@@ -72,15 +77,9 @@ public class BottomSheetFragment extends com.google.android.material.bottomsheet
         if (bmp != null) {
             imageLibrary.removeImage(bmp);
             parent.removeBitmap(bmp);
+            MainActivity.showSnackbar("Image deleted!");
         }
         dismiss();
-    }
-
-    /*
-     * This method saves a Provided Bitmap to the Gallery
-     */
-    public void saveToGallery(Bitmap bitmapToSave, Context context) {
-
     }
 
 }
