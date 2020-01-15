@@ -42,7 +42,6 @@ public class BottomSheetFragment extends com.google.android.material.bottomsheet
         return v;
     }
 
-
     public void onClickEdit(View view) {
         //todo change redundant code
         Intent intent = new Intent(view.getContext(), ImageEditorActivity.class);
