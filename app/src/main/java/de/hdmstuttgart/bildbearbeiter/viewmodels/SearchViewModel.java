@@ -1,7 +1,9 @@
 package de.hdmstuttgart.bildbearbeiter.viewmodels;
 
 import android.graphics.Bitmap;
+
 import androidx.lifecycle.ViewModel;
+
 import de.hdmstuttgart.bildbearbeiter.models.SearchResponseResult;
 import de.hdmstuttgart.bildbearbeiter.models.UnsplashSearcher;
 import retrofit2.Call;

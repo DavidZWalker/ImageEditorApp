@@ -1,17 +1,8 @@
 package de.hdmstuttgart.bildbearbeiter.views;
 
-import androidx.lifecycle.ViewModelProviders;
-
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +10,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hdmstuttgart.bildbearbeiter.models.SearchResponseResult;
 import de.hdmstuttgart.bildbearbeiter.R;
 import de.hdmstuttgart.bildbearbeiter.adapters.ImageAdapter;
-import de.hdmstuttgart.bildbearbeiter.viewmodels.SearchViewModel;
+import de.hdmstuttgart.bildbearbeiter.models.SearchResponseResult;
 import de.hdmstuttgart.bildbearbeiter.utilities.UIUtil;
+import de.hdmstuttgart.bildbearbeiter.viewmodels.SearchViewModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

@@ -2,10 +2,8 @@ package de.hdmstuttgart.bildbearbeiter.utilities;
 
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 
 import java.io.File;
 import java.io.FileInputStream;

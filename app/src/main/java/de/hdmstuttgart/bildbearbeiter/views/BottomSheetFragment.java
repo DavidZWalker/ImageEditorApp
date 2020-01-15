@@ -1,22 +1,14 @@
 package de.hdmstuttgart.bildbearbeiter.views;
 
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-
-import android.os.Environment;
-import android.os.VibrationEffect;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import de.hdmstuttgart.bildbearbeiter.R;
@@ -24,7 +16,6 @@ import de.hdmstuttgart.bildbearbeiter.adapters.ImageAdapter;
 import de.hdmstuttgart.bildbearbeiter.models.ImageLibrary;
 import de.hdmstuttgart.bildbearbeiter.utilities.ImageFileHandler;
 import de.hdmstuttgart.bildbearbeiter.utilities.UIUtil;
-import de.hdmstuttgart.bildbearbeiter.viewmodels.BottomSheetFramentViewModel;
 
 
 public class BottomSheetFragment extends com.google.android.material.bottomsheet.BottomSheetDialogFragment {
@@ -72,8 +63,6 @@ public class BottomSheetFragment extends com.google.android.material.bottomsheet
     }
 
     public void onClickSaveImage(View view) {
-
-        saveToGallery(UIUtil.extractBitmap(imageView),getContext());
     }
 
     public void onClickDeleteImage(View view) {

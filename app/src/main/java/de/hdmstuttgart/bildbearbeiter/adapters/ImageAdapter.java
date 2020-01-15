@@ -3,9 +3,7 @@ package de.hdmstuttgart.bildbearbeiter.adapters;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -14,16 +12,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-
 import java.io.IOException;
 import java.util.List;
 
 import de.hdmstuttgart.bildbearbeiter.R;
 import de.hdmstuttgart.bildbearbeiter.models.ImageLibrary;
+import de.hdmstuttgart.bildbearbeiter.utilities.ImageFileHandler;
 import de.hdmstuttgart.bildbearbeiter.views.BottomSheetFragment;
 import de.hdmstuttgart.bildbearbeiter.views.ImageEditorActivity;
-import de.hdmstuttgart.bildbearbeiter.utilities.ImageFileHandler;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
     private List<Bitmap> bitmapList;

@@ -14,8 +14,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Objects;
 
-import de.hdmstuttgart.bildbearbeiter.R;
-
 public class UIUtil {
 
     public static void hideKeyboard(@NonNull Activity activeActivity) {

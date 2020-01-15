@@ -3,9 +3,10 @@ package de.hdmstuttgart.bildbearbeiter.views;
 import android.os.Bundle;
 import android.view.View;
 
-import com.google.android.material.tabs.TabLayout;
-import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 
 import de.hdmstuttgart.bildbearbeiter.R;
 import de.hdmstuttgart.bildbearbeiter.adapters.SectionsPagerAdapter;

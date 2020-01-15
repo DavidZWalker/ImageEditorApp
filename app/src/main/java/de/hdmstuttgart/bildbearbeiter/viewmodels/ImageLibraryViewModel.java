@@ -1,10 +1,13 @@
 package de.hdmstuttgart.bildbearbeiter.viewmodels;
 
 import android.graphics.Bitmap;
+
 import androidx.lifecycle.ViewModel;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+
 import de.hdmstuttgart.bildbearbeiter.models.ImageLibrary;
 
 public class ImageLibraryViewModel extends ViewModel {

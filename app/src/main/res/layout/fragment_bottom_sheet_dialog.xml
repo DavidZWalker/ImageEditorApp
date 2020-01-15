@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingTop="8dp"
+    android:id="@+id/fragment_bottom_sheet"
     android:paddingBottom="8dp">
 
     <!-- NOTE: This list should be displayed in a list

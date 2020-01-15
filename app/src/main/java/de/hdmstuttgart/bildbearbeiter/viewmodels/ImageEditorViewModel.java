@@ -11,8 +11,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import de.hdmstuttgart.bildbearbeiter.models.ImageEditor;
 import de.hdmstuttgart.bildbearbeiter.filters.IBitmapFilter;
+import de.hdmstuttgart.bildbearbeiter.models.ImageEditor;
 
 public class ImageEditorViewModel extends ViewModel {
 

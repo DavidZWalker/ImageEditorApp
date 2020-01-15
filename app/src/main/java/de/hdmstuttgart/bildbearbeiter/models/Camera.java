@@ -2,6 +2,7 @@ package de.hdmstuttgart.bildbearbeiter.models;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
+
 import java.io.File;
 import java.io.IOException;
 

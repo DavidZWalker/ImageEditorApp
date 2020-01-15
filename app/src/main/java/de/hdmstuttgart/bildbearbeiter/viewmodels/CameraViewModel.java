@@ -2,10 +2,13 @@ package de.hdmstuttgart.bildbearbeiter.viewmodels;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
+
 import androidx.lifecycle.ViewModel;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
+
 import de.hdmstuttgart.bildbearbeiter.models.Camera;
 
 public class CameraViewModel extends ViewModel {
