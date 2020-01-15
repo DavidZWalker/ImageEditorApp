@@ -1,11 +1,13 @@
 package de.hdmstuttgart.bildbearbeiter.views;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.VibrationEffect;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -163,6 +165,7 @@ public class ImageEditorActivity extends AppCompatActivity {
             super.onPostExecute(saveResult);
             saveButton.setEnabled(true);
             saveButton.setText(R.string.save);
+            VibrationEffect.createOneShot(1000, 255);
             UIUtil.showShortSnackbar(findViewById(R.id.rootView), saveResult ? "Image saved to library!" : "Failed to save image.");
         }
     }
