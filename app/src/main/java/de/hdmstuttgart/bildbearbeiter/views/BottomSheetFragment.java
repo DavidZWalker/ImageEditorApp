@@ -60,9 +60,11 @@ public class BottomSheetFragment extends com.google.android.material.bottomsheet
         }
         intent.putExtra("imageURI", "tmpImage");
         view.getContext().startActivity(intent);
+        dismiss();
     }
 
     public void onClickSaveImage(View view) {
+        dismiss();
     }
 
     public void onClickDeleteImage(View view) {
@@ -71,7 +73,9 @@ public class BottomSheetFragment extends com.google.android.material.bottomsheet
             imageLibrary.removeImage(bmp);
             parent.removeBitmap(bmp);
         }
+        dismiss();
     }
+
     /*
      * This method saves a Provided Bitmap to the Gallery
      */

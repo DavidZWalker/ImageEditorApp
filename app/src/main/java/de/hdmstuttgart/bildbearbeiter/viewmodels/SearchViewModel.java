@@ -23,8 +23,7 @@ public class SearchViewModel extends ViewModel {
     public Bitmap getBitmapFromSearchResponse(SearchResponseResult.Photo res) {
         try {
             return model.getBitmapFromSearchResponse(res);
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             return null;
         }
     }

@@ -41,8 +41,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         Fragment fragment = fragmentFactory.getFragment(position + 1);
-        if (fragment instanceof CameraFragment)
-        {
+        if (fragment instanceof CameraFragment) {
             CameraFragment cameraFragment = (CameraFragment) fragment;
             cameraFragment.setViewPagerContext(viewPager);
         }

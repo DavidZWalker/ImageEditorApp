@@ -30,6 +30,7 @@ public class Camera {
     public Bitmap getCapturedBitmap() throws IOException {
         return capturedImageFileHandler.getImage(capturedImageTmpFileName);
     }
+
     public void setImageUri(Uri imageUri) {
         this.imageUri = imageUri;
     }

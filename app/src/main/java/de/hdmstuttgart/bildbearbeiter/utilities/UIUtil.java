@@ -27,8 +27,7 @@ public class UIUtil {
     }
 
     public static Bitmap extractBitmap(ImageView iv) {
-        if (iv != null)
-        {
+        if (iv != null) {
             BitmapDrawable drawable = (BitmapDrawable) iv.getDrawable();
             return drawable != null ? drawable.getBitmap() : null;
         }

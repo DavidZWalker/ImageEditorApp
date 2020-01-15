@@ -14,8 +14,7 @@ public class ImageLibraryViewModel extends ViewModel {
 
     private ImageLibrary model;
 
-    public ImageLibraryViewModel(File appFilesDir)
-    {
+    public ImageLibraryViewModel(File appFilesDir) {
         super();
         model = new ImageLibrary(appFilesDir);
     }
@@ -36,5 +35,7 @@ public class ImageLibraryViewModel extends ViewModel {
         model.removeImage(bmpToRemove);
     }
 
-    public ImageLibrary getModel() { return model; }
+    public ImageLibrary getModel() {
+        return model;
+    }
 }

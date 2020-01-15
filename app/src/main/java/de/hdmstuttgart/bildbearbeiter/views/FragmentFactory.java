@@ -8,8 +8,7 @@ import androidx.fragment.app.Fragment;
 public class FragmentFactory {
 
     public Fragment getFragment(int index) {
-        switch (index)
-        {
+        switch (index) {
             case MainActivity.CAMERA_PAGE:
                 return new CameraFragment();
             case MainActivity.SEARCH_PAGE:

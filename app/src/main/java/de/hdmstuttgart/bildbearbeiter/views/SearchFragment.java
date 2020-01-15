@@ -100,8 +100,7 @@ public class SearchFragment extends Fragment {
                     searchButton.setEnabled(true);
                 }
             });
-        }
-        else {
+        } else {
             UIUtil.showShortSnackbar(getView(), "Please enter something in the search field");
             searchProgressBar.setVisibility(View.GONE);
         }

@@ -4,5 +4,6 @@ import android.graphics.Bitmap;
 
 public interface IBitmapFilter {
     Bitmap applyFilter();
+
     String getName();
 }

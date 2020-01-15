@@ -9,7 +9,7 @@ public abstract class BitmapFilterBase implements IBitmapFilter {
 
     public BitmapFilterBase(Bitmap sourceBitmap) {
         this.sourceBitmap = sourceBitmap;
-        resultBitmap = Bitmap.createBitmap(sourceBitmap.getWidth(), sourceBitmap.getHeight(),sourceBitmap.getConfig());
+        resultBitmap = Bitmap.createBitmap(sourceBitmap.getWidth(), sourceBitmap.getHeight(), sourceBitmap.getConfig());
     }
 
     @Override

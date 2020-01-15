@@ -57,8 +57,7 @@ public class ImageEditor {
         return ifh.getImage("tmpImage");
     }
 
-    private void initAvailableFilters()
-    {
+    private void initAvailableFilters() {
         // ADD NEW FILTERS HERE!!!
         availableFilters.add(new NoBitmapFilter(sourceImage));
         availableFilters.add(new BlackWhiteBitmapFilter(sourceImage));

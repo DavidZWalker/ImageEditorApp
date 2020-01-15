@@ -23,13 +23,11 @@ public class ImageEditorViewModel extends ViewModel {
         model = new ImageEditor(appFilesDir);
     }
 
-    public List<IBitmapFilter> getAvailableFilters()
-    {
+    public List<IBitmapFilter> getAvailableFilters() {
         return model.getAvailableFilters();
     }
 
-    public Bitmap getSourceImage()
-    {
+    public Bitmap getSourceImage() {
         try {
             return model.getSourceImage();
         } catch (IOException e) {
@@ -48,8 +46,7 @@ public class ImageEditorViewModel extends ViewModel {
         }
     }
 
-    public Bitmap createTempBlackBitmap()
-    {
+    public Bitmap createTempBlackBitmap() {
         try {
             int width = model.getSourceImage().getWidth();
             int height = model.getSourceImage().getHeight();

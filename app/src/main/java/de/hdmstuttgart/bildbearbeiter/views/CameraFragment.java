@@ -48,7 +48,7 @@ public class CameraFragment extends Fragment {
     }
 
     private void saveImageToLibrary() {
-        Bitmap bmp = ((BitmapDrawable)capturedImageView.getDrawable()).getBitmap();
+        Bitmap bmp = ((BitmapDrawable) capturedImageView.getDrawable()).getBitmap();
         new SaveImageTask(bmp).execute();
     }
 
@@ -63,7 +63,7 @@ public class CameraFragment extends Fragment {
         intent.putExtra(MediaStore.EXTRA_OUTPUT, viewModel.getImageUri());
         intent.putExtra("android.intent.extras.LENS_FACING_FRONT", 1);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        startActivityForResult(intent,100);
+        startActivityForResult(intent, 100);
     }
 
     @Override
@@ -71,8 +71,7 @@ public class CameraFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == -1) {
             loadImageIntoView();
-        }
-        else if (resultCode == 0) {
+        } else if (resultCode == 0) {
             switchToLibrary();
         }
     }
@@ -117,8 +116,7 @@ public class CameraFragment extends Fragment {
             if (saveResult) {
                 capturedImageView.setImageBitmap(null);
                 saveText = "Image saved to library!";
-            }
-            else saveText = "Failed to save image.";
+            } else saveText = "Failed to save image.";
 
             saveImageButton.setEnabled(true);
             saveImageButton.setText(R.string.save);

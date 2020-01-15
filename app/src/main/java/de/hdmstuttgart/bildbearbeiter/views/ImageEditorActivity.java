@@ -61,7 +61,7 @@ public class ImageEditorActivity extends AppCompatActivity {
     }
 
     public void saveImageToLibrary(View v) {
-        Bitmap imageToSave = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+        Bitmap imageToSave = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
         new SaveImageTask(imageToSave).execute();
     }
 
@@ -71,7 +71,7 @@ public class ImageEditorActivity extends AppCompatActivity {
     }
 
     private View startAddFilterButton(IBitmapFilter filter) {
-        RelativeLayout filterButtonLayoutRoot = (RelativeLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.filter_button, null ,false);
+        RelativeLayout filterButtonLayoutRoot = (RelativeLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.filter_button, null, false);
         ImageView thumb = (ImageView) filterButtonLayoutRoot.getChildAt(0);
         TextView textView = (TextView) filterButtonLayoutRoot.getChildAt(1);
         filterButtons.addView(filterButtonLayoutRoot);
@@ -100,7 +100,7 @@ public class ImageEditorActivity extends AppCompatActivity {
         // select new filter view
         RelativeLayout newFilterView = (RelativeLayout) newSelection;
         ImageView thumb = (ImageView) newFilterView.getChildAt(0);
-        Bitmap bmp = ((BitmapDrawable)thumb.getDrawable()).getBitmap();
+        Bitmap bmp = ((BitmapDrawable) thumb.getDrawable()).getBitmap();
         imageView.setImageBitmap(bmp);
         newFilterView.setBackgroundColor(Color.GREEN);
         selectedFilterView = newFilterView;
@@ -112,8 +112,7 @@ public class ImageEditorActivity extends AppCompatActivity {
         IBitmapFilter filter;
         View layout;
 
-        public AddFilterButtonToViewTask(IBitmapFilter filter)
-        {
+        public AddFilterButtonToViewTask(IBitmapFilter filter) {
             super();
             this.filter = filter;
         }
@@ -139,7 +138,7 @@ public class ImageEditorActivity extends AppCompatActivity {
         }
     }
 
-    private class SaveImageTask extends  AsyncTask<Void, Void, Boolean> {
+    private class SaveImageTask extends AsyncTask<Void, Void, Boolean> {
 
         private Bitmap imageToSave;
 

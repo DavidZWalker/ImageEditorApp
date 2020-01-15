@@ -30,7 +30,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         notifyDataSetChanged();
     }
 
-    public ImageAdapter(List<Bitmap> bitmapList, ImageLibrary imageLibrary){
+    public ImageAdapter(List<Bitmap> bitmapList, ImageLibrary imageLibrary) {
         this(bitmapList);
         this.imageLibrary = imageLibrary;
     }
@@ -58,10 +58,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             intent.putExtra("imageURI", "tmpImage");
             parent.getContext().startActivity(intent);
         });
-        if(imageLibrary != null){
+        if (imageLibrary != null) {
             imageView.setOnLongClickListener(v -> {
-                BottomSheetFragment dialog = new BottomSheetFragment(this,imageView,imageLibrary);
-                FragmentManager fm = ((AppCompatActivity)parent.getContext()).getSupportFragmentManager();
+                BottomSheetFragment dialog = new BottomSheetFragment(this, imageView, imageLibrary);
+                FragmentManager fm = ((AppCompatActivity) parent.getContext()).getSupportFragmentManager();
                 dialog.show(fm, "bla");
                 return true;
             });
