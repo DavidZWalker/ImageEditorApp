@@ -2,7 +2,10 @@ package de.hdmstuttgart.bildbearbeiter.utilities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
@@ -18,5 +21,15 @@ public class UIUtil {
                         InputMethodManager.RESULT_UNCHANGED_SHOWN);
             }
         }
+    }
+
+    public static Bitmap extractBitmap(ImageView iv) {
+        if (iv != null)
+        {
+            BitmapDrawable drawable = (BitmapDrawable) iv.getDrawable();
+            return drawable != null ? drawable.getBitmap() : null;
+        }
+
+        return null;
     }
 }
