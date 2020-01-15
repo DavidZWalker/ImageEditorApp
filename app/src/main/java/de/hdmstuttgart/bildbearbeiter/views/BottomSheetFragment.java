@@ -1,6 +1,5 @@
 package de.hdmstuttgart.bildbearbeiter.views;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -9,10 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import java.io.IOException;
-import java.util.Random;
-
 import de.hdmstuttgart.bildbearbeiter.R;
 import de.hdmstuttgart.bildbearbeiter.adapters.ImageAdapter;
 import de.hdmstuttgart.bildbearbeiter.models.ImageLibrary;
