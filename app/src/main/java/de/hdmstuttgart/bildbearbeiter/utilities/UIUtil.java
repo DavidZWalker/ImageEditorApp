@@ -32,4 +32,8 @@ public class UIUtil {
 
         return null;
     }
+
+    public static void showShortSnackbar(String message) {
+
+    }
 }
