@@ -48,28 +48,4 @@ public class ImageFileHandler {
     public void deleteFile(File fileToRemove) {
         fileToRemove.delete();
     }
-
-    /*
-     * This method saves a Provided File to the Gallery
-     */
-    public boolean saveToGallery(Bitmap bitmapToSave, Context context) {
-        ContextWrapper cw = new ContextWrapper(context);
-        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-        File file = new File(directory, "UniqueFileName" + ".jpg");
-        if (!file.exists()) {
-            FileOutputStream fos = null;
-            try {
-                fos = new FileOutputStream(file);
-                bitmapToSave.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                fos.flush();
-                fos.close();
-                return true;
-            } catch (java.io.IOException e) {
-                e.printStackTrace();
-
-            }
-
-        }
-        return false;
-    }
 }
