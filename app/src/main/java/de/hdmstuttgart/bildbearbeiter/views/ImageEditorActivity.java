@@ -22,6 +22,7 @@ import java.util.List;
 
 import de.hdmstuttgart.bildbearbeiter.filters.IBitmapFilter;
 import de.hdmstuttgart.bildbearbeiter.R;
+import de.hdmstuttgart.bildbearbeiter.utilities.UIUtil;
 import de.hdmstuttgart.bildbearbeiter.viewmodels.ImageEditorViewModel;
 
 public class ImageEditorActivity extends AppCompatActivity {
@@ -162,9 +163,7 @@ public class ImageEditorActivity extends AppCompatActivity {
             super.onPostExecute(saveResult);
             saveButton.setEnabled(true);
             saveButton.setText(R.string.save);
-            Snackbar.make(findViewById(R.id.rootView),
-                    saveResult ? "Image saved to library!" : "Failed to save image.",
-                    Snackbar.LENGTH_SHORT).show();
+            UIUtil.showShortSnackbar(findViewById(R.id.rootView), saveResult ? "Image saved to library!" : "Failed to save image.");
         }
     }
 }
