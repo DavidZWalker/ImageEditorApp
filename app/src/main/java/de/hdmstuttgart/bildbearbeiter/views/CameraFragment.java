@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import com.google.android.material.snackbar.Snackbar;
 
 import de.hdmstuttgart.bildbearbeiter.R;
+import de.hdmstuttgart.bildbearbeiter.utilities.UIUtil;
 import de.hdmstuttgart.bildbearbeiter.viewmodels.CameraViewModel;
 
 public class CameraFragment extends Fragment {
@@ -87,8 +88,7 @@ public class CameraFragment extends Fragment {
         if (bmp != null) {
             capturedImageView.setImageBitmap(bmp);
             saveImageButton.setVisibility(View.VISIBLE);
-        } else
-            Snackbar.make(getView(), "Failed to get image.", Snackbar.LENGTH_SHORT).show();
+        } else UIUtil.showShortSnackbar(getView(), "Failed to get image.");
     }
 
     private void switchToLibrary() {
@@ -127,9 +127,7 @@ public class CameraFragment extends Fragment {
             saveImageButton.setEnabled(true);
             saveImageButton.setText(R.string.save);
             saveImageButton.setVisibility(View.INVISIBLE);
-            Snackbar.make(getActivity().findViewById(android.R.id.content),
-                    saveText,
-                    Snackbar.LENGTH_SHORT).show();
+            UIUtil.showShortSnackbar(getActivity().findViewById(android.R.id.content), saveText);
 
             if (saveResult)
                 switchToLibrary();

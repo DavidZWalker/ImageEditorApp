@@ -19,8 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,7 +104,7 @@ public class SearchFragment extends Fragment {
             });
         }
         else {
-            Snackbar.make(getView(), "Please enter something in the search field", Snackbar.LENGTH_SHORT).show();
+            UIUtil.showShortSnackbar(getView(), "Please enter something in the search field");
             searchProgressBar.setVisibility(View.GONE);
         }
     }
