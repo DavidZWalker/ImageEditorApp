@@ -5,6 +5,8 @@ import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import androidx.annotation.NonNull;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -17,7 +19,7 @@ public class ImageFileHandler {
 
     private File imageDir;
 
-    public ImageFileHandler(File applicationDir, String imageSubDir) {
+    public ImageFileHandler(@NonNull File applicationDir, String imageSubDir) {
         this.imageDir = new File(applicationDir, imageSubDir);
         if (!imageDir.exists()) imageDir.mkdirs();
     }
