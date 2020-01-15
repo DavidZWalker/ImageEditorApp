@@ -42,6 +42,7 @@ public class UnsplashSearcher {
     }
 
     public Call<SearchResponseResult> search(String query) {
+        if (query == null || query.isEmpty()) return null;
         return api.getSearchResults(query,
                 UNSPLASH_PAGE,
                 UNSPLASH_PER_PAGE,

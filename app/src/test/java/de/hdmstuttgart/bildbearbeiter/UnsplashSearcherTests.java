@@ -36,6 +36,18 @@ public class UnsplashSearcherTests {
     }
 
     @Test
+    public void searchQuery_negative_queryNull() {
+        Call<SearchResponseResult> response = searcher.search(null);
+        assertNull(response);
+    }
+
+    @Test
+    public void searchQuery_negative_queryEmpty() {
+        Call<SearchResponseResult> response = searcher.search("");
+        assertNull(response);
+    }
+
+    @Test
     public void getBitmapFromSearchResult_positive() {
         String query = "Zebra";
         Call<SearchResponseResult> response = searcher.search(query);
