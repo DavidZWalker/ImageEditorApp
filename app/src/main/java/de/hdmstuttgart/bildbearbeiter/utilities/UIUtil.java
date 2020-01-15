@@ -4,12 +4,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.Objects;
+
+import de.hdmstuttgart.bildbearbeiter.R;
 
 public class UIUtil {
 
@@ -33,7 +38,7 @@ public class UIUtil {
         return null;
     }
 
-    public static void showShortSnackbar(String message) {
-
+    public static void showShortSnackbar(View view, String message) {
+        Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show();
     }
 }
