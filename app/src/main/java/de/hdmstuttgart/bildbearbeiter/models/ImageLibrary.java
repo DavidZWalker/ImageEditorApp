@@ -38,6 +38,7 @@ public class ImageLibrary {
             if (loadedFiles.get(f).equals(imageToRemove)) {
                 loadedFiles.remove(f);
                 imageFileHandler.deleteFile(f);
+                return;
             }
     }
 }
