@@ -49,7 +49,7 @@ public class ImageLibraryFragment extends Fragment {
         imageRecyclerView = getActivity().findViewById(R.id.imageRecyclerView);
         progressBar = getActivity().findViewById(R.id.libProgressBar);
         libraryTextView = getActivity().findViewById(R.id.libraryTextView);
-        mAdapter = new ImageAdapter(new ArrayList<>());
+        mAdapter = new ImageAdapter(new ArrayList<>(), mViewModel.getModel());
 
         // init RecyclerView
         imageRecyclerView.setHasFixedSize(true);

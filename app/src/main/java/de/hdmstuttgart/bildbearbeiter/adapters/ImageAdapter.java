@@ -3,6 +3,7 @@ package de.hdmstuttgart.bildbearbeiter.adapters;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,16 +20,23 @@ import java.io.IOException;
 import java.util.List;
 
 import de.hdmstuttgart.bildbearbeiter.R;
+import de.hdmstuttgart.bildbearbeiter.models.ImageLibrary;
 import de.hdmstuttgart.bildbearbeiter.views.BottomSheetFragment;
 import de.hdmstuttgart.bildbearbeiter.views.ImageEditorActivity;
 import de.hdmstuttgart.bildbearbeiter.utilities.ImageFileHandler;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
     private List<Bitmap> bitmapList;
+    private ImageLibrary imageLibrary;
 
     public ImageAdapter(List<Bitmap> bitmapList) {
         this.bitmapList = bitmapList;
         notifyDataSetChanged();
+    }
+
+    public ImageAdapter(List<Bitmap> bitmapList, ImageLibrary imageLibrary){
+        this(bitmapList);
+        this.imageLibrary = imageLibrary;
     }
 
     public void addToBitmapList(Bitmap bitmap) {
@@ -54,12 +62,14 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             intent.putExtra("imageURI", "tmpImage");
             parent.getContext().startActivity(intent);
         });
-        imageView.setOnLongClickListener(v -> {
-            BottomSheetFragment dialog = new BottomSheetFragment(imageView);
-            FragmentManager fm = ((AppCompatActivity)parent.getContext()).getSupportFragmentManager();
-            dialog.show(fm, "bla");
-            return true;
-        });
+        if(imageLibrary != null){
+            imageView.setOnLongClickListener(v -> {
+                BottomSheetFragment dialog = new BottomSheetFragment(this,imageView,imageLibrary);
+                FragmentManager fm = ((AppCompatActivity)parent.getContext()).getSupportFragmentManager();
+                dialog.show(fm, "bla");
+                return true;
+            });
+        }
         return new ImageViewHolder(imageView);
     }
 
@@ -87,6 +97,11 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     public void clearBitmapList() {
         this.bitmapList.clear();
         notifyDataSetChanged();
+    }
 
+    public void removeBitmap(Bitmap bmptoRemove) {
+        int pos = this.bitmapList.indexOf(bmptoRemove);
+        this.bitmapList.remove(bmptoRemove);
+        notifyItemRemoved(pos);
     }
 }

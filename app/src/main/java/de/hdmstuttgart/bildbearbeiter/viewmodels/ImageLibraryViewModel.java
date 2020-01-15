@@ -32,4 +32,6 @@ public class ImageLibraryViewModel extends ViewModel {
     public void removeImage(Bitmap bmpToRemove) {
         model.removeImage(bmpToRemove);
     }
+
+    public ImageLibrary getModel() { return model; }
 }

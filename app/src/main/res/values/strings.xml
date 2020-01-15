@@ -16,8 +16,7 @@
     <string name="savingText">Saving…</string>
     <string name="save">Save</string>
 
-    <string name="saveImage">Save Image</string>
+    <string name="saveImage">Save Image to Gallery</string>
     <string name="deleteImage">Delete Image</string>
     <string name="editImage">Edit Image</string>
-    <string name="Cancel">Cancel</string>
 </resources>
