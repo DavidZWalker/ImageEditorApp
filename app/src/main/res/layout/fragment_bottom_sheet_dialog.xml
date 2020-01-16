@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:paddingTop="8dp"
     android:id="@+id/fragment_bottom_sheet"
-    android:paddingBottom="8dp">
+    android:padding="8dp">
 
     <!-- NOTE: This list should be displayed in a list
     instead of nested layouts -->
@@ -17,10 +17,7 @@
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/activity_margin"
-        android:paddingTop="8dp"
-        android:paddingRight="@dimen/activity_margin"
-        android:paddingBottom="8dp">
+        android:padding="10dp">
 
         <ImageView
             android:layout_width="24dp"
@@ -46,10 +43,7 @@
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/activity_margin"
-        android:paddingTop="8dp"
-        android:paddingRight="@dimen/activity_margin"
-        android:paddingBottom="8dp">
+        android:padding="10dp">
 
         <ImageView
             android:layout_width="24dp"
@@ -75,10 +69,7 @@
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/activity_margin"
-        android:paddingTop="8dp"
-        android:paddingRight="@dimen/activity_margin"
-        android:paddingBottom="8dp">
+        android:padding="10dp">
 
         <ImageView
             android:layout_width="24dp"
@@ -96,6 +87,5 @@
             android:textSize="16sp" />
 
     </LinearLayout>
-
 
 </LinearLayout>
