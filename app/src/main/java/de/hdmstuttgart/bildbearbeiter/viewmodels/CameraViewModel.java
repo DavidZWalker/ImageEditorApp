@@ -2,6 +2,7 @@ package de.hdmstuttgart.bildbearbeiter.viewmodels;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
@@ -39,7 +40,7 @@ public class CameraViewModel extends ViewModel {
             model.saveImageToLibrary(imageToSave, "captured_" + r.nextInt());
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("Error", "Failed to save image to library", e);
             return false;
         }
     }
@@ -62,7 +63,7 @@ public class CameraViewModel extends ViewModel {
         try {
             return model.getCapturedBitmap();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("Error", "Failed to get captured bitmap", e);
             return null;
         }
     }

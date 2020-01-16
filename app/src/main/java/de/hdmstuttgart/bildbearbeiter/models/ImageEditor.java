@@ -1,6 +1,7 @@
 package de.hdmstuttgart.bildbearbeiter.models;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,9 +54,11 @@ public class ImageEditor {
      * @throws IOException the io exception if saving is unsuccessful
      */
     public void saveImageToLibrary(Bitmap imageToSave) throws IOException {
+        Log.d("ImageEditor", "Saving image to library...");
         ImageFileHandler ifh = new ImageFileHandler(rootDir, ImageFileHandler.IMAGE_DIR_LIB);
         Random r = new Random();
         ifh.saveImage(imageToSave, "filtered_" + r.nextInt());
+        Log.d("ImageEditor", "Successfully saved image to library");
     }
 
     /**
@@ -78,11 +81,13 @@ public class ImageEditor {
     }
 
     private Bitmap loadSourceImageFromFile() throws IOException {
+        Log.d("ImageEditor", "Loading source image from file...");
         ImageFileHandler ifh = new ImageFileHandler(rootDir, ImageFileHandler.IMAGE_DIR_TMP);
         return ifh.getImage("tmpImage");
     }
 
     private void initAvailableFilters() {
+        Log.d("ImageEditor", "Adding filters...");
         // ADD NEW FILTERS HERE!!!
         availableFilters.add(new NoBitmapFilter(sourceImage));
         availableFilters.add(new BlackWhiteBitmapFilter(sourceImage));

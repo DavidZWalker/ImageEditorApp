@@ -1,6 +1,7 @@
 package de.hdmstuttgart.bildbearbeiter.viewmodels;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
@@ -46,17 +47,9 @@ public class ImageLibraryViewModel extends ViewModel {
         try {
             return model.loadImageFile(file);
         } catch (IOException e) {
+            Log.e("Error", "Failed to load bitmap from file", e);
             return null;
         }
-    }
-
-    /**
-     * Remove image.
-     *
-     * @param bmpToRemove the bmp to remove
-     */
-    public void removeImage(Bitmap bmpToRemove) {
-        model.removeImage(bmpToRemove);
     }
 
     /**

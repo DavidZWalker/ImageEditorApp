@@ -1,6 +1,7 @@
 package de.hdmstuttgart.bildbearbeiter.models;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,6 +37,7 @@ public class ImageLibrary {
      * @throws IOException if loading is unsuccessful.
      */
     public Bitmap loadImageFile(File file) throws IOException {
+        Log.d("ImageLib", "Loading image from file: " + file.getPath());
         Bitmap bmp = imageFileHandler.getImage(file.getName());
         loadedFiles.put(file, bmp);
         return bmp;
@@ -47,6 +49,7 @@ public class ImageLibrary {
      * @return the unloaded image files
      */
     public List<File> getUnloadedImageFiles() {
+        Log.d("ImageLib", "Getting images which are not loaded...");
         List<File> allFiles = new ArrayList<>(Arrays.asList(imageFileHandler.getImageFolder().listFiles()));
         return allFiles.stream()
                 .filter(x -> !loadedFiles.keySet().contains(x))
@@ -59,8 +62,10 @@ public class ImageLibrary {
      * @param imageToRemove the image to remove
      */
     public void removeImage(Bitmap imageToRemove) {
+        Log.d("ImageLib", "Attempting to remove image from library...");
         for (File f : loadedFiles.keySet())
             if (loadedFiles.get(f).equals(imageToRemove)) {
+                Log.d("ImageLib", "Found image to remove! Removing...");
                 loadedFiles.remove(f);
                 imageFileHandler.deleteFile(f);
                 return;

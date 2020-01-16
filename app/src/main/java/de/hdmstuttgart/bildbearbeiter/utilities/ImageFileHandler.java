@@ -1,9 +1,8 @@
 package de.hdmstuttgart.bildbearbeiter.utilities;
 
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -36,7 +35,10 @@ public class ImageFileHandler {
      */
     public ImageFileHandler(@NonNull File applicationDir, String imageSubDir) {
         this.imageDir = new File(applicationDir, imageSubDir);
-        if (!imageDir.exists()) imageDir.mkdirs();
+        if (!imageDir.exists()) {
+            Log.d("ImageFileHandler", "Image directory does not exist. Creating directory...");
+            imageDir.mkdirs();
+        }
     }
 
     /**
@@ -47,6 +49,7 @@ public class ImageFileHandler {
      * @throws IOException the io exception
      */
     public final void saveImage(Bitmap imageToSave, String fileName) throws IOException {
+        Log.d("ImageFileHandler", "Attempting to save image...");
         File file = new File(imageDir, fileName);
         FileOutputStream fos = new FileOutputStream(file);
         imageToSave.compress(Bitmap.CompressFormat.PNG, 0, fos);
@@ -61,6 +64,7 @@ public class ImageFileHandler {
      * @throws IOException the io exception
      */
     public final Bitmap getImage(String imgName) throws IOException {
+        Log.d("ImageFileHandler", "Attempting to retrieve image...");
         File imageFile = new File(imageDir, imgName);
         FileInputStream fis = new FileInputStream(imageFile);
         Bitmap decodedBitmap = BitmapFactory.decodeStream(fis);
@@ -85,6 +89,7 @@ public class ImageFileHandler {
      * @return the file
      */
     public File createFileWithName(String fileName) {
+        Log.d("ImageFileHandler", "Creating a new file with name: " + fileName);
         return new File(imageDir, fileName);
     }
 
@@ -94,6 +99,7 @@ public class ImageFileHandler {
      * @param fileToRemove the file to remove
      */
     public void deleteFile(File fileToRemove) {
+        Log.d("ImageFileHandler", "Attempting to remove file: " + fileToRemove);
         fileToRemove.delete();
     }
 }
