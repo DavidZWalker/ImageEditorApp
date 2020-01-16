@@ -12,20 +12,40 @@ import java.util.stream.Collectors;
 
 import de.hdmstuttgart.bildbearbeiter.utilities.ImageFileHandler;
 
+/**
+ * The type Image library handles everything about the Files corresponding to the images.
+ */
 public class ImageLibrary {
     private ImageFileHandler imageFileHandler;
     private HashMap<File, Bitmap> loadedFiles = new HashMap<>();
 
+    /**
+     * Instantiates a new Image library. and creates a {@link ImageFileHandler}
+     *
+     * @param appFilesDir the app files dir
+     */
     public ImageLibrary(File appFilesDir) {
         imageFileHandler = new ImageFileHandler(appFilesDir, ImageFileHandler.IMAGE_DIR_LIB);
     }
 
+    /**
+     * Loads a Bitmap from file and buts it in loadedFiles.
+     *
+     * @param file the file to be loaded
+     * @return the loaded bitmap
+     * @throws IOException if loading is unsuccessful.
+     */
     public Bitmap loadImageFile(File file) throws IOException {
         Bitmap bmp = imageFileHandler.getImage(file.getName());
         loadedFiles.put(file, bmp);
         return bmp;
     }
 
+    /**
+     * Gets all Images which are currently not loaded.
+     *
+     * @return the unloaded image files
+     */
     public List<File> getUnloadedImageFiles() {
         List<File> allFiles = new ArrayList<>(Arrays.asList(imageFileHandler.getImageFolder().listFiles()));
         return allFiles.stream()
@@ -33,6 +53,11 @@ public class ImageLibrary {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Removes image from loadedFiles and deletes it permanently.
+     *
+     * @param imageToRemove the image to remove
+     */
     public void removeImage(Bitmap imageToRemove) {
         for (File f : loadedFiles.keySet())
             if (loadedFiles.get(f).equals(imageToRemove)) {
