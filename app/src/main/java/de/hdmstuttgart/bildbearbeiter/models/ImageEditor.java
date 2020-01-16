@@ -18,12 +18,20 @@ import de.hdmstuttgart.bildbearbeiter.filters.SepiaBitmapFilter;
 import de.hdmstuttgart.bildbearbeiter.filters.VignetteBitmapFilter;
 import de.hdmstuttgart.bildbearbeiter.utilities.ImageFileHandler;
 
+/**
+ * The type Image editor it manages a list of different Filters available.
+ */
 public class ImageEditor {
 
     private Bitmap sourceImage;
     private List<IBitmapFilter> availableFilters;
     private File rootDir;
 
+    /**
+     * Instantiates a new Image editor and loads the Image from source.
+     *
+     * @param appFilesDir the app files directory
+     */
     public ImageEditor(File appFilesDir) {
         rootDir = appFilesDir;
         availableFilters = new ArrayList<>();
@@ -38,16 +46,33 @@ public class ImageEditor {
         initAvailableFilters();
     }
 
+    /**
+     * Creates an {@link ImageFileHandler} and saves the image with a random name.
+     *
+     * @param imageToSave the image to save
+     * @throws IOException the io exception if saving is unsuccessful
+     */
     public void saveImageToLibrary(Bitmap imageToSave) throws IOException {
         ImageFileHandler ifh = new ImageFileHandler(rootDir, ImageFileHandler.IMAGE_DIR_LIB);
         Random r = new Random();
         ifh.saveImage(imageToSave, "filtered_" + r.nextInt());
     }
 
+    /**
+     * Returns the source image if available, if not loads it from the File.
+     *
+     * @return the source image
+     * @throws IOException the io exception
+     */
     public Bitmap getSourceImage() throws IOException {
         return sourceImage != null ? sourceImage : loadSourceImageFromFile();
     }
 
+    /**
+     * Contains all Filters which a currently available in the app.
+     *
+     * @return the available filters
+     */
     public List<IBitmapFilter> getAvailableFilters() {
         return availableFilters;
     }
