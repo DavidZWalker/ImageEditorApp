@@ -32,6 +32,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * The type Search fragment offers the functionality to search an API for pictures with a query,
+ * the
+ */
 public class SearchFragment extends Fragment {
 
     private SearchViewModel mViewModel;
@@ -81,8 +85,8 @@ public class SearchFragment extends Fragment {
     private void doSearch() {
         searchButton.setEnabled(false);
         searchButton.setText(R.string.searchingText);
-        if(!checkInternetConnection()){
-            UIUtil.showShortSnackbar(getView(),"No Internet Connection, check your settings!");
+        if (!checkInternetConnection()) {
+            UIUtil.showShortSnackbar(getView(), "No Internet Connection, check your settings!");
             searchProgressBar.setVisibility(View.GONE);
             searchButton.setText(R.string.searchButtons);
             searchButton.setEnabled(true);
@@ -98,7 +102,7 @@ public class SearchFragment extends Fragment {
                 public void onResponse(Call<SearchResponseResult> call, Response<SearchResponseResult> response) {
                     //get urls
                     if (response.isSuccessful()) {
-                        if(response.body().getPhotos().size() == 0){
+                        if (response.body().getPhotos().size() == 0) {
                             onNoResultsFound();
                             return;
                         }
@@ -108,7 +112,7 @@ public class SearchFragment extends Fragment {
                 }
 
                 private void onNoResultsFound() {
-                    UIUtil.showShortSnackbar(getView(),"No results were found, try something else!");
+                    UIUtil.showShortSnackbar(getView(), "No results were found, try something else!");
                     searchProgressBar.setVisibility(View.GONE);
                     searchButton.setText(R.string.searchButtons);
                     searchButton.setEnabled(true);
@@ -127,10 +131,18 @@ public class SearchFragment extends Fragment {
         }
     }
 
+    /**
+     * Checks if there is a internet connection.
+     *
+     * @return the boolean
+     */
     public boolean checkInternetConnection() {
-      return mViewModel.checkInternetConnection((ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE));
+        return mViewModel.checkInternetConnection((ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE));
     }
 
+    /*
+     * AsyncTask which downloads a Bitmap from a specific URL.
+     */
     private class DownloadFilesTask extends AsyncTask<SearchResponseResult.Photo, Bitmap, Void> {
 
         protected Void doInBackground(SearchResponseResult.Photo... photos) {
