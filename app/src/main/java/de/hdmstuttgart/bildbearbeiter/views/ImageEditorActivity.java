@@ -25,15 +25,38 @@ import de.hdmstuttgart.bildbearbeiter.filters.IBitmapFilter;
 import de.hdmstuttgart.bildbearbeiter.utilities.UIUtil;
 import de.hdmstuttgart.bildbearbeiter.viewmodels.ImageEditorViewModel;
 
+/**
+ * The activity in which a Bitmap is edited with different filters.
+ */
 public class ImageEditorActivity extends AppCompatActivity {
 
+    /**
+     * The Image view.
+     */
     ImageView imageView;
+    /**
+     * The Filter buttons.
+     */
     LinearLayout filterButtons;
+    /**
+     * The Save button.
+     */
     Button saveButton;
+    /**
+     * The Selected filter view.
+     */
     View selectedFilterView;
+    /**
+     * The View model.
+     */
     ImageEditorViewModel viewModel;
+    /**
+     * The Running tasks.
+     */
     List<AsyncTask> runningTasks;
-
+    /*
+     * Creates the viewModel and assigns the Buttons and their onclick listeners.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +83,11 @@ public class ImageEditorActivity extends AppCompatActivity {
         runningTasks.forEach(x -> x.cancel(true));
     }
 
+    /**
+     * Saves an image from a view to the library.
+     *
+     * @param v the view which contains the image
+     */
     public void saveImageToLibrary(View v) {
         Bitmap imageToSave = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
         new SaveImageTask(imageToSave).execute();
@@ -108,10 +136,24 @@ public class ImageEditorActivity extends AppCompatActivity {
 
     private class AddFilterButtonToViewTask extends AsyncTask<Void, Void, Void> {
 
+        /**
+         * The Filtered bitmap.
+         */
         Bitmap filteredBitmap;
+        /**
+         * The Filter.
+         */
         IBitmapFilter filter;
+        /**
+         * The Layout.
+         */
         View layout;
 
+        /**
+         * Instantiates a new Add filter button to view task.
+         *
+         * @param filter the filter
+         */
         public AddFilterButtonToViewTask(IBitmapFilter filter) {
             super();
             this.filter = filter;
@@ -137,11 +179,18 @@ public class ImageEditorActivity extends AppCompatActivity {
             runningTasks.remove(this);
         }
     }
-
+    /*
+     * An AsyncTask which Saves the images to the library.
+     */
     private class SaveImageTask extends AsyncTask<Void, Void, Boolean> {
 
         private Bitmap imageToSave;
 
+        /**
+         * Instantiates a new Save image task.
+         *
+         * @param imageToSave the image to save
+         */
         public SaveImageTask(Bitmap imageToSave) {
             this.imageToSave = imageToSave;
         }
