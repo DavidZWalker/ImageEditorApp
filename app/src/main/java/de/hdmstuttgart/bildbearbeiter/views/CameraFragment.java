@@ -23,6 +23,9 @@ import de.hdmstuttgart.bildbearbeiter.R;
 import de.hdmstuttgart.bildbearbeiter.utilities.UIUtil;
 import de.hdmstuttgart.bildbearbeiter.viewmodels.CameraViewModel;
 
+/**
+ * This is the Camera View, it contains UI operations and communicates with the ViewModel.
+ */
 public class CameraFragment extends Fragment {
 
     private Button saveImageButton;
@@ -30,12 +33,18 @@ public class CameraFragment extends Fragment {
     private CameraViewModel viewModel;
     private ViewPager viewPagerParent;
 
+    /*
+     * Inflates the CameraFragment.
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.camera_fragment, container, false);
     }
 
+    /*
+     * Creates the viewModel and assigns the Buttons and their onclick listeners.
+     */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -52,10 +61,18 @@ public class CameraFragment extends Fragment {
         new SaveImageTask(bmp).execute();
     }
 
+    /**
+     * Sets view pager context.
+     *
+     * @param viewPager the view pager
+     */
     public void setViewPagerContext(ViewPager viewPager) {
         viewPagerParent = viewPager;
     }
 
+    /**
+     * Reacts to the user taking a photo with the camera.
+     */
     public void takePhoto() {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         String auth = getActivity().getApplicationContext().getPackageName() + ".provider";
@@ -94,6 +111,11 @@ public class CameraFragment extends Fragment {
 
         private Bitmap imageToSave;
 
+        /**
+         * This {@link AsyncTask} is responsible for saving the image to the internal library.
+         *
+         * @param imageToSave the image to save
+         */
         public SaveImageTask(Bitmap imageToSave) {
             this.imageToSave = imageToSave;
         }
