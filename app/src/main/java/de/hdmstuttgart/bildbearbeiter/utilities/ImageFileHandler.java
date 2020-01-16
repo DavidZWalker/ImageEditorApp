@@ -17,9 +17,10 @@ import java.io.IOException;
 public class ImageFileHandler {
 
     /**
-     * The constant IMAGE_DIR_LIB contains the location of the app storage.
+     * The constant IMAGE_DIR_LIB contains the library-subdirectory of the app storage.
      */
     public static final String IMAGE_DIR_LIB = "BBImages";
+
     /**
      * The constant IMAGE_DIR_TMP contains the location of the temporary app storage.
      */
@@ -29,7 +30,6 @@ public class ImageFileHandler {
 
     /**
      * Instantiates a new Image file handler and creates Directories if they don't exist already.
-     *
      * @param applicationDir the application dir
      * @param imageSubDir    the image sub dir
      */
@@ -43,10 +43,9 @@ public class ImageFileHandler {
 
     /**
      * Saves a file with an {@link FileOutputStream}.
-     *
      * @param imageToSave the image to save
      * @param fileName    the file name
-     * @throws IOException the io exception
+     * @throws IOException thrown by the FileOutputStream on error
      */
     public final void saveImage(Bitmap imageToSave, String fileName) throws IOException {
         Log.d("ImageFileHandler", "Attempting to save image...");
@@ -57,11 +56,10 @@ public class ImageFileHandler {
     }
 
     /**
-     * Loads an image from memory.
-     *
-     * @param imgName the img name
+     * Loads an image from the internal storage.
+     * @param imgName the image name
      * @return the image
-     * @throws IOException the io exception
+     * @throws IOException thrown by the FileInputStream on error
      */
     public final Bitmap getImage(String imgName) throws IOException {
         Log.d("ImageFileHandler", "Attempting to retrieve image...");
@@ -74,7 +72,6 @@ public class ImageFileHandler {
 
     /**
      * Gets image folder.
-     *
      * @return the image folder
      */
     public File getImageFolder() {
@@ -82,10 +79,9 @@ public class ImageFileHandler {
     }
 
     /**
-     * Create file with name file.
-     *
+     * Creates file with name file.
      * @param fileName the file name
-     * @return the file
+     * @return the created file
      */
     public File createFileWithName(String fileName) {
         Log.d("ImageFileHandler", "Creating a new file with name: " + fileName);

@@ -21,7 +21,6 @@ public class CameraViewModel extends ViewModel {
 
     /**
      * Instantiates a new Camera view model.
-     *
      * @param appFilesDir the app files directory
      */
     public CameraViewModel(File appFilesDir) {
@@ -29,8 +28,7 @@ public class CameraViewModel extends ViewModel {
     }
 
     /**
-     * Saves image to library
-     *
+     * Saves the specified image to library
      * @param imageToSave the image to save
      * @return true if saving is successful
      */
@@ -47,8 +45,7 @@ public class CameraViewModel extends ViewModel {
 
     /**
      * Creates a File for the captured image.
-     *
-     * @return the file
+     * @return the created file
      */
     public File createCapturedImageFile() {
         return model.createCapturedImageFile();
@@ -56,7 +53,6 @@ public class CameraViewModel extends ViewModel {
 
     /**
      * Gets captured bitmap taken by the camera.
-     *
      * @return the captured bitmap
      */
     public Bitmap getCapturedBitmap() {
@@ -69,18 +65,16 @@ public class CameraViewModel extends ViewModel {
     }
 
     /**
-     * Sets image uri.
-     *
-     * @param imageUri the image uri
+     * Sets image URI
+     * @param imageUri the image URI
      */
     public void setImageUri(Uri imageUri) {
         model.setImageUri(imageUri);
     }
 
     /**
-     * Gets image uri.
-     *
-     * @return the image uri
+     * Gets image URI.
+     * @return the image URI
      */
     public Uri getImageUri() {
         return model.getImageUri();

@@ -29,7 +29,6 @@ public class UnsplashSearcher {
     private static final String UNSPLASH_ACCESS_KEY = "7823a3e208b0868365e231a019b604cf2df2e3c70e1e084d8758b6696164208a";
     private static final String UNSPLASH_SECRET_KEY = "44d14fd815a6fc7d501f87e95a98ae5b8ce5276f6f36cd4b4568f23703e1bb45";
     private static final String UNSPLASH_BASE_URL = "https://api.unsplash.com/";
-
     private static final String UNSPLASH_ACCESS_TOKEN = "Bearer 4d69c93af58f8f56799f704d95f66f67c3172af4ab0ee0479ae6e58ac95171fe";
     private static final String UNSPLASH_REFRESH_TOKEN = "f126eb8b0708fc83f9f392aef1ed070715791141dddf567530ab191940e1e789";
     private static final String UNSPLASH_PAGE = "1";
@@ -58,7 +57,6 @@ public class UnsplashSearcher {
 
     /**
      * Starts the call to the unsplash api.
-     *
      * @param query the query
      * @return the call
      */
@@ -73,7 +71,6 @@ public class UnsplashSearcher {
 
     /**
      * Gets bitmap from search response.
-     *
      * @param res the resolution of the image
      * @return the bitmap from search response
      * @throws IOException if decoding is unsuccessful
@@ -90,7 +87,6 @@ public class UnsplashSearcher {
 
     /**
      * Checks if there is an internet connection available, if not displays a Snackbar.
-     *
      * @param systemService the system service
      * @return the boolean
      */

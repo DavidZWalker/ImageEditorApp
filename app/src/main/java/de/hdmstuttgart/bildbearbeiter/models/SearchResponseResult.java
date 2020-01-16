@@ -52,7 +52,7 @@ public class SearchResponseResult {
         /**
          * Gets small resolution.
          *
-         * @return the small
+         * @return the small resolution
          */
         public String getSmall() {
             return small;

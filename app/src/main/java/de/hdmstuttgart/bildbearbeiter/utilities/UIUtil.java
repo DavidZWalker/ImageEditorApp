@@ -21,8 +21,7 @@ import java.util.Objects;
 public class UIUtil {
 
     /**
-     * Hides the Keyboard from the Activity.
-     *
+     * Hides the Keyboard from the specified Activity.
      * @param activeActivity the currently active activity
      */
     public static void hideKeyboard(@NonNull Activity activeActivity) {
@@ -38,8 +37,7 @@ public class UIUtil {
 
     /**
      * Extracts the Bitmap from an ImageView
-     *
-     * @param iv the iv
+     * @param iv the ImageView
      * @return the bitmap
      */
     public static Bitmap extractBitmap(ImageView iv) {
@@ -55,8 +53,7 @@ public class UIUtil {
 
     /**
      * Shows a short Snackbar.
-     *
-     * @param view    the view
+     * @param view    the view on which to show the Snackbar
      * @param message the message
      */
     public static void showShortSnackbar(View view, String message) {

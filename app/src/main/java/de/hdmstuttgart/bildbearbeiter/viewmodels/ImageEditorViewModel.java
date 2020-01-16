@@ -24,7 +24,6 @@ public class ImageEditorViewModel extends ViewModel {
 
     /**
      * Instantiates a new Image editor view model.
-     *
      * @param appFilesDir the app files directory
      */
     public ImageEditorViewModel(File appFilesDir) {
@@ -34,7 +33,6 @@ public class ImageEditorViewModel extends ViewModel {
 
     /**
      * List of all currently available Filters
-     *
      * @return the available filters
      */
     public List<IBitmapFilter> getAvailableFilters() {
@@ -42,8 +40,7 @@ public class ImageEditorViewModel extends ViewModel {
     }
 
     /**
-     * Loads image from source.
-     *
+     * Gets the source image.
      * @return the source image
      */
     public Bitmap getSourceImage() {
@@ -57,7 +54,6 @@ public class ImageEditorViewModel extends ViewModel {
 
     /**
      * Saves image to the in-app library.
-     *
      * @param bitmapToSave the bitmap to save
      * @return the boolean
      */
@@ -72,8 +68,7 @@ public class ImageEditorViewModel extends ViewModel {
     }
 
     /**
-     * Creates a temporary BlackBitmap which is displayed during the process of applying a filter to a Bitmap.
-     *
+     * Creates a temporary black bitmap which is displayed during the process of applying a filter to a Bitmap.
      * @return temporary BlackBitmap
      */
     public Bitmap createTempBlackBitmap() {

@@ -80,12 +80,20 @@ public class ImageEditor {
         return availableFilters;
     }
 
+    /**
+     * Loads the source image from the app storage and sets it
+     * @return the loaded image
+     * @throws IOException thrown when an error occurs during loading
+     */
     private Bitmap loadSourceImageFromFile() throws IOException {
         Log.d("ImageEditor", "Loading source image from file...");
         ImageFileHandler ifh = new ImageFileHandler(rootDir, ImageFileHandler.IMAGE_DIR_TMP);
         return ifh.getImage("tmpImage");
     }
 
+    /**
+     * Initializes the filters
+     */
     private void initAvailableFilters() {
         Log.d("ImageEditor", "Adding filters...");
         // ADD NEW FILTERS HERE!!!
