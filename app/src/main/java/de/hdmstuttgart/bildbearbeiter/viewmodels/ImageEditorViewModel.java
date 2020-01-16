@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
@@ -49,7 +50,7 @@ public class ImageEditorViewModel extends ViewModel {
         try {
             return model.getSourceImage();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("Error", "Failed to get source image.", e);
             return null;
         }
     }
@@ -65,7 +66,7 @@ public class ImageEditorViewModel extends ViewModel {
             model.saveImageToLibrary(bitmapToSave);
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("Error", "Failed to save image to library", e);
             return false;
         }
     }
@@ -86,7 +87,7 @@ public class ImageEditorViewModel extends ViewModel {
             canvas.drawRect(0F, 0F, (float) width, (float) height, paint);
             return bitmap;
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("Error", "Failed to create temp bitmap", e);
             return null;
         }
     }

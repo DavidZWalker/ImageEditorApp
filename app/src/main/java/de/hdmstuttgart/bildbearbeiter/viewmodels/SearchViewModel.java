@@ -2,6 +2,7 @@ package de.hdmstuttgart.bildbearbeiter.viewmodels;
 
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
+import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
@@ -25,6 +26,7 @@ public class SearchViewModel extends ViewModel {
         try {
             return model.getBitmapFromSearchResponse(res);
         } catch (Exception ex) {
+            Log.e("Error", "Failed to get bitmap from search response", ex);
             return null;
         }
     }
