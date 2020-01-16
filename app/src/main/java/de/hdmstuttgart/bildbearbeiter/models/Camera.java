@@ -9,7 +9,7 @@ import java.io.IOException;
 import de.hdmstuttgart.bildbearbeiter.utilities.ImageFileHandler;
 
 /**
- * The type Camera.
+ * The type Camera provides functionality for Camera Image handling.
  */
 public class Camera {
     private Uri imageUri;
