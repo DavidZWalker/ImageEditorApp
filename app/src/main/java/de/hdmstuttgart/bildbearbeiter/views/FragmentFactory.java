@@ -3,7 +3,7 @@ package de.hdmstuttgart.bildbearbeiter.views;
 import androidx.fragment.app.Fragment;
 
 /**
- * A placeholder fragment containing a simple view.
+ * A FragmentFactory which takes an index an creates a corresponding {@link Fragment}.
  */
 public class FragmentFactory {
 
