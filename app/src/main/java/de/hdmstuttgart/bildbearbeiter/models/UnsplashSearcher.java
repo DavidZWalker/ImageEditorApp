@@ -5,7 +5,6 @@ import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
-import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -38,7 +37,7 @@ public class UnsplashSearcher {
 
     /**
      * Instantiates a new Unsplash call.
-     *
+     * <p>
      * It creates  a Gson Object for JSON parsing and Retrofit for making the HTTP call.
      */
     public UnsplashSearcher() {
@@ -98,15 +97,15 @@ public class UnsplashSearcher {
     public boolean checkInternetConnection(ConnectivityManager systemService) {
         Log.d("UnsplashSearcher", "Checking for internet connection...");
         boolean internetAvailable = false;
-        if(systemService == null){
+        if (systemService == null) {
             Log.d("UnsplashSearcher", "No internet connection detected! Device is offline.");
             return false;
         }
         Network[] networks = systemService.getAllNetworks();
-        if(networks.length>0){
-            for(Network network :networks){
+        if (networks.length > 0) {
+            for (Network network : networks) {
                 NetworkCapabilities nc = systemService.getNetworkCapabilities(network);
-                if(nc.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)){
+                if (nc.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)) {
                     Log.d("UnsplashSearcher", "Internet connection detected! Device is online.");
                     internetAvailable = true;
                 }

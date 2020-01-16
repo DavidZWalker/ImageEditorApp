@@ -45,6 +45,7 @@ public class ImageLibraryFragment extends Fragment {
 
         return inflater.inflate(R.layout.library_fragment, container, false);
     }
+
     /*
      * Creates the viewModel and assigns the Buttons and their onclick listeners.
      */
@@ -79,6 +80,7 @@ public class ImageLibraryFragment extends Fragment {
             new LoadLibraryImagesTask().execute();
         }
     }
+
     /*
      * An AsyncTask which loads images from the storage and displays a placeholder text if no images were loaded.
      */

@@ -75,7 +75,6 @@ public class ImageFileHandler {
     /**
      * Gets image folder.
      *
-     *
      * @return the image folder
      */
     public File getImageFolder() {

@@ -198,6 +198,7 @@ public class ImageEditorActivity extends AppCompatActivity {
             runningTasks.remove(this);
         }
     }
+
     /*
      * An AsyncTask which Saves the images to the library.
      */

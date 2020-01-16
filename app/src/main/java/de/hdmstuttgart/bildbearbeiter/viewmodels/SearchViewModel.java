@@ -56,6 +56,6 @@ public class SearchViewModel extends ViewModel {
      * @return true if there is an internet connection, false if there is none
      */
     public boolean checkInternetConnection(ConnectivityManager systemService) {
-       return model.checkInternetConnection(systemService);
+        return model.checkInternetConnection(systemService);
     }
 }
