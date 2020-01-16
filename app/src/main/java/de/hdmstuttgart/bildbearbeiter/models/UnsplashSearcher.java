@@ -19,6 +19,9 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * The type Unsplash searcher creates a request to Unsplash API using Retrofit and Gson.
+ */
 public class UnsplashSearcher {
     private Retrofit retrofit;
     private UnsplashAPI api;
@@ -32,6 +35,11 @@ public class UnsplashSearcher {
     private static final String UNSPLASH_PAGE = "1";
     private static final String UNSPLASH_PER_PAGE = "30";
 
+    /**
+     * Instantiates a new Unsplash call.
+     *
+     * It creates  a Gson Object for JSON parsing and Retrofit for making the HTTP call.
+     */
     public UnsplashSearcher() {
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -45,6 +53,12 @@ public class UnsplashSearcher {
         api = retrofit.create(UnsplashAPI.class);
     }
 
+    /**
+     * Starts the call to the unsplash api.
+     *
+     * @param query the query
+     * @return the call
+     */
     public Call<SearchResponseResult> search(String query) {
         return api.getSearchResults(query,
                 UNSPLASH_PAGE,
@@ -52,6 +66,13 @@ public class UnsplashSearcher {
                 UNSPLASH_ACCESS_TOKEN);
     }
 
+    /**
+     * Gets bitmap from search response.
+     *
+     * @param res the resolution of the image
+     * @return the bitmap from search response
+     * @throws IOException if decoding is unsuccessful
+     */
     public Bitmap getBitmapFromSearchResponse(SearchResponseResult.Photo res) throws IOException {
         URL url = new URL(res.getUrls().getSmall());
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -61,6 +82,12 @@ public class UnsplashSearcher {
         return BitmapFactory.decodeStream(input);
     }
 
+    /**
+     * Checks if there is an internet connection available, if not displays a Snackbar.
+     *
+     * @param systemService the system service
+     * @return the boolean
+     */
     public boolean checkInternetConnection(ConnectivityManager systemService) {
         boolean internetAvailable = false;
         if(systemService == null){
