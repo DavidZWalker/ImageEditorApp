@@ -29,6 +29,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     private FragmentFactory fragmentFactory;
     private List<Fragment> loadedFragments;
 
+    /**
+     * @param context   cotext of the activity which wants to switch to the page
+     * @param viewPager Generated code which allows swiping to switch between fragments.
+     * @param fm
+     */
     public SectionsPagerAdapter(Context context, ViewPager viewPager, FragmentManager fm) {
         super(fm);
         mContext = context;
@@ -37,9 +42,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         loadedFragments = new ArrayList<>();
     }
 
+    /*
+     *getItem is called to instantiate the fragment for the given page.
+     */
     @Override
     public Fragment getItem(int position) {
-        // getItem is called to instantiate the fragment for the given page.
         Fragment fragment = fragmentFactory.getFragment(position + 1);
         if (fragment instanceof CameraFragment) {
             CameraFragment cameraFragment = (CameraFragment) fragment;
@@ -60,6 +67,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         return TAB_TITLES.length;
     }
 
+    /*
+     * If the CameraFragment is requested, we immediately start the takePhoto() method which reacts when the user takes a photo through the android camera.
+     */
     public void onNewTabSelected(int index) {
         Fragment fragment = loadedFragments.get(index);
         if (fragment instanceof CameraFragment) {
