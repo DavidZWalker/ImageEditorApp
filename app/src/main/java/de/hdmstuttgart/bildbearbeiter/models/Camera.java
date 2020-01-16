@@ -39,7 +39,7 @@ public class Camera {
     }
 
     /**
-     * Create captured image file file.
+     * Creates image file for the captured image.
      *
      * @return the file
      */
