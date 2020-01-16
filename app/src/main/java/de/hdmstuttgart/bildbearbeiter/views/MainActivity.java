@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     /*
      * Creates a SectionsPagerAdapter which returns a frament and loads them into the tab layout.
+     * If a new page is selected, the SectionsPagerAdapter handles the action of showing a new page.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
