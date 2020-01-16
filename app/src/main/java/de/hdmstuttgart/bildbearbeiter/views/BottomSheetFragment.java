@@ -15,7 +15,6 @@ import de.hdmstuttgart.bildbearbeiter.models.ImageLibrary;
 import de.hdmstuttgart.bildbearbeiter.utilities.ImageFileHandler;
 import de.hdmstuttgart.bildbearbeiter.utilities.UIUtil;
 
-
 public class BottomSheetFragment extends com.google.android.material.bottomsheet.BottomSheetDialogFragment {
     private ImageView imageView;
     private ImageAdapter parent;
@@ -30,8 +29,6 @@ public class BottomSheetFragment extends com.google.android.material.bottomsheet
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -44,7 +41,6 @@ public class BottomSheetFragment extends com.google.android.material.bottomsheet
         v.findViewById(R.id.llDelete).setOnClickListener(this::onClickDeleteImage);
         return v;
     }
-
 
     public void onClickEdit(View view) {
         //todo change redundant code
@@ -77,5 +73,4 @@ public class BottomSheetFragment extends com.google.android.material.bottomsheet
         }
         dismiss();
     }
-
 }

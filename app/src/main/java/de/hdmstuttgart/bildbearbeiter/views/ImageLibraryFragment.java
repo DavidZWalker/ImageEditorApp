@@ -69,10 +69,6 @@ public class ImageLibraryFragment extends Fragment {
         }
     }
 
-    public void removeBitmap(Bitmap bmpToRemove) {
-        mViewModel.removeImage(bmpToRemove);
-    }
-
     private class LoadLibraryImagesTask extends AsyncTask<Void, Bitmap, Void> {
 
         @Override
