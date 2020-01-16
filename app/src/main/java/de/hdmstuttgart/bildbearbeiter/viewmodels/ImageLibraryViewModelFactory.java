@@ -6,9 +6,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import java.io.File;
 
+/**
+ * The type Image library view model factory.
+ */
 public class ImageLibraryViewModelFactory implements ViewModelProvider.Factory {
     private File appFilesDir;
 
+    /**
+     * Factory for ImageLibraries creates a {@link de.hdmstuttgart.bildbearbeiter.models.ImageLibrary}
+     *
+     * @param appFilesDir the app files dir
+     */
     public ImageLibraryViewModelFactory(File appFilesDir) {
         this.appFilesDir = appFilesDir;
     }

@@ -6,6 +6,9 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
+/**
+ * The type Page view model.
+ */
 public class PageViewModel extends ViewModel {
 
     private MutableLiveData<Integer> mIndex = new MutableLiveData<>();
@@ -16,10 +19,20 @@ public class PageViewModel extends ViewModel {
         }
     });
 
+    /**
+     * Sets index.
+     *
+     * @param index the index
+     */
     public void setIndex(int index) {
         mIndex.setValue(index);
     }
 
+    /**
+     * Gets text.
+     *
+     * @return the text
+     */
     public LiveData<String> getText() {
         return mText;
     }
