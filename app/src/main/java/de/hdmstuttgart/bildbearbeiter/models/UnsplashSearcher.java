@@ -2,6 +2,10 @@ package de.hdmstuttgart.bildbearbeiter.models;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -55,5 +59,22 @@ public class UnsplashSearcher {
         connection.connect();
         InputStream input = connection.getInputStream();
         return BitmapFactory.decodeStream(input);
+    }
+
+    public boolean checkInternetConnection(ConnectivityManager systemService) {
+        boolean internetAvailable = false;
+        if(systemService == null){
+            return false;
+        }
+        Network[] networks = systemService.getAllNetworks();
+        if(networks.length>0){
+            for(Network network :networks){
+                NetworkCapabilities nc = systemService.getNetworkCapabilities(network);
+                if(nc.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)){
+                    internetAvailable = true;
+                }
+            }
+        }
+        return internetAvailable;
     }
 }

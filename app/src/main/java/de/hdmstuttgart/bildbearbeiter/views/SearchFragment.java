@@ -1,6 +1,9 @@
 package de.hdmstuttgart.bildbearbeiter.views;
 
+import android.app.usage.NetworkStats;
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -38,6 +41,7 @@ public class SearchFragment extends Fragment {
     private ProgressBar searchProgressBar;
     private ImageAdapter searchAdapter;
     private EditText editText;
+    private ConnectivityManager cm;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -77,6 +81,12 @@ public class SearchFragment extends Fragment {
     private void doSearch() {
         searchButton.setEnabled(false);
         searchButton.setText(R.string.searchingText);
+        if(!checkInternetConnection()){
+            UIUtil.showShortSnackbar(getView(),"No Internet Connection, check your settings!");
+            searchProgressBar.setVisibility(View.GONE);
+            searchButton.setText(R.string.searchButtons);
+            searchButton.setEnabled(true);
+        }
         //get Search String from User
         String query = editText.getText().toString();
 
@@ -115,6 +125,10 @@ public class SearchFragment extends Fragment {
             UIUtil.showShortSnackbar(getView(), "Please enter something in the search field");
             searchProgressBar.setVisibility(View.GONE);
         }
+    }
+
+    public boolean checkInternetConnection() {
+      return mViewModel.checkInternetConnection((ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE));
     }
 
     private class DownloadFilesTask extends AsyncTask<SearchResponseResult.Photo, Bitmap, Void> {

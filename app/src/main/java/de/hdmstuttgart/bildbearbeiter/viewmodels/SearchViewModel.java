@@ -1,6 +1,7 @@
 package de.hdmstuttgart.bildbearbeiter.viewmodels;
 
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
 
 import androidx.lifecycle.ViewModel;
 
@@ -26,5 +27,9 @@ public class SearchViewModel extends ViewModel {
         } catch (Exception ex) {
             return null;
         }
+    }
+
+    public boolean checkInternetConnection(ConnectivityManager systemService) {
+       return model.checkInternetConnection(systemService);
     }
 }
