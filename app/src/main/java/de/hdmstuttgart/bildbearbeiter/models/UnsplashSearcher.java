@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -41,15 +42,18 @@ public class UnsplashSearcher {
      * It creates  a Gson Object for JSON parsing and Retrofit for making the HTTP call.
      */
     public UnsplashSearcher() {
+        Log.d("UnsplashSearcher", "Init Gson...");
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
 
+        Log.d("UnsplashSearcher", "Init Retrofit...");
         retrofit = new Retrofit.Builder()
                 .baseUrl(UNSPLASH_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
+        Log.d("UnsplashSearcher", "Creating retrofit api interface...");
         api = retrofit.create(UnsplashAPI.class);
     }
 
@@ -60,6 +64,7 @@ public class UnsplashSearcher {
      * @return the call
      */
     public Call<SearchResponseResult> search(String query) {
+        Log.d("UnsplashSearcher", "Searching Unsplash for '" + query + "'...");
         if (query == null || query.isEmpty()) return null;
         return api.getSearchResults(query,
                 UNSPLASH_PAGE,
@@ -75,6 +80,7 @@ public class UnsplashSearcher {
      * @throws IOException if decoding is unsuccessful
      */
     public Bitmap getBitmapFromSearchResponse(SearchResponseResult.Photo res) throws IOException {
+        Log.d("UnsplashSearcher", "Attempting to retrieve bitmap from search result...");
         URL url = new URL(res.getUrls().getSmall());
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setDoInput(true);
@@ -90,8 +96,10 @@ public class UnsplashSearcher {
      * @return the boolean
      */
     public boolean checkInternetConnection(ConnectivityManager systemService) {
+        Log.d("UnsplashSearcher", "Checking for internet connection...");
         boolean internetAvailable = false;
         if(systemService == null){
+            Log.d("UnsplashSearcher", "No internet connection detected! Device is offline.");
             return false;
         }
         Network[] networks = systemService.getAllNetworks();
@@ -99,6 +107,7 @@ public class UnsplashSearcher {
             for(Network network :networks){
                 NetworkCapabilities nc = systemService.getNetworkCapabilities(network);
                 if(nc.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)){
+                    Log.d("UnsplashSearcher", "Internet connection detected! Device is online.");
                     internetAvailable = true;
                 }
             }

@@ -2,6 +2,7 @@ package de.hdmstuttgart.bildbearbeiter.models;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.util.Log;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,6 +36,7 @@ public class Camera {
      * @throws IOException if the image couldn't be saved.
      */
     public void saveImageToLibrary(Bitmap imageToSave, String fileName) throws IOException {
+        Log.d("Camera", "Saving image to internal file: " + fileName);
         saveImageFileHandler.saveImage(imageToSave, fileName);
     }
 
@@ -44,6 +46,7 @@ public class Camera {
      * @return the file
      */
     public File createCapturedImageFile() {
+        Log.d("Camera", "Creating a captured image file...");
         return capturedImageFileHandler.createFileWithName(capturedImageTmpFileName);
     }
 
@@ -51,9 +54,10 @@ public class Camera {
      * Gets captured bitmap from {@link ImageFileHandler}
      *
      * @return the captured bitmap
-     * @throws IOException if the picture couldn't be retrived.
+     * @throws IOException if the picture couldn't be retrieved.
      */
     public Bitmap getCapturedBitmap() throws IOException {
+        Log.d("Camera", "Retrieving the captured image...");
         return capturedImageFileHandler.getImage(capturedImageTmpFileName);
     }
 
