@@ -1,6 +1,7 @@
 package de.hdmstuttgart.bildbearbeiter.views;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public static final int SEARCH_PAGE = 3;
     private static View activityRootView;
+    private final String logTag = "MainActivity";
 
     /*
      * Creates a SectionsPagerAdapter which returns a frament and loads them into the tab layout.
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(logTag, "Creating main activity");
         setContentView(R.layout.activity_main);
         activityRootView = findViewById(R.id.activityRoot);
 
@@ -54,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
+                Log.d(logTag, "New page selected");
                 sectionsPagerAdapter.onNewTabSelected(position);
             }
 

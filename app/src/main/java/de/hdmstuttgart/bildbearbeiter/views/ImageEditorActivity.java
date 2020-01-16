@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.VibrationEffect;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -54,12 +55,16 @@ public class ImageEditorActivity extends AppCompatActivity {
      * The Running tasks.
      */
     List<AsyncTask> runningTasks;
+
+    private final String logTag = "ImageEditorActivity";
+
     /*
      * Creates the viewModel and assigns the Buttons and their onclick listeners.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(logTag, "Creating view for ImageEditorActivity...");
         setContentView(R.layout.activity_fullscreen_image);
         viewModel = new ImageEditorViewModel(getFilesDir());
 
@@ -75,12 +80,15 @@ public class ImageEditorActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+        Log.d(logTag, "View created successfully");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        Log.d(logTag, "Stopping all running tasks...");
         runningTasks.forEach(x -> x.cancel(true));
+        Log.d(logTag, "All running tasks stopped.");
     }
 
     /**
@@ -89,26 +97,32 @@ public class ImageEditorActivity extends AppCompatActivity {
      * @param v the view which contains the image
      */
     public void saveImageToLibrary(View v) {
+        Log.d(logTag, "Attempting to save image to library...");
         Bitmap imageToSave = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
         new SaveImageTask(imageToSave).execute();
     }
 
     private void addFilterButtonsToView() {
-        for (IBitmapFilter f : viewModel.getAvailableFilters())
+        for (IBitmapFilter f : viewModel.getAvailableFilters()) {
+            Log.d(logTag, "Adding filter '" + f.getName() + "'...");
             new AddFilterButtonToViewTask(f).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
     }
 
     private View startAddFilterButton(IBitmapFilter filter) {
+        Log.d(logTag, "Initializing filter button for filter: " + filter.getName());
         RelativeLayout filterButtonLayoutRoot = (RelativeLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.filter_button, null, false);
         ImageView thumb = (ImageView) filterButtonLayoutRoot.getChildAt(0);
         TextView textView = (TextView) filterButtonLayoutRoot.getChildAt(1);
         filterButtons.addView(filterButtonLayoutRoot);
         thumb.setImageBitmap(viewModel.createTempBlackBitmap());
         textView.setText(filter.getName());
+        Log.d(logTag, "Filter button for " + filter.getName() + " initialized!");
         return filterButtonLayoutRoot;
     }
 
     private void finishAddFilterButton(View view, Bitmap filteredBitmap) {
+        Log.d(logTag, "Finalizing filter button...");
         RelativeLayout filterButtonLayoutRoot = (RelativeLayout) view;
         ImageView thumb = (ImageView) filterButtonLayoutRoot.getChildAt(0);
         ProgressBar progressBar = (ProgressBar) filterButtonLayoutRoot.getChildAt(2);
@@ -117,9 +131,11 @@ public class ImageEditorActivity extends AppCompatActivity {
         filterButtonLayoutRoot.setOnClickListener(this::selectFilter);
         if (selectedFilterView == null)
             selectFilter(filterButtons.getChildAt(0));
+        Log.d(logTag, "Filter button finalized!");
     }
 
     private void selectFilter(View newSelection) {
+        Log.d(logTag, "User selected filter");
         // deselect old filter view
         if (selectedFilterView != null) {
             selectedFilterView.setBackgroundColor(Color.TRANSPARENT);
@@ -161,6 +177,7 @@ public class ImageEditorActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
+            Log.d(logTag, "Initializing async filter application...");
             super.onPreExecute();
             runningTasks.add(this);
             layout = startAddFilterButton(filter);
@@ -168,12 +185,14 @@ public class ImageEditorActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
+            Log.d(logTag, "Applying filter...");
             filteredBitmap = filter.applyFilter();
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            Log.d(logTag, "Filter applied");
             super.onPostExecute(aVoid);
             finishAddFilterButton(layout, filteredBitmap);
             runningTasks.remove(this);
@@ -197,18 +216,21 @@ public class ImageEditorActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
+            Log.d(logTag, "Starting save async...");
             saveButton.setText(R.string.savingText);
             saveButton.setEnabled(false);
         }
 
         @Override
         protected Boolean doInBackground(Void... voids) {
+            Log.d(logTag, "Saving...");
             return viewModel.saveImageToLibrary(imageToSave);
         }
 
         @Override
         protected void onPostExecute(Boolean saveResult) {
             super.onPostExecute(saveResult);
+            Log.d(logTag, "Saved!");
             saveButton.setEnabled(true);
             saveButton.setText(R.string.save);
             VibrationEffect.createOneShot(1000, 255);
