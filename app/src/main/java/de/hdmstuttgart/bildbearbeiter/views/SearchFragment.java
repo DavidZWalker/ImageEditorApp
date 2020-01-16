@@ -88,9 +88,20 @@ public class SearchFragment extends Fragment {
                 public void onResponse(Call<SearchResponseResult> call, Response<SearchResponseResult> response) {
                     //get urls
                     if (response.isSuccessful()) {
+                        if(response.body().getPhotos().size() == 0){
+                            onNoResultsFound();
+                            return;
+                        }
                         List<SearchResponseResult.Photo> photoList = response.body().getPhotos();
                         new DownloadFilesTask().execute(photoList.toArray(new SearchResponseResult.Photo[photoList.size()]));
                     }
+                }
+
+                private void onNoResultsFound() {
+                    UIUtil.showShortSnackbar(getView(),"No results were found, try something else!");
+                    searchProgressBar.setVisibility(View.GONE);
+                    searchButton.setText(R.string.searchButtons);
+                    searchButton.setEnabled(true);
                 }
 
                 @Override
