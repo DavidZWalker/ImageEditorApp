@@ -12,13 +12,28 @@ import de.hdmstuttgart.bildbearbeiter.R;
 import de.hdmstuttgart.bildbearbeiter.adapters.SectionsPagerAdapter;
 import de.hdmstuttgart.bildbearbeiter.utilities.UIUtil;
 
+/**
+ * The MainActivity, the App starts here.
+ */
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * The constant CAMERA_PAGE contains the internal index for the camera page.
+     */
     public static final int CAMERA_PAGE = 1;
+    /**
+     * The constant LIBRARY_PAGE contains the internal index for the library page.
+     */
     public static final int LIBRARY_PAGE = 2;
+    /**
+     * The constant SEARCH_PAGE contains the internal index for the search page.
+     */
     public static final int SEARCH_PAGE = 3;
     private static View activityRootView;
 
+    /*
+     * Creates a SectionsPagerAdapter which returns a frament and loads them into the tab layout.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +62,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Shows a short snackbar.
+     *
+     * @param message the message
+     */
     public static void showSnackbar(String message) {
         UIUtil.showShortSnackbar(activityRootView, message);
     }
