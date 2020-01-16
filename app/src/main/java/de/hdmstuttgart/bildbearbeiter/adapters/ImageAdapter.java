@@ -21,20 +21,39 @@ import de.hdmstuttgart.bildbearbeiter.utilities.ImageFileHandler;
 import de.hdmstuttgart.bildbearbeiter.views.BottomSheetFragment;
 import de.hdmstuttgart.bildbearbeiter.views.ImageEditorActivity;
 
+/**
+ * The type Image which is assigned to every image, displayed in the app.
+ */
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
     private List<Bitmap> bitmapList;
     private ImageLibrary imageLibrary;
 
+    /**
+     * Instantiates a new Image adapter.
+     *
+     * @param bitmapList the bitmap list
+     */
     public ImageAdapter(List<Bitmap> bitmapList) {
         this.bitmapList = bitmapList;
         notifyDataSetChanged();
     }
 
+    /**
+     * Instantiates a new Image adapter.
+     *
+     * @param bitmapList   the bitmap list
+     * @param imageLibrary the image library
+     */
     public ImageAdapter(List<Bitmap> bitmapList, ImageLibrary imageLibrary) {
         this(bitmapList);
         this.imageLibrary = imageLibrary;
     }
 
+    /**
+     * Add a Bitmap to bitmapList
+     *
+     * @param bitmap the bitmap to be added
+     */
     public void addToBitmapList(Bitmap bitmap) {
         this.bitmapList.add(bitmap);
         notifyItemInserted(bitmapList.size() - 1);
@@ -80,21 +99,40 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         return bitmapList == null ? 0 : bitmapList.size();
     }
 
+    /**
+     * Internal VIewHolder for Images
+     */
     public static class ImageViewHolder extends RecyclerView.ViewHolder {
 
+        /**
+         * The Image view.
+         */
         ImageView imageView;
 
+        /**
+         * Instantiates a new Image view holder.
+         *
+         * @param imageView the image view
+         */
         public ImageViewHolder(ImageView imageView) {
             super(imageView);
             this.imageView = imageView;
         }
     }
 
+    /**
+     * Clears the bitmap list.
+     */
     public void clearBitmapList() {
         this.bitmapList.clear();
         notifyDataSetChanged();
     }
 
+    /**
+     * Removes  abitmap from the bitmap list.
+     *
+     * @param bmptoRemove the bmpto remove
+     */
     public void removeBitmap(Bitmap bmptoRemove) {
         int pos = this.bitmapList.indexOf(bmptoRemove);
         this.bitmapList.remove(bmptoRemove);
