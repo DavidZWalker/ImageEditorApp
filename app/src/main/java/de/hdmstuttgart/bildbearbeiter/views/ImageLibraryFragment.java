@@ -24,6 +24,9 @@ import de.hdmstuttgart.bildbearbeiter.adapters.ImageAdapter;
 import de.hdmstuttgart.bildbearbeiter.viewmodels.ImageLibraryViewModel;
 import de.hdmstuttgart.bildbearbeiter.viewmodels.ImageLibraryViewModelFactory;
 
+/**
+ * The type Image library fragment.
+ */
 public class ImageLibraryFragment extends Fragment {
 
     private ImageLibraryViewModel mViewModel;
@@ -39,7 +42,9 @@ public class ImageLibraryFragment extends Fragment {
 
         return inflater.inflate(R.layout.library_fragment, container, false);
     }
-
+    /*
+     * Creates the viewModel and assigns the Buttons and their onclick listeners.
+     */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -68,7 +73,9 @@ public class ImageLibraryFragment extends Fragment {
             new LoadLibraryImagesTask().execute();
         }
     }
-
+    /*
+     * An AsyncTask which loads images from the storage and displays a placeholder text if no images were loaded.
+     */
     private class LoadLibraryImagesTask extends AsyncTask<Void, Bitmap, Void> {
 
         @Override
