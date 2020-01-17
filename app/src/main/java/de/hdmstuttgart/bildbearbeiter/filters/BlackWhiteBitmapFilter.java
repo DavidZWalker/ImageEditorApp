@@ -7,12 +7,23 @@ import androidx.core.math.MathUtils;
 
 import java.util.stream.IntStream;
 
+/**
+ * The type Black white bitmap filter.
+ */
 public class BlackWhiteBitmapFilter extends BitmapFilterBase {
 
+    /**
+     * Instantiates a new Black white bitmap filter.
+     *
+     * @param sourceBitmap the source bitmap
+     */
     public BlackWhiteBitmapFilter(Bitmap sourceBitmap) {
         super(sourceBitmap);
     }
 
+    /*
+
+     */
     @Override
     public Bitmap applyFilter() {
         double contrast = 2;
@@ -25,7 +36,7 @@ public class BlackWhiteBitmapFilter extends BitmapFilterBase {
                             // get pixel color
                             int pixel = sourceBitmap.getPixel(x, y);
 
-                            // apply filter contrast for every channel R, G, B
+                            // apply filter contrast for every channel R, G, B and makes sure every pixel stays in the range from 0 to 255
                             int r = Color.red(pixel);
                             r = (int) MathUtils.clamp(((((r / 255.0) - 0.5) * contrast) + 0.5) * 255.0, 0, 255);
 
