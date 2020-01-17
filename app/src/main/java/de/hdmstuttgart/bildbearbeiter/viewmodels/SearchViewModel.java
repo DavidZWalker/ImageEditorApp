@@ -26,7 +26,6 @@ public class SearchViewModel extends ViewModel {
 
     /**
      * Checks for an empty query and returns null, if this is not the case, it starts the search.
-     *
      * @param query the query
      * @return Call with {@link SearchResponseResult}
      */
@@ -35,9 +34,8 @@ public class SearchViewModel extends ViewModel {
     }
 
     /**
-     * Gets bitmaps from search response.
-     *
-     * @param res the res
+     * Gets bitmaps from a specified search response.
+     * @param res the response
      * @return the bitmap from search response
      */
     public Bitmap getBitmapFromSearchResponse(SearchResponseResult.Photo res) {
@@ -50,12 +48,11 @@ public class SearchViewModel extends ViewModel {
     }
 
     /**
-     * Checks internet connection boolean.
-     *
+     * Checks internet connection
      * @param systemService the system service
      * @return true if there is an internet connection, false if there is none
      */
     public boolean checkInternetConnection(ConnectivityManager systemService) {
-       return model.checkInternetConnection(systemService);
+        return model.checkInternetConnection(systemService);
     }
 }

@@ -12,7 +12,7 @@ public interface UnsplashAPI {
     /**
      * Gets search results.
      *
-     * @param query    the query
+     * @param query    the query to send to the Unsplash API
      * @param page     the page result number
      * @param per_page images per page
      * @param auth     the authentication token

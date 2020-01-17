@@ -1,11 +1,11 @@
 package de.hdmstuttgart.bildbearbeiter.views;
 
-import android.app.usage.NetworkStats;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,11 +45,12 @@ public class SearchFragment extends Fragment {
     private ProgressBar searchProgressBar;
     private ImageAdapter searchAdapter;
     private EditText editText;
-    private ConnectivityManager cm;
+    private final String logTag = "SearchFragment";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        Log.d(logTag, "Inflating view for SearchFragment...");
         //inflate view to work with it
         final View view = inflater.inflate(R.layout.search_fragment, container, false);
         //setting onClick on SearchButton
@@ -58,6 +59,7 @@ public class SearchFragment extends Fragment {
         searchButton = view.findViewById(R.id.buttonSearchPictures);
 
         searchButton.setOnClickListener(v -> {
+            Log.d(logTag, "User clicked search.");
             UIUtil.hideKeyboard(getActivity());
             searchAdapter.clearBitmapList();
             searchProgressBar.setVisibility(View.VISIBLE);
@@ -80,9 +82,11 @@ public class SearchFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
+        Log.d(logTag, "View for SearchFragment created successfully!");
     }
 
     private void doSearch() {
+        Log.d(logTag, "Doing search...");
         searchButton.setEnabled(false);
         searchButton.setText(R.string.searchingText);
         if (!checkInternetConnection()) {
@@ -102,6 +106,7 @@ public class SearchFragment extends Fragment {
                 public void onResponse(Call<SearchResponseResult> call, Response<SearchResponseResult> response) {
                     //get urls
                     if (response.isSuccessful()) {
+                        Log.d(logTag, "Response received!");
                         if (response.body().getPhotos().size() == 0) {
                             onNoResultsFound();
                             return;
@@ -112,6 +117,7 @@ public class SearchFragment extends Fragment {
                 }
 
                 private void onNoResultsFound() {
+                    Log.d(logTag, "No results found for user query...");
                     UIUtil.showShortSnackbar(getView(), "No results were found, try something else!");
                     searchProgressBar.setVisibility(View.GONE);
                     searchButton.setText(R.string.searchButtons);
@@ -120,6 +126,7 @@ public class SearchFragment extends Fragment {
 
                 @Override
                 public void onFailure(Call<SearchResponseResult> call, Throwable t) {
+                    Log.e(logTag, "Failed to search!", t);
                     searchProgressBar.setVisibility(View.GONE);
                     searchButton.setText(R.string.searchButtons);
                     searchButton.setEnabled(true);
@@ -137,6 +144,7 @@ public class SearchFragment extends Fragment {
      * @return the boolean
      */
     public boolean checkInternetConnection() {
+        Log.d(logTag, "Checking internet connection...");
         return mViewModel.checkInternetConnection((ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE));
     }
 
@@ -146,6 +154,7 @@ public class SearchFragment extends Fragment {
     private class DownloadFilesTask extends AsyncTask<SearchResponseResult.Photo, Bitmap, Void> {
 
         protected Void doInBackground(SearchResponseResult.Photo... photos) {
+            Log.d(logTag, "Doing search async...");
             // get Bitmap for each search result
             for (SearchResponseResult.Photo photo : photos) {
                 Bitmap bmp = mViewModel.getBitmapFromSearchResponse(photo);
@@ -156,11 +165,13 @@ public class SearchFragment extends Fragment {
         }
 
         protected void onProgressUpdate(Bitmap... downloadedImage) {
+            Log.d(logTag, "Progress updated! Publishing...");
             searchAdapter.addToBitmapList(downloadedImage[0]);
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            Log.d(logTag, "Search complete! Finalizing...");
             searchProgressBar.setVisibility(View.GONE);
             searchButton.setText(R.string.searchButtons);
             searchButton.setEnabled(true);

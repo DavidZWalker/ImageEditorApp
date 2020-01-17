@@ -20,7 +20,6 @@ public class ImageLibraryViewModel extends ViewModel {
 
     /**
      * Instantiates a new Image library view model.
-     *
      * @param appFilesDir the app files dir
      */
     public ImageLibraryViewModel(File appFilesDir) {
@@ -30,7 +29,6 @@ public class ImageLibraryViewModel extends ViewModel {
 
     /**
      * Gets unloaded image files.
-     *
      * @return the unloaded image files
      */
     public List<File> getUnloadedImageFiles() {
@@ -39,9 +37,8 @@ public class ImageLibraryViewModel extends ViewModel {
 
     /**
      * Gets bitmap from file.
-     *
      * @param file the file
-     * @return the bitmap from file
+     * @return the loaded bitmap
      */
     public Bitmap getBitmapFromFile(File file) {
         try {
@@ -53,8 +50,7 @@ public class ImageLibraryViewModel extends ViewModel {
     }
 
     /**
-     * Gets model.
-     *
+     * Gets the model.
      * @return the model
      */
     public ImageLibrary getModel() {

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ public class BottomSheetFragment extends com.google.android.material.bottomsheet
     private ImageView imageView;
     private ImageAdapter parent;
     private ImageLibrary imageLibrary;
+    private final String logTag = "BottomSheetFragment";
 
     /**
      * Instantiates a new Bottom sheet fragment.
@@ -49,6 +51,7 @@ public class BottomSheetFragment extends com.google.android.material.bottomsheet
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d(logTag, "Inflating bottom sheet view...");
         View v = inflater.inflate(R.layout.fragment_bottom_sheet_dialog, container, false);
 
         v.findViewById(R.id.llEdit).setOnClickListener(this::onClickEdit);
@@ -63,14 +66,16 @@ public class BottomSheetFragment extends com.google.android.material.bottomsheet
      * @param view the view
      */
     public void onClickEdit(View view) {
+        Log.d(logTag, "User clicked on 'Edit'. Attempting to start ImageEditorActivity...");
         Intent intent = new Intent(view.getContext(), ImageEditorActivity.class);
         Bitmap bmp = UIUtil.extractBitmap(imageView);
         ImageFileHandler ifh = new ImageFileHandler(view.getContext().getFilesDir(), ImageFileHandler.IMAGE_DIR_TMP);
         try {
             ifh.saveImage(bmp, "tmpImage");
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(logTag, "Failed to save temp image.", e);
         }
+
         intent.putExtra("imageURI", "tmpImage");
         view.getContext().startActivity(intent);
         dismiss();
@@ -82,8 +87,10 @@ public class BottomSheetFragment extends com.google.android.material.bottomsheet
      * @param view the view
      */
     public void onClickSaveImage(View view) {
+        Log.d(logTag, "User clicked on 'Save'. Attempting to save image...");
         Bitmap bmpToSave = UIUtil.extractBitmap(imageView);
         MediaStore.Images.Media.insertImage(getContext().getContentResolver(), bmpToSave, "PhotoMagicPhoto", "savedPhoto");
+        Log.d(logTag, "Image saved successfully!");
         MainActivity.showSnackbar("Image saved!");
         dismiss();
     }
@@ -94,12 +101,15 @@ public class BottomSheetFragment extends com.google.android.material.bottomsheet
      * @param view the view
      */
     public void onClickDeleteImage(View view) {
+        Log.d(logTag, "User clicked on 'Delete'. Attempting to remove image...");
         Bitmap bmp = UIUtil.extractBitmap(imageView);
         if (bmp != null) {
             imageLibrary.removeImage(bmp);
             parent.removeBitmap(bmp);
             MainActivity.showSnackbar("Image deleted!");
         }
+
+        Log.d(logTag, "Image deleted successfully!");
         dismiss();
     }
 }

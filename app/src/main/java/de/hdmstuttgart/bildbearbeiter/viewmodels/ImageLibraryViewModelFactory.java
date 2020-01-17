@@ -14,7 +14,6 @@ public class ImageLibraryViewModelFactory implements ViewModelProvider.Factory {
 
     /**
      * Factory for ImageLibraries creates a {@link de.hdmstuttgart.bildbearbeiter.models.ImageLibrary}
-     *
      * @param appFilesDir the app files dir
      */
     public ImageLibraryViewModelFactory(File appFilesDir) {
