@@ -12,16 +12,12 @@ public class SepiaBitmapFilter extends BitmapFilterBase {
 
     /**
      * Instantiates a new Sepia bitmap filter.
-     *
      * @param sourceBitmap the source bitmap
      */
     public SepiaBitmapFilter(Bitmap sourceBitmap) {
         super(sourceBitmap);
     }
 
-    /*
-     * This filter calculates the average of every color on a pixel and applies that value to said pixel.
-     */
     @Override
     public Bitmap applyFilter() {
         int depth = 20;

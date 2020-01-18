@@ -9,16 +9,12 @@ public class NoBitmapFilter extends BitmapFilterBase {
 
     /**
      * Instantiates a new No bitmap filter.
-     *
      * @param sourceBitmap the source bitmap
      */
     public NoBitmapFilter(Bitmap sourceBitmap) {
         super(sourceBitmap);
     }
 
-    /*
-     * no modifications are done here
-     */
     @Override
     public Bitmap applyFilter() {
         return sourceBitmap;

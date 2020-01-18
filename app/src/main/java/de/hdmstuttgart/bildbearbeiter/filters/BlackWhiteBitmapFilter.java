@@ -14,16 +14,12 @@ public class BlackWhiteBitmapFilter extends BitmapFilterBase {
 
     /**
      * Instantiates a new Black white bitmap filter.
-     *
      * @param sourceBitmap the source bitmap
      */
     public BlackWhiteBitmapFilter(Bitmap sourceBitmap) {
         super(sourceBitmap);
     }
 
-    /*
-
-     */
     @Override
     public Bitmap applyFilter() {
         double contrast = 2;

@@ -12,16 +12,12 @@ public class RedBitmapFilter extends BitmapFilterBase {
 
     /**
      * Instantiates a new Red bitmap filter. The Red filter boosts the red value of every filter and sets 0 to the other two.
-     *
      * @param sourceBitmap the source bitmap
      */
     public RedBitmapFilter(Bitmap sourceBitmap) {
         super(sourceBitmap);
     }
 
-    /*
-     *Every Red pixel has its value boosted by 150. The Other Pixels are set to 0.
-     */
     @Override
     public Bitmap applyFilter() {
         IntStream.range(0, sourceBitmap.getWidth())

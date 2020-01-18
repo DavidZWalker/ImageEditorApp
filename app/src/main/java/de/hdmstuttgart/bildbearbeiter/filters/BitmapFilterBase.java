@@ -11,6 +11,7 @@ public abstract class BitmapFilterBase implements IBitmapFilter {
      *  with the applied filter.
      */
     protected Bitmap resultBitmap;
+
     /**
      * The Source bitmap without a filter.
      */
@@ -19,7 +20,6 @@ public abstract class BitmapFilterBase implements IBitmapFilter {
     /**
      * Instantiates a new Bitmap
      * creates a Bitmap ready to be edited
-     *
      * @param sourceBitmap the source bitmap
      */
     public BitmapFilterBase(Bitmap sourceBitmap) {
