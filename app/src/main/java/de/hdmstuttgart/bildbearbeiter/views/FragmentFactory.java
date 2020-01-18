@@ -7,6 +7,11 @@ import androidx.fragment.app.Fragment;
  */
 public class FragmentFactory {
 
+    /**
+     * Gets a fragment based on the page index
+     * @param index the index
+     * @return the corresponding fragment
+     */
     public Fragment getFragment(int index) {
         switch (index) {
             case MainActivity.CAMERA_PAGE:

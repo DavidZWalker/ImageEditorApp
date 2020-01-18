@@ -29,7 +29,6 @@ public class BottomSheetFragment extends com.google.android.material.bottomsheet
 
     /**
      * Instantiates a new Bottom sheet fragment.
-     *
      * @param parent       the parent
      * @param imageView    the image view
      * @param imageLibrary the image library
@@ -40,6 +39,10 @@ public class BottomSheetFragment extends com.google.android.material.bottomsheet
         this.parent = parent;
     }
 
+    /**
+     * Called when the fragment is being created
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,8 +64,7 @@ public class BottomSheetFragment extends com.google.android.material.bottomsheet
     }
 
     /**
-     * When the user presses Edit, a new {@link ImageEditorActivity } is opened.
-     *
+     * When the user presses Edit, a new {@link ImageEditorActivity} is opened.
      * @param view the view
      */
     public void onClickEdit(View view) {
@@ -83,7 +85,6 @@ public class BottomSheetFragment extends com.google.android.material.bottomsheet
 
     /**
      * When the user presses save, the picture calls to {@link UIUtil} to extract the image and saves it into to the gallery.
-     *
      * @param view the view
      */
     public void onClickSaveImage(View view) {
@@ -97,7 +98,6 @@ public class BottomSheetFragment extends com.google.android.material.bottomsheet
 
     /**
      * When the user presses delete, the file and the bitmap are deleted from the internal app storage.
-     *
      * @param view the view
      */
     public void onClickDeleteImage(View view) {

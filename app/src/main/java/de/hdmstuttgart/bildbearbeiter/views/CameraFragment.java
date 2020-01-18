@@ -60,6 +60,9 @@ public class CameraFragment extends Fragment {
         Log.d(logTag, "CameraFragment created");
     }
 
+    /**
+     * Saves the captured image to the internal library
+     */
     private void saveImageToLibrary() {
         Log.d(logTag, "Attempting to save image to library...");
         Bitmap bmp = ((BitmapDrawable) capturedImageView.getDrawable()).getBitmap();
@@ -67,11 +70,10 @@ public class CameraFragment extends Fragment {
     }
 
     /**
-     * Sets view pager context.
-     *
+     * Sets the parent view pager
      * @param viewPager the view pager
      */
-    public void setViewPagerContext(ViewPager viewPager) {
+    public void setViewPager(ViewPager viewPager) {
         viewPagerParent = viewPager;
     }
 
@@ -90,6 +92,12 @@ public class CameraFragment extends Fragment {
         startActivityForResult(intent, 100);
     }
 
+    /**
+     * Called when the Camera activity returns with a result
+     * @param requestCode the request code made to the activity
+     * @param resultCode the response code from the activity
+     * @param data the intent data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -102,6 +110,9 @@ public class CameraFragment extends Fragment {
         }
     }
 
+    /**
+     * Loads the captured image into the view
+     */
     private void loadImageIntoView() {
         Log.d(logTag, "Attempting to load image into view...");
         Uri selectedImage = viewModel.getImageUri();
@@ -113,10 +124,16 @@ public class CameraFragment extends Fragment {
         } else UIUtil.showShortSnackbar(getView(), "Failed to get image.");
     }
 
+    /**
+     * Switches to the library page
+     */
     private void switchToLibrary() {
         viewPagerParent.setCurrentItem(MainActivity.LIBRARY_PAGE - 1);
     }
 
+    /**
+     * Asynchronous task for saving the image to the internal library
+     */
     private class SaveImageTask extends AsyncTask<Void, Void, Boolean> {
 
         private Bitmap imageToSave;

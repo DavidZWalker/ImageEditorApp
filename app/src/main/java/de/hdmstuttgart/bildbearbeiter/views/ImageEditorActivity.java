@@ -35,22 +35,27 @@ public class ImageEditorActivity extends AppCompatActivity {
      * The Image view.
      */
     ImageView imageView;
+
     /**
      * The Filter buttons.
      */
     LinearLayout filterButtons;
+
     /**
      * The Save button.
      */
     Button saveButton;
+
     /**
      * The Selected filter view.
      */
     View selectedFilterView;
+
     /**
      * The View model.
      */
     ImageEditorViewModel viewModel;
+
     /**
      * The Running tasks.
      */
@@ -77,12 +82,19 @@ public class ImageEditorActivity extends AppCompatActivity {
         addFilterButtonsToView();
     }
 
+    /**
+     * Called after the activity has been created
+     * @param savedInstanceState
+     */
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         Log.d(logTag, "View created successfully");
     }
 
+    /**
+     * Called when the activity is stopped
+     */
     @Override
     protected void onStop() {
         super.onStop();
@@ -93,7 +105,6 @@ public class ImageEditorActivity extends AppCompatActivity {
 
     /**
      * Saves an image from a view to the library.
-     *
      * @param v the view which contains the image
      */
     public void saveImageToLibrary(View v) {
@@ -102,6 +113,9 @@ public class ImageEditorActivity extends AppCompatActivity {
         new SaveImageTask(imageToSave).execute();
     }
 
+    /**
+     * Adds the filter buttons to the view
+     */
     private void addFilterButtonsToView() {
         for (IBitmapFilter f : viewModel.getAvailableFilters()) {
             Log.d(logTag, "Adding filter '" + f.getName() + "'...");
@@ -109,6 +123,11 @@ public class ImageEditorActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Begins adding a filter button for the specified filter
+     * @param filter the filter for the button
+     * @return the view of the filter
+     */
     private View startAddFilterButton(IBitmapFilter filter) {
         Log.d(logTag, "Initializing filter button for filter: " + filter.getName());
         RelativeLayout filterButtonLayoutRoot = (RelativeLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.filter_button, null, false);
@@ -121,6 +140,11 @@ public class ImageEditorActivity extends AppCompatActivity {
         return filterButtonLayoutRoot;
     }
 
+    /**
+     * Finalizes filter button
+     * @param view the view of the filter button
+     * @param filteredBitmap the filtered bitmap to add to the view
+     */
     private void finishAddFilterButton(View view, Bitmap filteredBitmap) {
         Log.d(logTag, "Finalizing filter button...");
         RelativeLayout filterButtonLayoutRoot = (RelativeLayout) view;
@@ -134,7 +158,11 @@ public class ImageEditorActivity extends AppCompatActivity {
         Log.d(logTag, "Filter button finalized!");
     }
 
-    private void selectFilter(View newSelection) {
+    /**
+     * Called when a filter is selected
+     * @param view the view
+     */
+    private void selectFilter(View view) {
         Log.d(logTag, "User selected filter");
         // deselect old filter view
         if (selectedFilterView != null) {
@@ -142,7 +170,7 @@ public class ImageEditorActivity extends AppCompatActivity {
         }
 
         // select new filter view
-        RelativeLayout newFilterView = (RelativeLayout) newSelection;
+        RelativeLayout newFilterView = (RelativeLayout) view;
         ImageView thumb = (ImageView) newFilterView.getChildAt(0);
         Bitmap bmp = ((BitmapDrawable) thumb.getDrawable()).getBitmap();
         imageView.setImageBitmap(bmp);
@@ -150,6 +178,9 @@ public class ImageEditorActivity extends AppCompatActivity {
         selectedFilterView = newFilterView;
     }
 
+    /**
+     * AsyncTask for adding a filter button to the view
+     */
     private class AddFilterButtonToViewTask extends AsyncTask<Void, Void, Void> {
 
         /**
@@ -167,7 +198,6 @@ public class ImageEditorActivity extends AppCompatActivity {
 
         /**
          * Instantiates a new Add filter button to view task.
-         *
          * @param filter the filter
          */
         public AddFilterButtonToViewTask(IBitmapFilter filter) {
@@ -208,7 +238,6 @@ public class ImageEditorActivity extends AppCompatActivity {
 
         /**
          * Instantiates a new Save image task.
-         *
          * @param imageToSave the image to save
          */
         public SaveImageTask(Bitmap imageToSave) {

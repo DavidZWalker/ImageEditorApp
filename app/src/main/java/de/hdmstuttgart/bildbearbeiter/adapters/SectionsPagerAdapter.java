@@ -50,7 +50,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment = fragmentFactory.getFragment(position + 1);
         if (fragment instanceof CameraFragment) {
             CameraFragment cameraFragment = (CameraFragment) fragment;
-            cameraFragment.setViewPagerContext(viewPager);
+            cameraFragment.setViewPager(viewPager);
         }
         loadedFragments.add(fragment);
         return fragment;
