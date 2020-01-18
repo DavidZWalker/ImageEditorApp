@@ -30,7 +30,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     /**
      * Instantiates a new Image adapter.
-     *
      * @param bitmapList the bitmap list
      */
     public ImageAdapter(List<Bitmap> bitmapList) {
@@ -40,7 +39,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     /**
      * Instantiates a new Image adapter.
-     *
      * @param bitmapList   the bitmap list
      * @param imageLibrary the image library
      */
@@ -51,7 +49,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     /**
      * Add a Bitmap to bitmapList
-     *
      * @param bitmap the bitmap to be added
      */
     public void addToBitmapList(Bitmap bitmap) {
@@ -129,13 +126,12 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     }
 
     /**
-     * Removes  abitmap from the bitmap list.
-     *
-     * @param bmptoRemove the bmpto remove
+     * Removes a bitmap from the bitmap list.
+     * @param bmpToRemove the bitmap to remove
      */
-    public void removeBitmap(Bitmap bmptoRemove) {
-        int pos = this.bitmapList.indexOf(bmptoRemove);
-        this.bitmapList.remove(bmptoRemove);
+    public void removeBitmap(Bitmap bmpToRemove) {
+        int pos = this.bitmapList.indexOf(bmpToRemove);
+        this.bitmapList.remove(bmpToRemove);
         notifyItemRemoved(pos);
     }
 }

@@ -30,9 +30,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     private List<Fragment> loadedFragments;
 
     /**
-     * @param context   cotext of the activity which wants to switch to the page
+     * @param context  context of the activity which wants to switch to the page
      * @param viewPager Generated code which allows swiping to switch between fragments.
-     * @param fm
+     * @param fm the fragment manager
      */
     public SectionsPagerAdapter(Context context, ViewPager viewPager, FragmentManager fm) {
         super(fm);
@@ -43,7 +43,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     }
 
     /*
-     *getItem is called to instantiate the fragment for the given page.
+     * getItem is called to instantiate the fragment for the given page.
      */
     @Override
     public Fragment getItem(int position) {
